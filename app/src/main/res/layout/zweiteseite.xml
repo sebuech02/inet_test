@@ -1,11 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/texts2"
-        android:text="Test, bis update"/>
+        android:orientation="vertical"
+        android:background="#000000">
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#ffffff"
+        android:textSize="22dp"
+        android:backgroundTint="#000000"
+        android:text="Alle Spiele"
+        app:layout_constraintEnd_toEndOf="parent" />
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:backgroundTint="#000000"
+            android:textSize="22dp"
+            android:text="Free for All"
+            app:layout_constraintEnd_toEndOf="parent" />
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:backgroundTint="#000000"
+            android:textSize="22dp"
+            android:text="Team Deathmatch"
+            app:layout_constraintEnd_toEndOf="parent" />
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:backgroundTint="#000000"
+            android:textSize="22dp"
+            android:text="Duoq"
+            app:layout_constraintEnd_toEndOf="parent" />
+        <Button
+            android:id="@+id/button5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:backgroundTint="#000000"
+            android:textSize="22dp"
+            android:text="Bonus Spiele"
+            app:layout_constraintEnd_toEndOf="parent" />
+        <Button
+            android:id="@+id/button6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:backgroundTint="#000000"
+            android:textSize="22dp"
+            android:text="Alltime Favorites"
+            app:layout_constraintEnd_toEndOf="parent" />
+        <Button
+            android:id="@+id/button7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:textSize="22dp"
+            android:backgroundTint="#000000"
+            android:text="Random Spiel"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
