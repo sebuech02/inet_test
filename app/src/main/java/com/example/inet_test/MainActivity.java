@@ -1,7 +1,11 @@
 package com.example.inet_test;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import org.jsoup.Jsoup;
@@ -12,8 +16,9 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private TextView result;
+    private Button but;
     final ArrayList<spiel> Spiele= new ArrayList<spiel>();
     //final ArrayList<String> names = new ArrayList<String>();
 
@@ -21,8 +26,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        but=(Button) findViewById(R.id.but1);
+        but.setOnClickListener(this);
         result=(TextView) findViewById(R.id.text);
         getWebsite();
+    }
+    @Override
+    public void onClick(View v){
+        if (v.getId() == R.id.but1){
+            startActivity(new Intent(MainActivity.this, zweiteSeite.class));
+        }
     }
     private void getWebsite() {
         new Thread(new Runnable() {
@@ -55,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
                     builder.append("\n");
                     Spiele.add(current);
                 }
+                spiel_liste.set(Spiele);
             } catch(IOException e){
                 builder.append("ERROR du PENNER");
             }
