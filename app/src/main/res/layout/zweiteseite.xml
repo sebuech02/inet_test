@@ -72,6 +72,15 @@
             android:backgroundTint="#000000"
             android:text="Random Spiel"
             app:layout_constraintEnd_toEndOf="parent" />
+        <Button
+            android:id="@+id/button8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:textSize="22dp"
+            android:backgroundTint="#000000"
+            android:text="Rangliste &amp; Sonstiges"
+            app:layout_constraintEnd_toEndOf="parent" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

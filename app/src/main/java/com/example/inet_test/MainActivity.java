@@ -19,6 +19,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.lang.annotation.ElementType;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -27,6 +28,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageButton but3;
     private ProgressBar pgb;
     final ArrayList<spiel> Spiele= new ArrayList<spiel>();
+    final ArrayList<stringinteger> rangliste = new ArrayList<stringinteger>();
+    final ArrayList<stringstring> nhaus = new ArrayList<stringstring>();
+    final ArrayList<stringinteger> bier = new ArrayList<stringinteger>();
+    final ArrayList<String> misc = new ArrayList<String>();
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -42,8 +47,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //pgb.setProgressDrawable(@drawable/carlrot);
         getWebsite();
         pgb.setProgress(66, true);
-        getRangliste();
-        pgb.setProgress(92,true);
         but1.setOnClickListener(this);
         but2.setOnClickListener(this);
         but3.setOnClickListener(this);
@@ -72,6 +75,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void run() {
                 spiel current = null;
+                stringinteger current_rangliste = null;
+                String pumpenk = null;
+                String kegelk = null;
+                stringstring current_nhaus = null;
+                stringinteger current_bier = null;
+                String current_misc=null;
             try {
                 Document doc = Jsoup.connect("https://raw.githubusercontent.com/sebuech02/kegliege_xml/main/data.xml").get();
                 Elements elemente = doc.select("spiel");
@@ -87,6 +96,51 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Spiele.add(current);
                 }
                 spiel_liste.set(Spiele);
+                Document doc2 = Jsoup.connect("https://raw.githubusercontent.com/sebuech02/kegeliege_rangliste/main/rangliste.xml").get();
+                Elements elemente2 = doc2.select("rangliste");
+                for (Element element : elemente2){
+                    current_rangliste = new stringinteger();
+                    String name=element.select("name").text();
+                    String zahl_s=element.select("zahl").text();
+                    int zahl=Integer.parseInt(zahl_s);
+                    current_rangliste.text=name;
+                    current_rangliste.zahl=zahl;
+                    rangliste.add(current_rangliste);
+                }
+                pumpenk=doc2.select("pumpenk").text();
+                kegelk=doc2.select("kegelk").text();
+                Elements elemente3 = doc2.select("nhaus");
+                for (Element element : elemente3){
+                    current_nhaus = new stringstring();
+                    String werfer=element.select("werfer").text();
+                    String nummer=element.select("nummer").text();
+                    current_nhaus.werfer=werfer;
+                    current_nhaus.zahl=nummer;
+                    nhaus.add(current_nhaus);
+                }
+                Elements elemente4 = doc2.select("bier");
+                for (Element element : elemente4){
+                    current_bier = new stringinteger();
+                    String name=element.select("kegler").text();
+                    String zahl_s=element.select("striche").text();
+                    int zahl=Integer.parseInt(zahl_s);
+                    current_bier.text=name;
+                    current_bier.zahl=zahl;
+                    bier.add(current_bier);
+                }
+                Elements elemente5 = doc2.select("misc");
+                for (Element element : elemente5){
+                    current_misc = new String();
+                    String eintrag=element.select("eintrag").text();
+                    current_misc=eintrag;
+                    misc.add(current_misc);
+                }
+                ranglisten_daten.set_prangliste(rangliste);
+                ranglisten_daten.set_pumpenk(pumpenk);
+                ranglisten_daten.set_kegelk(kegelk);
+                ranglisten_daten.set_nhaus(nhaus);
+                ranglisten_daten.set_bier(bier);
+                ranglisten_daten.set_misc(misc);
             } catch(IOException e){
                 Toast.makeText(getApplicationContext(),"ERROR, keine Spiele", Toast.LENGTH_LONG).show();
             }
@@ -95,77 +149,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 public void run() {
                 }
             });
-            }
-        }).start();
-    }
-    private void getRangliste() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                ArrayList<stringinteger> rangliste = null;
-                stringinteger current_rangliste = null;
-                String pumpenk = null;
-                String kegelk = null;
-                ArrayList<stringstring> nhaus = null;
-                stringstring current_nhaus = null;
-                ArrayList<stringinteger> bier = null;
-                stringinteger current_bier = null;
-                ArrayList<String> misc = null;
-                String current_misc=null;
-                try {
-                    Document doc = Jsoup.connect("https://raw.githubusercontent.com/sebuech02/kegliege_xml/main/data.xml").get();
-                    Elements elemente = doc.select("rangliste");
-                    for (Element element : elemente){
-                        current_rangliste = new stringinteger();
-                        String name=element.select("name").text();
-                        String zahl_s=element.select("zahl").text();
-                        int zahl=Integer.parseInt(zahl_s);
-                        current_rangliste.text=name;
-                        current_rangliste.zahl=zahl;
-                        rangliste.add(current_rangliste);
-                    }
-                    pumpenk=doc.select("pumpenk").text();
-                    kegelk=doc.select("kegelk").text();
-                    elemente = doc.select("nhaus");
-                    for (Element element : elemente){
-                        current_nhaus = new stringstring();
-                        String werfer=element.select("werfer").text();
-                        String nummer=element.select("nummer").text();
-                        current_nhaus.werfer=werfer;
-                        current_nhaus.zahl=nummer;
-                        nhaus.add(current_nhaus);
-                    }
-                    elemente = doc.select("bier");
-                    for (Element element : elemente){
-                        current_bier = new stringinteger();
-                        String name=element.select("kegler").text();
-                        String zahl_s=element.select("striche").text();
-                        int zahl=Integer.parseInt(zahl_s);
-                        current_bier.text=name;
-                        current_bier.zahl=zahl;
-                        bier.add(current_bier);
-                    }
-                    elemente = doc.select("misc");
-                    for (Element element : elemente){
-                        current_misc = new String();
-                        String eintrag=element.select("eintrag").text();
-                        current_misc=eintrag;
-                        misc.add(current_misc);
-                    }
-                    ranglisten_daten.set_prangliste(rangliste);
-                    ranglisten_daten.set_pumpenk(pumpenk);
-                    ranglisten_daten.set_kegelk(kegelk);
-                    ranglisten_daten.set_nhaus(nhaus);
-                    ranglisten_daten.set_bier(bier);
-                    ranglisten_daten.set_misc(misc);
-                } catch(IOException e){
-                    Toast.makeText(getApplicationContext(),"ERROR, keine Rangliste", Toast.LENGTH_LONG).show();
-                }
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                    }
-                });
             }
         }).start();
     }
