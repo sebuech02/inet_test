@@ -28,6 +28,7 @@
         <activity android:name=".k_free"/>
         <activity android:name=".k_tdm"/>
         <activity android:name=".bestenliste"/>
+        <activity android:name=".bier"/>
     </application>
 
 </manifest>

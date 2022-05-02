@@ -1,0 +1,39 @@
+Installationsanleitungen
+Microsoft JDBC-Treiber 10.2 für SQL Server
+
+
+EINFÜHRUNG
+------------
+Die folgenden Anweisungen gelten für das Entpacken der Dateien "sqljdbc_<version>_enu.zip" und 
+sqljdbc_<version>_enu.tar.gz.
+
+
+WINDOWS
+-------
+1. Lesen Sie die Datei "license.txt". Indem Sie den Microsoft JDBC-Treiber 10.2 für SQL Server herunterladen und verwenden, erklären Sie sich mit dieser Lizenz einverstanden.
+
+2. Laden Sie die Datei "sqljdbc_<version>_enu.zip" in ein temporäres Verzeichnis herunter.
+
+3. Extrahieren Sie "sqljdbc_<version>_enu.zip".
+
+4. Geben Sie ein Zielverzeichnis ein, wenn Sie dazu aufgefordert werden. Es wird empfohlen,
+   diese ZIP-Datei in "%ProgramFiles%" mit dem folgenden Standardverzeichnis zu entpacken:
+
+	Microsoft JDBC-Treiber 10.2 für SQL Server
+
+
+UNIX
+----
+1. Lesen Sie die Datei "license.txt". Indem Sie den Microsoft JDBC-Treiber 10.2 für SQL Server herunterladen und verwenden, erklären Sie sich mit dieser Lizenz einverstanden.
+
+2. Laden Sie die Datei "sqljdbc_<version>_enu.tar.gz" in ein temporäres Verzeichnis herunter.
+
+3. Wechseln Sie zum Entpacken der komprimierten TAR-Datei zu dem Verzeichnis, in dem der
+   Treiber entpackt werden soll, und geben Sie den folgenden Befehl ein:
+
+	gzip -d sqljdbc_<version>_enu.tar.gz
+
+4. Verschieben Sie die TAR-Datei zum Entpacken in das Verzeichnis, in dem der Treiber 
+   installiert werden soll, und geben Sie den folgenden Befehl ein:
+
+	tar -xf sqljdbc_<version>_enu.tar
