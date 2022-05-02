@@ -31,7 +31,7 @@
             android:textColor="#ffffff"
             android:backgroundTint="#000000"
             android:textSize="22dp"
-            android:text="Abschicken"/>
+            android:text="Warteschlange skippen"/>
         <TextView
             android:id="@+id/liste"
             android:layout_width="match_parent"
