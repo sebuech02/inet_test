@@ -11,6 +11,7 @@ Datenformat beruht auf einer anaeinanderreihung von ArrayListen.
 In den verschiedenen Kategorien werden die Daten dann mit get Methoden ausgelesen und angezeigt.
 
 Geplante/dran gedachte Features:
+
 ++++++++++++++++++++++++++++++++
   - online Strichliste für Bier bestellen, damit man dem Bierbesteller per knopfdruck klar machen kann was man möchte.
   - hinzufügen von Spielen in der app. (online Sync)
