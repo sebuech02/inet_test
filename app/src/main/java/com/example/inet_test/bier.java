@@ -17,6 +17,7 @@ public class bier extends MainActivity{
     private Button bierplus;
     private Button bierminus;
     private Button refresh;
+    private Button fertig;
     private TextView liste;
     Connection connect;
     String conresult="";
@@ -29,13 +30,14 @@ public class bier extends MainActivity{
         bierplus=(Button) findViewById(R.id.bierplus);
         bierminus=(Button) findViewById(R.id.bierminus);
         refresh=(Button) findViewById(R.id.refresh);
+        fertig=(Button) findViewById(R.id.fertig);
         liste=(TextView) findViewById(R.id.liste);
         sqlhelper helper = new sqlhelper();
         connect = helper.connectionclass();
         bierplus.setOnClickListener(this);
         bierminus.setOnClickListener(this);
         refresh.setOnClickListener(this);
-        bier_local.init();
+        fertig.setOnClickListener(this);
         neuladen();
     }
     @Override
@@ -51,6 +53,9 @@ public class bier extends MainActivity{
                 bier_local.init();
                 neuladen();
                 break;
+            case R.id.fertig:
+                bierbestellt();
+                break;
             default:
                 break;
         }
@@ -60,6 +65,26 @@ public class bier extends MainActivity{
             Statement st = connect.createStatement();
             st.execute("update strichliste set bier_gr = bier_gr + 1;");
             bier_local.grbplus();
+            neuladen();
+        } catch (Exception ex) {
+            liste.setText("Ein schwerer Fehler");
+        }
+    }
+    public void bierbestellt(){
+        try {
+            Statement st = connect.createStatement();
+            st.execute("update strichliste set bier_gr = 0;");
+            st = connect.createStatement();
+            st.execute("update strichliste set bier_kl = 0;");
+            st = connect.createStatement();
+            st.execute("update strichliste set weizen = 0;");
+            st = connect.createStatement();
+            st.execute("update strichliste set cola_gr = 0;");
+            st = connect.createStatement();
+            st.execute("update strichliste set cola_kl = 0;");
+            st = connect.createStatement();
+            st.execute("update strichliste set sonst = 0;");
+            bier_local.init();
             neuladen();
         } catch (Exception ex) {
             liste.setText("Ein schwerer Fehler");

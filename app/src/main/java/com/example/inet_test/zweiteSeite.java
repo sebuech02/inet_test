@@ -50,6 +50,7 @@ public class zweiteSeite extends MainActivity implements View.OnClickListener{
         random.setOnClickListener(this);
         rang.setOnClickListener(this);
         bier.setOnClickListener(this);
+        bier_local.init();
         }
         @Override
     public void onClick(View v){
