@@ -21,12 +21,13 @@
         <activity android:name=".zweiteSeite" />
         <activity android:name=".settings" />
         <activity android:name=".anzeige"/>
-        <activity android:name="k_alles"/>
+        <activity android:name=".k_alles"/>
         <activity android:name=".k_duoq"/>
         <activity android:name=".k_atf"/>
         <activity android:name=".k_bonus"/>
         <activity android:name=".k_free"/>
         <activity android:name=".k_tdm"/>
+        <activity android:name=".bestenliste"/>
     </application>
 
 </manifest>
