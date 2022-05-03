@@ -6,8 +6,11 @@
         <entry key="..\:/android/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.121" />
         <entry key="..\:/android/app/src/main/res/drawable/ic_launcher_background.xml" value="0.121" />
         <entry key="..\:/android/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/android/app/src/main/res/layout/anmeldung.xml" value="0.18541666666666667" />
         <entry key="..\:/android/app/src/main/res/layout/anzeige.xml" value="0.10989583333333333" />
+        <entry key="..\:/android/app/src/main/res/layout/auswahl.xml" value="0.18541666666666667" />
         <entry key="..\:/android/app/src/main/res/layout/bestenliste.xml" value="0.18541666666666667" />
+        <entry key="..\:/android/app/src/main/res/layout/bier.xml" value="0.18541666666666667" />
         <entry key="..\:/android/app/src/main/res/layout/kategorien.xml" value="0.10989583333333333" />
         <entry key="..\:/android/app/src/main/res/layout/settings.xml" value="0.10989583333333333" />
         <entry key="..\:/android/app/src/main/res/layout/zweiteseite.xml" value="0.22" />

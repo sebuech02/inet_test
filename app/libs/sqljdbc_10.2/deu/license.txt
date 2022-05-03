@@ -1,0 +1,67 @@
+﻿MICROSOFT-SOFTWARE-LIZENZBESTIMMUNGEN
+MICROSOFT JDBC DRIVER 10.2 FOR SQL SERVER
+
+Diese Lizenzbestimmungen sind ein Vertrag zwischen Ihnen und der Microsoft Corporation (oder einem mit Microsoft verbundenen Unternehmen). Sie gelten für die oben bezeichnete Software und alle Updates von Microsoft-Diensten und -Software (insoweit nicht solche Dienste oder Updates von neuen oder zusätzlichen Bestimmungen begleitet werden, in welchem Fall diese anderen Bestimmungen prospektiv wirken und Ihre und die Rechte von Microsoft bezüglich der Software oder Dienste vor dem Update nicht berühren). WENN SIE DIESE LIZENZBESTIMMUNGEN EINHALTEN, VERFÜGEN SIE ÜBER DIE NACHFOLGEND AUFGEFÜHRTEN RECHTE.
+
+1. RECHTE ZUR INSTALLATION UND NUTZUNG.
+	a. Allgemeines. Sie sind berechtigt, eine beliebige Anzahl von Kopien der Software zu installieren und zu nutzen, um Ihre Anwendungen zu entwickeln und zu testen.
+	b. Drittanbietersoftware. Die Software kann Drittanbieteranwendungen enthalten, die Microsoft, nicht der Drittanbieter, unter diesem Vertrag an Sie lizenziert. Eventuell enthaltene Hinweise zu Drittanbieteranwendungen werden nur zu Ihrer Information gegeben.
+
+2. VERTREIBBARER CODE. Die Software kann Code enthalten, den Sie verbreiten (d. h. Dritten verfügbar machen) dürfen.
+	a. Vertriebsrechte. Der unten beschriebene Code und die genannten Textdateien sind vertreibbar, wenn sie mit der Software geliefert werden.
+		i. REDIST.TXT-Dateien. Sie sind berechtigt, ggf. in der REDIST-Liste in der Software oder unter REDIST (https://aka.ms/jdbceularedist) aufgeführten Code im Objektcodeformat zu kopieren und zu verbreiten.
+		ii. Bildbibliothek. Sie sind berechtigt, Bilder, Grafiken und Animationen in der Bildbibliothek wie in der Dokumentation der Software beschrieben zu kopieren und zu verbreiten.
+		iii. Beispielcode, Vorlagen und Stile. Sie sind berechtigt, das Quell- und Objektcodeformat von Code zu kopieren, zu ändern und zu verbreiten, der als „Beispiel“, „Vorlage“, „einfache Stile“ und „Skizzenstile“ gekennzeichnet ist
+		iv. Vertrieb durch Dritte. Sie sind berechtigt, Distributoren Ihrer Anwendungen das Kopieren und den Vertrieb von vertreibbarem Code, den Sie mit Ihren Anwendungen vertreiben möchten, zu gestatten.
+	b. Vertriebsbedingungen. Wenn Sie Code vertreiben, müssen Sie
+		i. dem Code in Ihren Anwendungen wesentliche primäre Funktionalität hinzufügen,
+		ii. von Distributoren und externen Endbenutzern die Zustimmung zu Bestimmungen verlangen, die den Code und Microsoft mindestens im selben Umfang schützen wie dieser Vertrag
+		iii. Microsoft von allen Ansprüchen und Kosten, einschließlich Anwaltsgebühren, freistellen und gegen alle Ansprüche verteidigen, die mit dem Vertrieb oder der Nutzung Ihrer Anwendungen in Zusammenhang stehen, außer insoweit sich ein Anspruch ausschließlich auf den unveränderten vertreibbaren Code stützt.
+	c. Vertriebsbeschränkungen. Sie sind nicht berechtigt,
+		i. die Marken oder die Handelsaufmachung von Microsoft in Ihrer Anwendung auf eine Weise zu verwenden, die nahelegt, dass Ihre Anwendung von Microsoft stammt oder von Microsoft empfohlen ist, oder
+		ii. den Quellcode eines vertreibbaren Codes so zu ändern oder zu verbreiten, dass ein Teil des Codes einer Lizenz unterstellt wird, die vorsieht, dass der vertreibbare Code, oder ein anderer Teil der Software oder anderes geistiges Eigentum von Microsoft, im Quellcodeformat offenzulegen oder zu verbreiten ist oder dass andere das Recht haben, den Code zu ändern.
+
+3. DATENERFASSUNG. Einige Features in der Software ermöglichen eventuell die Datenerfassung von Nutzern Ihrer Anwendungen, die auf die Software zugreifen oder die Software nutzen. Wenn Sie diese Features zur Datenerfassung in Ihren Anwendungen nutzen, sind Sie zur Einhaltung von anwendbarem Recht, unter anderem zur Einholung einer erforderlichen Zustimmung des Nutzers, und dazu verpflichtet, eine einschlägige Datenschutzrichtlinie zur Information der Nutzer zu unterhalten, wie Sie deren Daten verwenden, erfassen und weitergeben. Sie verpflichten sich, alle entsprechenden Bestimmungen der Microsoft-Datenschutzerklärung einzuhalten unter [https://go.microsoft.com/fwlink/?LinkId=521839].
+
+4. GÜLTIGKEITSBEREICH DER LIZENZ. Die Software wird lizenziert, nicht verkauft. Alle anderen Rechte verbleiben bei Microsoft. Außer anwendbares Recht räumt Ihnen jenseits dieser Einschränkung umfangreichere Rechte ein, sind Sie nicht berechtigt,
+	a. technische Beschränkungen in der Software zu umgehen, die Ihnen die Nutzung nur in bestimmter Weise ermöglichen,
+	b. die Software zurückzuentwickeln (Reverse Engineering), zu dekompilieren oder zu disassemblieren,
+	c. Hinweise von Microsoft oder deren Lieferanten in der Software zu entfernen, zu minimieren, zu blockieren oder zu ändern,
+	d. die Software auf eine Weise zu verwenden, die gegen das Gesetz verstößt, oder Schadprogramme zu erstellen oder zu verbreiten oder
+	e. die Software weiterzugeben, zu veröffentlichen, zu verbreiten oder zu verleihen (außer etwaigen vertreibbaren Code gemäß den Bestimmungen oben), die Software als eine eigenständige gehostete Lösung zur Nutzung durch andere bereitzustellen oder die Software oder diesen Vertrag auf einen Dritten zu übertragen.
+
+5. AUSFUHRBESCHRÄNKUNGEN. Sie sind verpflichtet, alle nationalen und internationalen Exportgesetze und Exportbestimmungen einzuhalten, die für die Software gelten und auch Beschränkungen in Bezug auf Bestimmungsorte, Endbenutzer und die Endnutzung enthalten. Weitere Informationen zu Ausfuhrbeschränkungen finden Sie unter http://aka.ms/exporting.
+
+6. SUPPORTSERVICES. Microsoft ist unter diesem Vertrag nicht zu Supportleistungen für die Software verpflichtet. Etwaiger Support wird „wie besehen“, „mit allen Fehlern“ und ohne jegliche Gewähr geleistet.
+
+7. UPDATES. Die Software darf in regelmäßigen Abständen Update-Suchen vornehmen und gefundene Updates für Sie herunterladen und installieren. Sie dürfen Updates nur von Microsoft oder autorisierten Quellen beziehen. Microsoft muss eventuell Ihr Betriebssystem aktualisieren, um Updates zur Verfügung stellen zu können. Sie stimmen zu, diese automatischen Updates ohne weitere Mitteilung zu erhalten. Es ist möglich, dass Updates nicht alle vorhandenen Softwarefeatures, Dienste oder Peripheriegeräte erfassen oder unterstützen.
+
+8. GESAMTER VERTRAG. Dieser Vertrag sowie etwaige Bestimmungen, die Microsoft für Ergänzungen, Updates oder Drittanbieteranwendungen vorsieht, stellen den gesamten Vertrag über die Software dar.
+
+9. ANWENDBARES RECHT UND GERICHTSSTAND. Wenn Sie die Software in den Vereinigten Staaten oder Kanada erworben haben, unterliegen die Auslegung dieses Vertrages, Ansprüche wegen seiner Verletzung und alle anderen Ansprüche (einschließlich gründend auf Verbraucherschutz, unlauterem Wettbewerb und unerlaubter Handlung) unter Ausschluss der Kollisionsnormen den Gesetzen des Staats oder der Provinz, in der Sie Ihren Wohnsitz haben (oder als Unternehmen Ihren Hauptsitz haben). Wenn Sie die Software in einem anderen Land erworben haben, gelten die Gesetze des betreffenden Lands. Wenn US-Bundesrecht zum Tragen kommt, unterwerfen sich Sie und Microsoft als ausschließlichem Gerichtsstand dem Bundesgericht in King County, Washington, USA. Wenn nicht, unterwerfen sich Sie und Microsoft als ausschließlichem Gerichtsstand dem Superior Court of King County, Washington, USA.
+
+10. VERBRAUCHERRECHTE; REGIONALE VARIATIONEN. Dieser Vertrag beschreibt bestimmte Rechte. Möglicherweise sehen die Gesetze Ihres Staats oder Lands andere Rechte vor, einschließlich Verbraucherrechte. Unabhängig von Ihrer Vertragsbeziehung mit Microsoft haben Sie möglicherweise auch Rechte gegenüber der Partei, von der Sie die Software erworben haben. Dieser Vertrag ändert diese anderen Rechte nicht, wenn die Gesetze Ihres Bundesstaates oder Lands dies nicht gestatten. Wenn Sie die Software beispielsweise in einer der unten genannten Regionen erworben haben oder zwingendes Recht des Landes Anwendung findet, gelten die folgenden Bestimmungen für Sie:
+	a) Australien. Nach dem Australian Consumer Law gelten gesetzliche Garantien, und es besteht an keiner Stelle dieses Vertrags die Absicht, diese Rechte einzuschränken.
+	b) Kanada. Wenn Sie diese Software in Kanada erworben haben, können Sie den Erhalt von Updates auf Ihrem Gerät stoppen, indem Sie das Feature für automatische Updates ausschalten, Ihr Gerät vom Internet trennen (sobald Sie wieder eine Verbindung zum Internet herstellen, setzt die Software die Suche nach und die Installation von Updates fort) oder die Software deinstallieren. Die Produktdokumentation, sofern vorhanden, enthält möglicherweise auch Anweisungen zum Ausschalten von Updates für Ihr Gerät bzw. Ihre Software.
+	c) Deutschland und Österreich.
+		(i)	Gewährleistung. Die ordnungsgemäß lizenzierte Software wird im Wesentlichen wie in den Microsoft-Materialien, die der Software beiliegen, beschrieben arbeiten. Microsoft übernimmt jedoch keine vertragliche Garantie in Bezug auf die lizenzierte Software.
+		(ii)	Haftungsbeschränkung. Bei Vorsatz, grober Fahrlässigkeit, bei Ansprüchen nach dem Produkthaftungsgesetz sowie bei Verletzung von Leben, Körper oder Gesundheit haftet Microsoft nach den gesetzlichen Bestimmungen.
+		Vorbehaltlich der vorangegangenen Klausel (ii) haftet Microsoft nur dann für leichte Fahrlässigkeit, wenn Microsoft diejenigen wesentlichen Vertragspflichten verletzt, deren Erfüllung die ordnungsgemäße Durchführung dieses Vertrags überhaupt erst ermöglicht, deren Verletzung den Zweck dieses Vertrags gefährden würde und auf deren Einhaltung eine Partei regelmäßig vertrauen darf (sogenannte „Kardinalpflichten“). In anderen Fällen von leichter Fahrlässigkeit haftet Microsoft nicht.
+
+11. AUSSCHLUSS VON GARANTIEN. DIE SOFTWARE WIRD „WIE BESEHEN“ LIZENZIERT. SIE TRAGEN DAS MIT DER NUTZUNG VERBUNDENE RISIKO. MICROSOFT GEWÄHRT KEINE AUSDRÜCKLICHEN GEWÄHRLEISTUNGEN ODER GARANTIEN. IN DEM NACH ANWENDBAREM RECHT ZULÄSSIGEN UMFANG SCHLIESST MICROSOFT ALLE KONKLUDENTEN GEWÄHRLEISTUNGEN, UNTER ANDEREM DIE DER HANDELSÜBLICHKEIT, DER EIGNUNG FÜR EINEN BESTIMMTEN ZWECK UND DER NICHTVERLETZUNG VON RECHTEN DRITTER, AUS.
+
+12. BESCHRÄNKUNG UND AUSSCHLUSS VON SCHADENERSATZ. WENN SIE TROTZ DES VORSTEHENDEN GARANTIEAUSSCHLUSSES EINEN ANSPRUCH AUF SCHADENERSATZ HABEN, KÖNNEN SIE VON MICROSOFT UND DEREN LIEFERANTEN ERSATZ NUR FÜR DIREKTE SCHÄDEN IN HÖHE VON BIS ZU 5,00 US-$ ERHALTEN. SIE KÖNNEN KEINEN ERSATZ FÜR ANDERE SCHÄDEN ERHALTEN, DARUNTER NICHT FÜR FOLGESCHÄDEN, SCHÄDEN AUS ENTGANGENEM GEWINN, SPEZIELLE, INDIREKTE ODER ZUFÄLLIGE SCHÄDEN.
+Diese Beschränkung gilt für (a) alles, das die Software, Dienste, Inhalte (einschließlich Code) auf Internetseiten Dritter oder Drittanbieteranwendungen betrifft, und für (b) Ansprüche, die auf Vertragsverletzung, Verletzung einer Gewährleistung, Garantie oder Zusage, auf verschuldensunabhängiger Haftung, Fahrlässigkeit oder unerlaubter Handlung gründen, sowie für alle anderen Ansprüche und jeweils in dem nach anwendbarem Recht zulässigen Umfang.
+Sie hat auch dann Gültigkeit, wenn Microsoft von der Möglichkeit der Schäden gewusst hat oder hätte wissen müssen. Obige Beschränkung und obiger Ausschluss gelten möglicherweise nicht für Sie, weil Ihr Staat oder Land den Ausschluss oder die Beschränkung von zufälligen Schäden, Folgeschäden oder sonstigen Schäden nicht gestattet. Wenn Sie die Software in DEUTSCHLAND oder in ÖSTERREICH erworben haben, findet die Beschränkung im vorstehenden Absatz „Beschränkung und Ausschluss des Schadenersatzes“ auf Sie keine Anwendung. Stattdessen gelten für Schadenersatz oder Ersatz vergeblicher Aufwendungen, gleich aus welchem Rechtsgrund einschließlich unerlaubter Handlung, die folgenden Regelungen: Microsoft haftet bei Vorsatz, grober Fahrlässigkeit, bei Ansprüchen nach dem Produkthaftungsgesetz sowie bei Verletzung von Leben, Körper oder der Gesundheit nach den gesetzlichen Vorschriften. Microsoft haftet nicht für leichte Fahrlässigkeit. Wenn Sie die Software jedoch in Deutschland erworben haben, haftet Microsoft auch für leichte Fahrlässigkeit, wenn Microsoft eine Vertragspflicht verletzt, deren Erfüllung die ordnungsgemäße Durchführung des Vertrages überhaupt erst ermöglicht, deren Verletzung die Erreichung des Vertragszwecks gefährdet und auf deren Einhaltung Sie regelmäßig vertrauen dürfen (sog. „Kardinalpflichten“). In diesen Fällen ist die Haftung von Microsoft auf typische und vorhersehbare Schäden beschränkt. In allen anderen Fällen haftet Microsoft auch in Deutschland nicht für leichte Fahrlässigkeit.
+
+
+
+
+
+
+
+
+
+
+
+

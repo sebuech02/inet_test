@@ -20,6 +20,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.lang.annotation.ElementType;
+import java.sql.Connection;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -32,7 +33,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     final ArrayList<stringstring> nhaus = new ArrayList<stringstring>();
     final ArrayList<stringinteger> bier = new ArrayList<stringinteger>();
     final ArrayList<String> misc = new ArrayList<String>();
-
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
