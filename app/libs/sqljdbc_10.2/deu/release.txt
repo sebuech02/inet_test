@@ -1,0 +1,188 @@
+Informationen zu dieser Version
+Microsoft JDBC-Treiber 10.2 für SQL Server
+
+------------
+EINFÜHRUNG
+------------
+Diese Datei enthält aktuelle oder andere wichtige Informationen, die die Dokumentation zum Microsoft JDBC-Treiber 10.2 
+Dokumentation zum JDBC-Treiber 10.2 für SQL Server. Lesen Sie sich diese Datei vollständig 
+vor der Installation des JDBC-Treibers durch.
+
+Ihr Feedback ist sehr wichtig für uns. Microsoft ist bestrebt, Ihr Feedback schnellstmöglich 
+zu beantworten. Informationen zum Senden von Feedback über den JDBC-Treiberblog und Onlineforen 
+finden Sie auf der Seite zum Microsoft JDBC-Treiber 10.2 für SQL Server unter https://aka.ms/mssql-jdbc-feedback.
+
+
+------------
+INSTALLATION
+------------
+Anweisungen zum Installieren des JDBC-Treibers finden Sie in der Datei "install.txt". In dieser Datei finden Sie 
+Informationen zum Installieren des JDBC-Treibers auf Windows-, Linux- und macOS-Betriebssystemen.
+
+
+---------------------------
+UNTERSTÜTZTE BETRIEBSSYSTEME
+---------------------------
+Unterstützte Betriebssysteme für den Microsoft JDBC-Treiber 10.2 für SQL Server:
+  Windows Server 2012
+  Windows Server 2012 R2
+  Windows Server 2016
+  Windows Server 2019
+  Windows Server 2022
+  Windows 8.1
+  Windows 10
+  Windows 11
+  Linux
+  macOS
+
+Die Liste oben enthält Beispiele von unterstützten Betriebssystemen. Der JDBC-Treiber ist 
+für alle Betriebssysteme ausgelegt, die die Verwendung einer JVM (Java Virtual Machine) unterstützen. 
+
+Allerdings wurden nur die neuesten Betriebssysteme von Linux und macOS (Ubuntu 20.04, Ubuntu 18.04, CentOS 7, SUSE 12,
+ macOS 11) auf Kompatibilität und Unterstützung getestet.
+
+
+-----------------------
+UNTERSTÜTZTE JAVA-VERSIONEN
+-----------------------
+Der Microsoft JDBC-Treiber 10.2 für SQL Server wurde getestet und unterstützt die aktuellen Versionen des Java 
+Development Kit-Builds (JDK) über Open JDK und Zulu in den oben aufgeführten unterstützten Betriebssystemen.
+Die im Folgenden aufgelisteten Familienversionen der JRE-Systembibliothek (Java Runtime Environment) werden unterstützt:
+
+  ----------------------------------------------------------------------
+  JRE-Familienversion | JAR-Dateien des Treibers für die höchste Unterstützung
+  ----------------------------------------------------------------------
+  8+                 | mssql-jdbc-10.2.0.jre8.jar
+  11+                | mssql-jdbc-10.2.0.jre11.jar
+  17+                | mssql-jdbc-10.2.0.jre17.jar
+
+
+----------------
+INHALT DIESER VERSION
+----------------
+Die ZIP- oder TAR-Datei des Microsoft JDBC-Treibers 10.2 für SQL Server entpackt die folgenden Dateien 
+an den angegebenen Speicherorten und relativ zum ausgewählten Installationsverzeichnis:
+
+<Installationsverzeichnis>\sqljdbc_<Version>\<Sprache>\install.txt
+<Installationsverzeichnis>\sqljdbc_<Version>\<Sprache>\release.txt
+<Installationsverzeichnis>\sqljdbc_<Version>\<Sprache>\license.txt
+<Installationsverzeichnis>\sqljdbc_<Version>\<Sprache>\thirdpartynotices.txt
+<Installationsverzeichnis>\sqljdbc_<Version>\<Sprache>\mssql-jdbc-10.2.0.jre8.jar
+<Installationsverzeichnis>\sqljdbc_<Version>\<Sprache>\mssql-jdbc-10.2.0.jre11.jar
+<Installationsverzeichnis>\sqljdbc_<Version>\<Sprache>\mssql-jdbc-10.2.0.jre17.jar
+<Installationsverzeichnis>\sqljdbc_<Version>\<Sprache>\auth\x86\mssql-jdbc_auth-10.2.0.x86.dll
+<Installationsverzeichnis>\sqljdbc_<Version>\<Sprache>\auth\x64\mssql-jdbc_auth-10.2.0.x64.dll
+<Installationsverzeichnis>\sqljdbc_<Version>\<Sprache>\samples\<Beispieldateien...>
+<Installationsverzeichnis>\sqljdbc_<Version>\<Sprache>\xa\xa_install.sql
+<Installationsverzeichnis>\sqljdbc_<Version>\<Sprache>\xa\x86\sqljdbc_xa.dll
+<Installationsverzeichnis>\sqljdbc_<Version>\<Sprache>\xa\x64\sqljdbc_xa.dll
+
+Ausführliche Informationen über die einzelnen Komponenten finden Sie in der Onlinedokumentation
+zum Microsoft JDBC-Treiber für SQL Server unter https://aka.ms/mssql-jdbc.
+
+
+-------------
+DOKUMENTATION
+-------------
+Diese Informationen zu dieser Version, die Installationsanweisungen und die Lizenzbedingungen sind in diesem Paket enthalten. 
+Sämtliche andere Dokumentation finden Sie online.
+
+Beachten Sie, dass keine Offlinehilfedateien mehr bereitgestellt werden. 
+
+
+---------
+JAR-DATEIEN
+---------
+Aus Gründen der Abwärtskompatibilität und zur Unterstützung möglicher Upgradeszenarien enthält der JDBC-Treiber 10.2 
+drei JAR-Klassenbibliotheken in jedem Installationspaket:
+	mssql-jdbc-10.2.0.jre8.jar
+	mssql-jdbc-10.2.0.jre11.jar
+	mssql-jdbc-10.2.0.jre17.jar
+
+
+----------------------
+FEATURESPEZIFISCHE DATEIEN
+----------------------
+Azure Active Directory- und integrierte Authentifizierungskomponenten (unter Windows) sind im Verzeichnis „auth“ 
+enthalten.
+
+JDBC-Komponenten für verteilte Transaktionen sind im Verzeichnis "xa" enthalten.
+
+
+--------------------
+FEATUREABHÄNGIGKEITEN
+--------------------
+Einige Features im Microsoft JDBC-Treiber 10.2 für SQL Server sind von den folgenden externen Bibliotheken 
+abhängig:
+
+1. Verwenden von „Always Encrypted“ mit einem Azure Key Vault-Anbieter
+   Abhängige Bibliotheken: azure-keyvault(version 4.3.6), azure-identity(version 1.4.3)
+
+2. Verwenden von "Always Encrypted" mit Secure Enclaves
+   Abhängige Bibliotheken: com.google.code.gson (Version 2.8.9)
+   und org.bouncycastle (Version 1.70). org.bouncycastle ist nur für JDK 8 erforderlich.
+   
+3. Verwenden der Azure Active Directory-Authentifizierung auf Windows-, Linux-, und macOS-Betriebssystemen
+   Abhängige Bibliotheken: azure-identity(version 1.4.3)
+   
+4. Verwenden von „useFmtOnly“ zum Abrufen von Parametermetadaten
+   Abhängige Bibliotheken: antlr-runtime (Version 4.9.3)
+   
+Ausführliche Informationen zum Verwenden dieser abhängigen Bibliotheken in einer Java- oder 
+Maven-Standardanwendung finden Sie hier: https://go.microsoft.com/fwlink/?linkid=867575
+
+-------
+SAMPLES
+-------
+Beispielanwendungen, die verschiedene Funktionen des JDBC-Treibers veranschaulichen, sind im Verzeichnis
+"samples" enthalten. Einzelheiten zu den einzelnen Beispielen und ihrer Ausführung finden Sie in der 
+Onlinedokumentation.
+
+
+-----------
+LISTE DER ÄNDERUNGEN
+------------
+Eine detaillierte Liste der Änderungen, Fixes und Verbesserungen in jedem Release finden Sie unter https://aka.ms/mssql-jdbc-release-notes.
+
+------------
+BEKANNTE PROBLEME
+------------
+Die folgenden Probleme sind für den Microsoft JDBC-Treiber 10.2 für SQL Server bekannt:
+
+1) TRENNEN VON VERBINDUNGEN MIT SQL AZURE
+
+Bei der Verbindungsherstellung mit SQL Azure können Verbindungen im Leerlauf nach einer Phase ohne Aktivität durch eine Netzwerkkomponente 
+wie eine Firewall beendet werden. Um zu vermeiden, das Verbindungen im Leerlauf von einer Netzwerkkomponente beendet werden, 
+sollten die folgenden Registrierungseinstellungen (oder bei anderen Betriebssystemen als Windows die jeweiligen Entsprechungen) auf dem 
+Betriebssystem festgelegt werden, auf dem der Treiber geladen wird:
+           
+Registrierungseinstellung                                                                   Empfohlener Wert
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\KeepAliveTime            30000
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\KeepAliveInterval         1000
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\TcpMaxDataRetransmission  10
+
+2) BEI VERWENDUNG VON TVP MIT SQL_VARIANT 
+
+2.a) FÜR DATUMSWERTE
+
+Wenn Sie TVP zum Auffüllen einer Tabelle verwenden, die in der sql_variant-Spalte gespeicherte datetime/smalldatetime/date-Werte enthält, 
+können Sie getDateTime()/getSmallDateTime()/getDate() im Resultset nicht aufrufen, und es wird die folgende Ausnahme ausgelöst:
+
+	java.lang.String kann nicht in java.sql.Timestamp umgewandelt werden
+
+Problemumgehung: Verwenden Sie stattdessen „getString()“ oder „getObject()“.
+
+2.b) VERWENDUNG VON TVP MIT SQL_VARIANT FÜR NULL-WERTE
+
+Wenn Sie TVP zum Auffüllen einer Tabelle verwenden und den Wert NULL an den Spaltentyp „sql_variant“ senden, wird
+eine Ausnahme ausgelöst, da die Eingabe eines NULL-Werts mit dem Spaltentyp sql_variant in TVP derzeit nicht unterstützt wird.
+
+
+3) BEI VERWENDUNG DER NTLM-AUTHENTIFIZIERUNG
+
+Die zeitgleiche Aktivierung des erweiterten Schutzes und von verschlüsselten Verbindungen wird derzeit nicht unterstützt.
+
+4) BEI VERWENDUNG VON useFmtOnly
+
+Es gibt einige Probleme mit diesem Feature. Diese sind auf Mängel in der SQL-Parserlogik zurückzuführen.
+Weitere Informationen und Vorschläge zur Problemumgehung finden Sie unter https://aka.ms/mssql-jdbc-usefmtonly.
