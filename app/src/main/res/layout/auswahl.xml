@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,44 +8,52 @@
         android:orientation="vertical"
         android:background="#000000">
         <Button
-            android:id="@+id/bierplus"
+            android:id="@+id/getr1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="#ffffff"
             android:textSize="22dp"
             android:backgroundTint="#000000"
-            android:text="Besttellen"/>
+            android:text="Großes Bier (0,4l)"/>
         <Button
-            android:id="@+id/bierminus"
+            android:id="@+id/getr2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="#ffffff"
-            android:backgroundTint="#000000"
             android:textSize="22dp"
-            android:text="Deine Bestellung löschen"/>
+            android:backgroundTint="#000000"
+            android:text="kleines Bier (0,2l)"/>
         <Button
-            android:id="@+id/refresh"
+            android:id="@+id/getr3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="#ffffff"
-            android:backgroundTint="#000000"
             android:textSize="22dp"
-            android:text="Neu laden"/>
-        <TextView
-            android:id="@+id/liste"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textColor="#ffffff"
             android:backgroundTint="#000000"
-            android:textSize="22dp" />
+            android:text="Weizen (0,5l)"/>
         <Button
-            android:id="@+id/fertig"
+            android:id="@+id/getr4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="#ffffff"
-            android:backgroundTint="#000000"
             android:textSize="22dp"
-            android:text="Frank tat die Bestellung"/>
+            android:backgroundTint="#000000"
+            android:text="Große Cola"/>
+        <Button
+            android:id="@+id/getr5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:textSize="22dp"
+            android:backgroundTint="#000000"
+            android:text="kleine Cola"/>
+        <Button
+            android:id="@+id/getr6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:textSize="22dp"
+            android:backgroundTint="#000000"
+            android:text="Sonstiges wie Essen, Apfelkorn..."/>
     </LinearLayout>
-
 </ScrollView>

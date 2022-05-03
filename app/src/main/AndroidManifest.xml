@@ -29,6 +29,8 @@
         <activity android:name=".k_tdm"/>
         <activity android:name=".bestenliste"/>
         <activity android:name=".bier"/>
+        <activity android:name=".anmeldung"/>
+        <activity android:name=".auswahl"/>
     </application>
 
 </manifest>

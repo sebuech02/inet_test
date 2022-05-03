@@ -85,7 +85,7 @@ public class zweiteSeite extends MainActivity implements View.OnClickListener{
                 startActivity(new Intent(zweiteSeite.this, bestenliste.class));
                 break;
             case R.id.button9:
-                startActivity(new Intent(zweiteSeite.this, bier.class));
+                startActivity(new Intent(zweiteSeite.this, anmeldung.class));
                 break;
             default:
                 break;

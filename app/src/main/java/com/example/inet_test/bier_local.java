@@ -7,6 +7,7 @@ public class bier_local {
     public static int grcola;
     public static int klcola;
     public static int sonst;
+    public static int id;
 
     public static void init(){
         grbier=0;
@@ -63,6 +64,12 @@ public class bier_local {
         if (sonst>0) {
             sonst = sonst - 1;
         }
+    }
+    public static void setid(int i){
+        id=i;
+    }
+    public static int getid(){
+        return id;
     }
     public static String get(){
         return( grbier+" Große Bier"+System.lineSeparator()+
