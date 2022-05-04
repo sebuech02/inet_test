@@ -34,12 +34,14 @@ public class bier extends MainActivity{
         refresh=(Button) findViewById(R.id.refresh);
         fertig=(Button) findViewById(R.id.fertig);
         liste=(TextView) findViewById(R.id.liste);
+        liste.setText("sql helper ausführen");
         sqlhelper helper = new sqlhelper();
         connect = helper.connectionclass();
         bierplus.setOnClickListener(this);
         bierminus.setOnClickListener(this);
         refresh.setOnClickListener(this);
         fertig.setOnClickListener(this);
+        liste.setText("Lade daten");
         neuladen();
     }
     @Override
@@ -85,7 +87,7 @@ public class bier extends MainActivity{
             neuladen();
             Toast.makeText(getApplicationContext(),"Danke Besteller!",Toast.LENGTH_SHORT).show();
         } catch (Exception ex) {
-            liste.setText("Ein schwerer Fehler");
+            liste.setText("Ein schwerer Fehler (beim zurücksetzten)"+System.lineSeparator()+"App schließen und neuladen bidde!");
         }
     }
     public void wenigerbier(){
@@ -103,7 +105,7 @@ public class bier extends MainActivity{
             st = connect.createStatement();
             st.execute("update strichliste set sonst = 0 where id = "+bier_local.getid()+";");
         } catch (Exception ex) {
-            liste.setText("Ein schwerer Fehler");
+            liste.setText("Ein schwerer Fehler"+System.lineSeparator()+"App schließen und neuladen bidde!");
         }
         neuladen();
     }
@@ -147,7 +149,7 @@ public class bier extends MainActivity{
                 }
             }
             else{
-                builder.append("Hier ging nix, SQL-ERROR");
+                builder.append("Hier ging nix, SQL-ERROR"+System.lineSeparator()+"App schließen und neuladen bidde!");
             }
             builder.append(System.lineSeparator()+System.lineSeparator()+"Deine Bestellung, "+finde_name(bier_local.getid())+":"+System.lineSeparator());
             Statement st = connect.createStatement();
@@ -164,7 +166,7 @@ public class bier extends MainActivity{
             liste.setText(anzeige);
         }
         catch (Exception ex){
-        liste.setText("Ein schwerer Fehler");
+        liste.setText("Ein schwerer Fehler, keine Verbindung");
         }
     }
     public String finde_name(int i){
