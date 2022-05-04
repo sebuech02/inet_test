@@ -10,6 +10,8 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 
+import org.w3c.dom.Text;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,8 +23,10 @@ public class bier extends MainActivity{
     private Button refresh;
     private Button fertig;
     private TextView liste;
+    private TextView liste2;
+    private Button bezahlt;
+    private Button abendvorbei;
     Connection connect;
-    String conresult="";
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,9 @@ public class bier extends MainActivity{
         refresh=(Button) findViewById(R.id.refresh);
         fertig=(Button) findViewById(R.id.fertig);
         liste=(TextView) findViewById(R.id.liste);
+        liste2=(TextView) findViewById(R.id.liste2);
+        bezahlt=(Button) findViewById(R.id.bezahlt);
+        abendvorbei=(Button) findViewById(R.id.abendvorbei);
         liste.setText("sql helper ausführen");
         sqlhelper helper = new sqlhelper();
         connect = helper.connectionclass();
@@ -41,8 +48,20 @@ public class bier extends MainActivity{
         bierminus.setOnClickListener(this);
         refresh.setOnClickListener(this);
         fertig.setOnClickListener(this);
+        bezahlt.setOnClickListener(this);
+        if (bier_local.getid()==20){
+            abendvorbei.setOnClickListener(this);
+            abendvorbei.setText("Alles hat bezahlt (löscht alle Geld und liter Statistiken)");
+        }
         liste.setText("Lade daten");
         neuladen();
+        bezahlt.setText(finde_name(bier_local.getid())+" hat bezahlt");
+        if (bier_local.getid()==20){
+            Toast.makeText(getApplicationContext(),"Kasse spendiert!",Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Toast.makeText(getApplicationContext(),"Guten Durst, "+finde_name(bier_local.getid())+"!",Toast.LENGTH_SHORT).show();
+        }
     }
     @Override
     public void onResume(){
@@ -60,10 +79,16 @@ public class bier extends MainActivity{
                 break;
             case R.id.refresh:
                 neuladen();
-                Toast.makeText(getApplicationContext(),"Neuladen erfolgreich",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"refresh",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.fertig:
                 bierbestellt();
+                break;
+            case R.id.bezahlt:
+                bierbezahlt();
+                break;
+            case R.id.abendvorbei:
+                bierbezahlt_alle();
                 break;
             default:
                 break;
@@ -72,6 +97,10 @@ public class bier extends MainActivity{
     public void bierbestellt(){
         try {
             Statement st = connect.createStatement();
+            st.execute("update strichliste set geld = geld + (bier_gr + cola_gr) * "+bier_local.ggrpreis+" + (bier_kl + cola_kl) * "+bier_local.gklpreis+" + weizen * "+bier_local.wpreis+";");
+            st = connect.createStatement();
+            st.execute("update strichliste set liter = liter + (bier_gr + cola_gr) * 0.4 + (bier_kl + cola_kl) * +0.2 + weizen * 0.5;");
+            st = connect.createStatement();
             st.execute("update strichliste set bier_gr = 0;");
             st = connect.createStatement();
             st.execute("update strichliste set bier_kl = 0;");
@@ -87,8 +116,31 @@ public class bier extends MainActivity{
             neuladen();
             Toast.makeText(getApplicationContext(),"Danke Besteller!",Toast.LENGTH_SHORT).show();
         } catch (Exception ex) {
-            liste.setText("Ein schwerer Fehler (beim zurücksetzten)"+System.lineSeparator()+"App schließen und neuladen bidde!");
+            liste.setText("Ein schwerer Fehler (beim zurücksetzten)"+System.lineSeparator()+"App komplett schließen und neuladen bidde!");
         }
+    }
+    public void bierbezahlt(){
+        try {
+            Statement st = connect.createStatement();
+            st.execute("update strichliste set geld = 0 where id = "+bier_local.getid()+";");
+            st = connect.createStatement();
+            st.execute("update strichliste set liter = 0 where id = "+bier_local.getid()+";");
+        } catch (Exception ex) {
+            liste.setText("Ein schwerer Fehler, konnte nicht abrechnen"+System.lineSeparator()+"App schließen und neuladen bidde!");
+        }
+        neuladen();
+    }
+    public void bierbezahlt_alle(){
+        try {
+            Statement st = connect.createStatement();
+            st.execute("update strichliste set geld = 0;");
+            st = connect.createStatement();
+            st.execute("update strichliste set liter = 0 ;");
+        } catch (Exception ex) {
+            liste.setText("Ein schwerer Fehler, konnte nicht abrechnen"+System.lineSeparator()+"App schließen und neuladen bidde!");
+        }
+        Toast.makeText(getApplicationContext(),"Kegeln leider Vorbei",Toast.LENGTH_LONG).show();
+        neuladen();
     }
     public void wenigerbier(){
         try {
@@ -105,7 +157,7 @@ public class bier extends MainActivity{
             st = connect.createStatement();
             st.execute("update strichliste set sonst = 0 where id = "+bier_local.getid()+";");
         } catch (Exception ex) {
-            liste.setText("Ein schwerer Fehler"+System.lineSeparator()+"App schließen und neuladen bidde!");
+            liste.setText("Ein schwerer Fehler, konnte nicht stornieren"+System.lineSeparator()+"App schließen und neuladen bidde!");
         }
         neuladen();
     }
@@ -149,11 +201,12 @@ public class bier extends MainActivity{
                 }
             }
             else{
-                builder.append("Hier ging nix, SQL-ERROR"+System.lineSeparator()+"App schließen und neuladen bidde!");
+                builder.append("Hier ging nix, SQL-ERROR, quary_error"+System.lineSeparator()+"App komplett schließen und neuladen bidde!");
             }
             builder.append(System.lineSeparator()+System.lineSeparator()+"Deine Bestellung, "+finde_name(bier_local.getid())+":"+System.lineSeparator());
             Statement st = connect.createStatement();
             ResultSet temp = st.executeQuery("select * from strichliste where id = "+bier_local.getid()+";");
+            StringBuilder builder2 = new StringBuilder();
             while (temp.next()) {
                 builder.append(temp.getInt(1) + " große Bier" + System.lineSeparator());
                 builder.append(temp.getInt(2) + " kleine Bier" + System.lineSeparator());
@@ -161,12 +214,15 @@ public class bier extends MainActivity{
                 builder.append(temp.getInt(4) + " große Cola" + System.lineSeparator());
                 builder.append(temp.getInt(5) + " kleine Kokain" + System.lineSeparator());
                 builder.append(temp.getInt(6) + " Sonstiges" + System.lineSeparator());
+                builder2.append("Heute ballerst du schon "+temp.getFloat(8)+"l zu einem Preis von "+temp.getFloat(9)+"€ (ohne Gewähr)");
             }
             anzeige = builder.toString();
+            String anzeige2 = builder2.toString();
             liste.setText(anzeige);
+            liste2.setText(anzeige2);
         }
         catch (Exception ex){
-        liste.setText("Ein schwerer Fehler, keine Verbindung");
+        liste.setText("Ein schwerer Fehler, keine Verbindung zur Datenbank");
         }
     }
     public String finde_name(int i){
