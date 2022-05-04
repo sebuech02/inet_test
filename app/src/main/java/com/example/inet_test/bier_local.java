@@ -8,6 +8,9 @@ public class bier_local {
     public static int klcola;
     public static int sonst;
     public static int id;
+    public static double ggrpreis = 3.9;
+    public static double gklpreis= 2;
+    public static double wpreis = 4.8;
 
     public static void init(){
         grbier=0;
@@ -16,6 +19,9 @@ public class bier_local {
         grcola=0;
         klcola=0;
         sonst=0;
+        ggrpreis=3.9;
+        gklpreis=2;
+        wpreis=4.8;
     }
     public static void grbplus(){
         grbier=grbier + 1;
