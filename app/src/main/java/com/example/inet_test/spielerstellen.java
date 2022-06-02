@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+
 import androidx.annotation.RequiresApi;
 
 public class spielerstellen extends MainActivity implements View.OnClickListener {
@@ -17,6 +18,7 @@ public class spielerstellen extends MainActivity implements View.OnClickListener
     private String input;
     private String input_name;
     private String input_kat;
+    private String kat;
     private Spinner dropdown;
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -49,5 +51,47 @@ public class spielerstellen extends MainActivity implements View.OnClickListener
         input_name=name.getText().toString();
         input=beschreibung.getText().toString();
         input_kat=dropdown.getSelectedItem().toString();
+        switch (input_kat){
+            case "Jeder für sich oder alle gegen alle":
+                kat="ffa";
+                break;
+            case "2 Teams oder auch 3 große Teams":
+                kat="tdm";
+                break;
+            case "2er Teams, bzw recht kleine Teams":
+                kat="duoq";
+                break;
+            case "Bonusspiele (Trinkspiele)":
+                kat="bonus";
+                break;
+            default:
+                kat=input_kat;
+        }
+
+        StringBuilder build = new StringBuilder();
+        build.append("Name:");
+        build.append(input_name);
+        build.append(System.lineSeparator());
+        build.append("Kategorie:");
+        build.append(kat);
+        build.append(System.lineSeparator());
+        build.append(System.lineSeparator());
+        build.append(input);
+        build.append(System.lineSeparator());
+        build.append(System.lineSeparator());
+        build.append(System.lineSeparator());
+        build.append("XML-Version");
+        build.append(System.lineSeparator());
+        build.append("<spiel>"+System.lineSeparator() +
+                "        <id>??</id>"+System.lineSeparator() +
+                "        <name>"+input_name+"</name>"+System.lineSeparator() +
+                "        <kategorie>"+kat+"</kategorie>"+System.lineSeparator() +
+                "        <beschreibung>"+input+"</beschreibung>"+System.lineSeparator() +
+                "        <atf>false</atf>"+System.lineSeparator() +
+                "    </spiel>");
+        String message = build.toString();
+        String mail = "sebastian.buechler@tutanota.de";
+        javamailapi  mailapi = new javamailapi(this, mail, "Neues Spiel für die Volle Pumpe", message);
+        mailapi.execute();
     }
 }
