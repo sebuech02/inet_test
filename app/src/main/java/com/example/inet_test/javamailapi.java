@@ -55,7 +55,7 @@ public class javamailapi extends AsyncTask<Void,Void,Void>  {
             mProgressDialog.dismiss();
 
             //Show success toast
-            Toast.makeText(this.mContext,"Spiel gesendet zur freigabe",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this.mContext,"Spiel gesendet, wartet auf Freigabe",Toast.LENGTH_LONG).show();
         }
 
         @Override
