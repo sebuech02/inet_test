@@ -31,6 +31,7 @@
         <activity android:name=".bier"/>
         <activity android:name=".anmeldung"/>
         <activity android:name=".auswahl"/>
+        <activity android:name=".spielerstellen"/>
     </application>
 
 </manifest>
