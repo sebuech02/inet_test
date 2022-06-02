@@ -22,6 +22,7 @@ public class zweiteSeite extends MainActivity implements View.OnClickListener{
     private Button random;
     private Button rang;
     private Button bier;
+    private Button spielmachen;
     private ArrayList<spiel> ubergabe;
     private TextView tv;
 
@@ -40,6 +41,7 @@ public class zweiteSeite extends MainActivity implements View.OnClickListener{
         random=(Button) findViewById(R.id.button7);
         rang=(Button) findViewById(R.id.button8);
         bier=(Button) findViewById(R.id.button9);
+        spielmachen=(Button) findViewById(R.id.button10);
         ubergabe=spiel_liste.get();
         alles.setOnClickListener(this);
         free.setOnClickListener(this);
@@ -50,6 +52,7 @@ public class zweiteSeite extends MainActivity implements View.OnClickListener{
         random.setOnClickListener(this);
         rang.setOnClickListener(this);
         bier.setOnClickListener(this);
+        spielmachen.setOnClickListener(this);
         bier_local.init();
         }
         @Override
@@ -86,6 +89,9 @@ public class zweiteSeite extends MainActivity implements View.OnClickListener{
                 break;
             case R.id.button9:
                 startActivity(new Intent(zweiteSeite.this, anmeldung.class));
+                break;
+            case R.id.button10:
+                startActivity(new Intent(zweiteSeite.this, spielerstellen.class));
                 break;
             default:
                 break;
