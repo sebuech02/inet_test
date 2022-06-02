@@ -7,6 +7,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 
 import androidx.annotation.RequiresApi;
@@ -40,8 +41,24 @@ public class spielerstellen extends MainActivity implements View.OnClickListener
     public void onClick(View v){
         switch (v.getId()) {
             case R.id.submit:
-                spielhochladen();
-                break;
+                String eingabe1 = name.getText().toString();
+                String eingabe2 = beschreibung.getText().toString();
+                if (eingabe1.matches("")){
+                    Toast.makeText(this, "Der Name fehlt", Toast.LENGTH_LONG).show();
+                    break;
+                }
+                else{
+                    if (eingabe2.matches("")){
+                        Toast.makeText(this, "Die Beschreibung fehlt", Toast.LENGTH_LONG).show();
+                        break;
+                    }
+                    else{
+                        spielhochladen();
+                        name.getText().clear();
+                        beschreibung.getText().clear();
+                        break;
+                    }
+                }
             default:
                 break;
         }
@@ -69,10 +86,10 @@ public class spielerstellen extends MainActivity implements View.OnClickListener
         }
 
         StringBuilder build = new StringBuilder();
-        build.append("Name:");
+        build.append("Name: ");
         build.append(input_name);
         build.append(System.lineSeparator());
-        build.append("Kategorie:");
+        build.append("Kategorie: ");
         build.append(kat);
         build.append(System.lineSeparator());
         build.append(System.lineSeparator());
@@ -80,7 +97,8 @@ public class spielerstellen extends MainActivity implements View.OnClickListener
         build.append(System.lineSeparator());
         build.append(System.lineSeparator());
         build.append(System.lineSeparator());
-        build.append("XML-Version");
+        build.append("XML-Version:");
+        build.append(System.lineSeparator());
         build.append(System.lineSeparator());
         build.append("<spiel>"+System.lineSeparator() +
                 "        <id>??</id>"+System.lineSeparator() +
