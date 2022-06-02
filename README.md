@@ -13,11 +13,13 @@ In den verschiedenen Kategorien werden die Daten dann mit get Methoden ausgelese
 Geplante/dran gedachte Features:
 
   - Einstellungen mit option die Sortierung zu ändern
-  - hinzufügen von Spielen in der app. (online Sync)
   - alle Daten auf SQL-server packen
   - Animationen und visuals
+  - Spiele online sync mit erstellen
+  - (Server fehlt)
 *****************
 Fertige Features:
 
   - online Strichliste für Bier bestellen, damit man dem Bierbesteller per knopfdruck klar machen kann was man möchte.
   - spiele einlesen aus xml (web-basiert) + rangliste einlesen 
+    - hinzufügen von Spielen in der app.
