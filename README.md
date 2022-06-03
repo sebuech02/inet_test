@@ -26,4 +26,4 @@ Fertige Features:
 
   - online Strichliste für Bier bestellen, damit man dem Bierbesteller per knopfdruck klar machen kann was man möchte.
   - spiele einlesen aus xml (web-basiert) + rangliste einlesen 
-    - hinzufügen von Spielen in der app.
+    - hinzufügen von Spielen in der app. (benötigt noch manuelle Freigabe)
