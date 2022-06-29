@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/floating_layout"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:backgroundTint="#000000">
+    <ImageView
+        android:id="@+id/btn_chat"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:src="@drawable/carlrot"/>
+</LinearLayout>

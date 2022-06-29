@@ -32,6 +32,8 @@
         <activity android:name=".anmeldung"/>
         <activity android:name=".auswahl"/>
         <activity android:name=".spielerstellen"/>
+        <activity android:name=".kegeln"
+            android:theme="@style/Theme.Inet_test2"/>
     </application>
 
 </manifest>
