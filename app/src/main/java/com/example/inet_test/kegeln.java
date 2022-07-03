@@ -8,6 +8,7 @@ import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 
@@ -54,7 +55,7 @@ public class kegeln extends MainActivity{
     public int imagewidth;
     public int depth = 0;
     public boolean once=true;
-    public int counter = 1;
+    public int counter = 0;
     public float xdist;
     public float ydist;
     public float remainx;
@@ -66,6 +67,10 @@ public class kegeln extends MainActivity{
     public float zwischenergebx;
     public float zwischenergeby;
     public boolean turn_valid;
+    public TextView ergebniss;
+    public float landungx;
+    public float landungy;
+    public float landungz;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -98,6 +103,7 @@ public class kegeln extends MainActivity{
         kugel15 = (ImageView) findViewById(R.id.kugel15);
         kugel10 = (ImageView) findViewById(R.id.kugel10);
         kugel05 = (ImageView) findViewById(R.id.kugel05);
+        ergebniss = (TextView) findViewById(R.id.ergebnisse);
 
         kugel95.getLayoutParams().width =(int) ((width/10) * 0.95);
         kugel90.getLayoutParams().width =(int) ((width/10) * 0.90);
@@ -141,6 +147,9 @@ public class kegeln extends MainActivity{
                         doturn();
                         break;
                     case 6:
+                        doturn2();
+                        break;
+                    case 7:
                         aftermath();
                         break;
                 }
@@ -241,28 +250,80 @@ public class kegeln extends MainActivity{
                     }
                 }
             }
-            bounddetection();
+            //bounddetection();
+            if (kugel.getX()<0 || kugel.getX()>width) {
+                carlosinbound = false;
+                turn_valid = false;
+                phase = 7;
+            }
+            if (kugel.getY()>height){
+                carlosinbound = false;
+                turn_valid = false;
+                phase = 7;
+            }
+            if (kugel.getY()<=0){
+                carlosinbound = false;
+                turn_valid = true;
+                phase = 6;
+            }
         }
-
     }
 
     public void aftermath(){
+        //phase  = -1;
+        if (turn_valid){
+            landungx = kugel.getX();
+            landungy = kugel.getY();
+            landungz = depth;
+            if ((landungx<width/3) || (landungx>2*width/3)){
+                publish_result("nix getroffen");
+            } else {
+                publish_result("schöner Strike!");
+            }
+        } else {
+            publish_result("ooB ,left and reight or to the  bottom");
+        }
+    }
 
+    public void publish_result(String msg){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ergebniss.setText(msg);
+            }
+        });
     }
 
     public void bounddetection(){
         if (kugel.getX()<0 || kugel.getX()>width) {
             carlosinbound = false;
             turn_valid = false;
+            phase = 7;
         }
         if (kugel.getY()>height){
             carlosinbound = false;
             turn_valid = false;
+            phase = 7;
         }
-        if (kugel.getY()<0){
+        if (kugel.getY()<=0){
             carlosinbound = false;
             turn_valid = true;
+            phase = 6;
         }
+    }
+
+    public void doturn2(){
+        if (kugel.getY()<height/2){
+            move_carlos(0,1,depth);
+            counter = counter +1;
+            if (counter == 5) {
+                depth = (int) (depth + speed);
+                counter = 0;
+            }
+        } else{
+            phase = 7;
+        }
+
     }
 
     public void move_carlos(int x, int y, int z){
