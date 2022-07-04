@@ -320,7 +320,7 @@ public class kegeln extends MainActivity{
                     zwischenergebx = remainx;
                     einmal = false;
                 } else {
-                    if (zwischenergeby / zwischenergebx > rate) {
+                    if (zwischenergeby / zwischenergebx > rate || (zwischenergebx<1)) {
                         move_carlos(0, 1 * (int) Math.signum(ydist), depth);
                         zwischenergeby = zwischenergeby - 1;
                     } else {
