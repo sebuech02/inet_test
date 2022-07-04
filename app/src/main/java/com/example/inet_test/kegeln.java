@@ -40,7 +40,17 @@ public class kegeln extends MainActivity{
     public ImageView kugel15;
     public ImageView kugel10;
     public ImageView kugel05;
+    public ImageView bier1;
+    public ImageView bier2;
+    public ImageView bier3;
+    public ImageView bier4;
+    public ImageView bier5;
+    public ImageView bier6;
+    public ImageView bier7;
+    public ImageView bier8;
+    public ImageView bier9;
 
+    public ImageView hit;
     public ImageView blue_dot;
     public ImageView blue_dot2;
     public float initalx;
@@ -71,6 +81,12 @@ public class kegeln extends MainActivity{
     public float landungx;
     public float landungy;
     public float landungz;
+    public int levelid;
+    public int leveldepth;
+    public int bier_width;
+    public int toleranz;
+    public int depthcounter = 0;
+    public boolean nixgetroffen = true;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -84,6 +100,7 @@ public class kegeln extends MainActivity{
         kugel = (ImageView) findViewById(R.id.kugel);
         kugel.getLayoutParams().width = width/10;
         imagewidth = width/10;
+        levelid = 1;
         kugel95 = (ImageView) findViewById(R.id.kugel95);
         kugel90 = (ImageView) findViewById(R.id.kugel90);
         kugel85 = (ImageView) findViewById(R.id.kugel85);
@@ -104,6 +121,16 @@ public class kegeln extends MainActivity{
         kugel10 = (ImageView) findViewById(R.id.kugel10);
         kugel05 = (ImageView) findViewById(R.id.kugel05);
         ergebniss = (TextView) findViewById(R.id.ergebnisse);
+        hit = (ImageView) findViewById(R.id.hit);
+        bier1 = (ImageView) findViewById(R.id.bier1);
+        bier2 = (ImageView) findViewById(R.id.bier2);
+        bier3 = (ImageView) findViewById(R.id.bier3);
+        bier4 = (ImageView) findViewById(R.id.bier4);
+        bier5 = (ImageView) findViewById(R.id.bier5);
+        bier6 = (ImageView) findViewById(R.id.bier6);
+        bier7 = (ImageView) findViewById(R.id.bier7);
+        bier8 = (ImageView) findViewById(R.id.bier8);
+        bier9 = (ImageView) findViewById(R.id.bier9);
 
         kugel95.getLayoutParams().width =(int) ((width/10) * 0.95);
         kugel90.getLayoutParams().width =(int) ((width/10) * 0.90);
@@ -124,6 +151,7 @@ public class kegeln extends MainActivity{
         kugel15.getLayoutParams().width =(int) ((width/10) * 0.15);
         kugel10.getLayoutParams().width =(int) ((width/10) * 0.10);
         kugel05.getLayoutParams().width =(int) ((width/10) * 0.05);
+        hit.getLayoutParams().width = (int) (width/10);
 
         blue_dot = (ImageView) findViewById(R.id.blue_dot);
         blue_dot2 = (ImageView) findViewById(R.id.blue_dot2);
@@ -152,9 +180,11 @@ public class kegeln extends MainActivity{
                     case 7:
                         aftermath();
                         break;
+                    default:
+                        break;
                 }
             }
-        }, 0, 5);
+        }, 0, 1);
     }
 
     public void initialize_game() {
@@ -179,10 +209,55 @@ public class kegeln extends MainActivity{
         kugel15.setVisibility(View.INVISIBLE);
         kugel10.setVisibility(View.INVISIBLE);
         kugel05.setVisibility(View.INVISIBLE);
+        hit.setVisibility(View.INVISIBLE);
 
         kugel.setX(width/2 - width/20);
-        kugel.setY(2*height/3 - kugel.getHeight());
+        kugel.setY(3*height/4 - kugel.getHeight());
+        position_bier();
+        switch (levelid){
+            case 1:
+                leveldepth = 5000;
+                toleranz = 2000;
+                publish_result("Level " + levelid+System.lineSeparator() + "Tiefe: " + leveldepth);
+                break;
+        }
         phase = 2;
+    }
+
+    public void position_bier(){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                bier_width = (width/10)*((11-levelid)/10);
+                bier1.getLayoutParams().width = bier_width;
+                bier2.getLayoutParams().width = bier_width;
+                bier3.getLayoutParams().width = bier_width;
+                bier4.getLayoutParams().width = bier_width;
+                bier5.getLayoutParams().width = bier_width;
+                bier6.getLayoutParams().width = bier_width;
+                bier7.getLayoutParams().width = bier_width;
+                bier8.getLayoutParams().width = bier_width;
+                bier9.getLayoutParams().width = bier_width;
+                bier1.setX(width/2-bier_width/2);
+                bier1.setY(height/2);
+                bier2.setX(bier1.getX()-bier_width/2);
+                bier2.setY(height/2 - bier1.getHeight()/2);
+                bier3.setX(bier1.getX()+bier_width/2);
+                bier3.setY(height/2 - bier1.getHeight()/2);
+                bier4.setX(bier1.getX()-bier_width);
+                bier4.setY(height/2-bier1.getHeight());
+                bier5.setX(bier1.getX());
+                bier5.setY(height/2-bier1.getHeight());
+                bier6.setX(bier1.getX()+bier_width);
+                bier6.setY(height/2-bier1.getHeight());
+                bier7.setX(bier1.getX()-bier_width/2);
+                bier7.setY(height/2 - 3*bier1.getHeight()/2);
+                bier8.setX(bier1.getX()+bier_width/2);
+                bier8.setY(height/2 - 3*bier1.getHeight()/2);
+                bier9.setX(bier1.getX());
+                bier9.setY(height/2-2*bier1.getHeight());
+            }
+        });
     }
 
     public void waitfortouch() {
@@ -198,7 +273,7 @@ public class kegeln extends MainActivity{
             @Override
             public void run() {
                 kugel.setX(width/2 - width/20);
-                kugel.setY(2*height/3);
+                kugel.setY(3*height/4);
                 kugel.setVisibility(View.VISIBLE);
                 carlosinbound = true;
             }
@@ -214,12 +289,19 @@ public class kegeln extends MainActivity{
         ydist = desty - initaly;
         remainx = Math.abs(xdist);
         remainy = Math.abs(ydist);
+        if (depthcounter>5) {
+            depth = (int) (depth + speed);
+            depthcounter = 0;
+        }
+        else {
+            depthcounter = depthcounter + 1;
+        }
         if (carlosinbound) {
             if (Math.abs(xdist) > Math.abs(ydist)) {
                 rate = Math.abs(xdist / ydist);
                 if (einmal){
                     move_carlos(0, (int) 1 * (int) Math.signum(ydist), depth);
-                    depth = (int) (depth + speed);
+                    //depth = (int) (depth + speed);
                     remainy = remainy - 1;
                     zwischenergeby = remainy;
                     zwischenergebx = remainx;
@@ -236,7 +318,7 @@ public class kegeln extends MainActivity{
                 rate = Math.abs(ydist / xdist);
                 if (einmal){
                     move_carlos((int) 1 * (int) Math.signum(xdist), 0, depth);
-                    depth = (int) (depth + speed);
+                    //depth = (int) (depth + speed);
                     remainx = remainx - 1;
                     zwischenergeby = remainy;
                     zwischenergebx = remainx;
@@ -272,17 +354,39 @@ public class kegeln extends MainActivity{
     public void aftermath(){
         //phase  = -1;
         if (turn_valid){
-            landungx = kugel.getX();
-            landungy = kugel.getY();
+            showhit();
+            landungx = kugel.getX()+kugel.getWidth()/2;
+            landungy = kugel.getY()+kugel.getHeight()/2;
             landungz = depth;
-            if ((landungx<width/3) || (landungx>2*width/3)){
-                publish_result("nix getroffen");
+            if ((landungx<bier4.getX()) || (landungx>bier6.getX()+bier6.getWidth())){
+                publish_result("nix getroffen, leider daneben");
             } else {
-                publish_result("schöner Strike!");
+                if (landungy < bier9.getY()){
+                    publish_result("Zu weit gepfeffert");
+                } else {
+                    if (depth < leveldepth-toleranz){
+                        publish_result("Leider zu kurz");
+                    } else {
+                        hitdetection();
+                        //publish_result("schöner Strike!");
+                    }
+                }
             }
         } else {
-            publish_result("ooB ,left and reight or to the  bottom");
+            publish_result("Out of bounds, besser zielen");
         }
+        phase = phase + 1;
+    }
+    public void showhit(){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                hit.setVisibility(View.VISIBLE);
+                hit.setX(kugel.getX());
+                hit.setY(kugel.getY());
+                kugel.setVisibility(View.INVISIBLE);
+            }
+        });
     }
 
     public void publish_result(String msg){
@@ -294,26 +398,9 @@ public class kegeln extends MainActivity{
         });
     }
 
-    public void bounddetection(){
-        if (kugel.getX()<0 || kugel.getX()>width) {
-            carlosinbound = false;
-            turn_valid = false;
-            phase = 7;
-        }
-        if (kugel.getY()>height){
-            carlosinbound = false;
-            turn_valid = false;
-            phase = 7;
-        }
-        if (kugel.getY()<=0){
-            carlosinbound = false;
-            turn_valid = true;
-            phase = 6;
-        }
-    }
 
     public void doturn2(){
-        if (kugel.getY()<height/2){
+        if ((kugel.getY()<3*height/4) && (depth<leveldepth+toleranz) && nichtvonobengetroffen()){
             move_carlos(0,1,depth);
             counter = counter +1;
             if (counter == 5) {
@@ -325,6 +412,43 @@ public class kegeln extends MainActivity{
         }
 
     }
+
+    public boolean nichtvonobengetroffen(){
+        if (depth > leveldepth){
+            landungx = kugel.getX() + kugel.getWidth()/2;
+            landungy = kugel.getY() + kugel.getHeight()/2;
+            if ((landungx>bier9.getX() && (landungx<bier9.getX()+bier9.getWidth()) && (landungy<bier9.getY()+bier9.getHeight()) && (landungy>bier9.getY()))) {
+                return false;
+            }
+            if ((landungx>bier8.getX() && (landungx<bier8.getX()+bier8.getWidth()) && (landungy<bier8.getY()+bier8.getHeight()) && (landungy>bier8.getY()))) {
+                return false;
+            }
+            if ((landungx>bier7.getX() && (landungx<bier7.getX()+bier7.getWidth()) && (landungy<bier7.getY()+bier7.getHeight()) && (landungy>bier7.getY()))) {
+                return false;
+            }
+            if ((landungx>bier6.getX() && (landungx<bier6.getX()+bier6.getWidth()) && (landungy<bier6.getY()+bier6.getHeight()) && (landungy>bier6.getY()))) {
+                return false;
+            }
+            if ((landungx>bier5.getX() && (landungx<bier5.getX()+bier5.getWidth()) && (landungy<bier5.getY()+bier5.getHeight()) && (landungy>bier5.getY()))) {
+                return false;
+            }
+            if ((landungx>bier4.getX() && (landungx<bier4.getX()+bier4.getWidth()) && (landungy<bier4.getY()+bier4.getHeight()) && (landungy>bier4.getY()))) {
+                return false;
+            }
+            if ((landungx>bier3.getX() && (landungx<bier3.getX()+bier3.getWidth()) && (landungy<bier3.getY()+bier3.getHeight()) && (landungy>bier3.getY()))) {
+                return false;
+            }
+            if ((landungx>bier2.getX() && (landungx<bier2.getX()+bier2.getWidth()) && (landungy<bier2.getY()+bier2.getHeight()) && (landungy>bier2.getY()))) {
+                return false;
+            }
+            if ((landungx>bier1.getX() && (landungx<bier1.getX()+bier1.getWidth()) && (landungy<bier1.getY()+bier1.getHeight()) && (landungy>bier1.getY()))) {
+                return false;
+            }
+            return true;
+        } else{
+            return true;
+            }
+        }
 
     public void move_carlos(int x, int y, int z){
         runOnUiThread(new Runnable() {
@@ -467,7 +591,86 @@ public class kegeln extends MainActivity{
                 }
             }
         });
+    }
 
+    public void hitdetection(){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (nixgetroffen){
+                    if ((landungx>bier9.getX() && (landungx<bier9.getX()+bier9.getWidth()) && (landungy<bier9.getY()+bier9.getHeight()) && (landungy>bier9.getY()))) {
+                        bier9.setVisibility(View.INVISIBLE);
+                        publish_result("Ergebniss: 1");
+                        nixgetroffen = false;
+                    }
+                    if ((landungx>bier8.getX() && (landungx<bier8.getX()+bier8.getWidth()) && (landungy<bier8.getY()+bier8.getHeight()) && (landungy>bier8.getY()))) {
+                        bier9.setVisibility(View.INVISIBLE);
+                        bier8.setVisibility(View.INVISIBLE);
+                        publish_result("Ergebniss: 2");
+                        nixgetroffen = false;
+                    }
+                    if ((landungx>bier7.getX() && (landungx<bier7.getX()+bier7.getWidth()) && (landungy<bier7.getY()+bier7.getHeight()) && (landungy>bier7.getY()))) {
+                        bier9.setVisibility(View.INVISIBLE);
+                        bier7.setVisibility(View.INVISIBLE);
+                        publish_result("Ergebniss: 2");
+                        nixgetroffen = false;
+                    }
+                    if ((landungx>bier6.getX() && (landungx<bier6.getX()+bier6.getWidth()) && (landungy<bier6.getY()+bier6.getHeight()) && (landungy>bier6.getY()))) {
+                        bier6.setVisibility(View.INVISIBLE);
+                        publish_result("Ergebniss: 1");
+                        nixgetroffen = false;
+                    }
+                    if ((landungx>bier5.getX() && (landungx<bier5.getX()+bier5.getWidth()) && (landungy<bier5.getY()+bier5.getHeight()) && (landungy>bier5.getY()))) {
+                        bier5.setVisibility(View.INVISIBLE);
+                        bier7.setVisibility(View.INVISIBLE);
+                        bier8.setVisibility(View.INVISIBLE);
+                        bier9.setVisibility(View.INVISIBLE);
+                        publish_result("Ergebniss: 4");
+                        nixgetroffen = false;
+                    }
+                    if ((landungx>bier4.getX() && (landungx<bier4.getX()+bier4.getWidth()) && (landungy<bier4.getY()+bier4.getHeight()) && (landungy>bier4.getY()))) {
+                        bier4.setVisibility(View.INVISIBLE);
+                        publish_result("Ergebniss: 1");
+                        nixgetroffen = false;
+                    }
+                    if ((landungx>bier3.getX() && (landungx<bier3.getX()+bier3.getWidth()) && (landungy<bier3.getY()+bier3.getHeight()) && (landungy>bier3.getY()))) {
+                        bier3.setVisibility(View.INVISIBLE);
+                        bier5.setVisibility(View.INVISIBLE);
+                        bier6.setVisibility(View.INVISIBLE);
+                        bier7.setVisibility(View.INVISIBLE);
+                        bier8.setVisibility(View.INVISIBLE);
+                        bier9.setVisibility(View.INVISIBLE);
+                        publish_result("Ergebniss: 6");
+                        nixgetroffen = false;
+                    }
+                    if ((landungx>bier2.getX() && (landungx<bier2.getX()+bier2.getWidth()) && (landungy<bier2.getY()+bier2.getHeight()) && (landungy>bier2.getY()))) {
+                        bier2.setVisibility(View.INVISIBLE);
+                        bier4.setVisibility(View.INVISIBLE);
+                        bier5.setVisibility(View.INVISIBLE);
+                        bier7.setVisibility(View.INVISIBLE);
+                        bier8.setVisibility(View.INVISIBLE);
+                        bier9.setVisibility(View.INVISIBLE);
+                        publish_result("Ergebniss: 6");
+                        nixgetroffen = false;
+                    }
+                    if ((landungx>bier1.getX() && (landungx<bier1.getX()+bier1.getWidth()) && (landungy<bier1.getY()+bier1.getHeight()) && (landungy>bier1.getY()))) {
+                        bier1.setVisibility(View.INVISIBLE);
+                        bier2.setVisibility(View.INVISIBLE);
+                        bier3.setVisibility(View.INVISIBLE);
+                        bier4.setVisibility(View.INVISIBLE);
+                        bier5.setVisibility(View.INVISIBLE);
+                        bier6.setVisibility(View.INVISIBLE);
+                        bier7.setVisibility(View.INVISIBLE);
+                        bier8.setVisibility(View.INVISIBLE);
+                        bier9.setVisibility(View.INVISIBLE);
+                        publish_result("Ergebniss: 9");
+                        nixgetroffen = false;
+                    }
+                } else {
+                    //publish_result("mal wieder an allem vorbei, einfach schlecht");
+                }
+            }
+        });
     }
 
     @Override
@@ -481,7 +684,7 @@ public class kegeln extends MainActivity{
                     kugel.setY(initaly - kugel.getHeight());
                     phase = 3;
                     blue_dot.setVisibility(View.VISIBLE);
-                    blue_dot.setX(initalx - blue_dot.getWidth()/2);
+                    blue_dot.setX(initalx - blue_dot.getWidth());
                     blue_dot.setY(initaly - blue_dot.getHeight());
                 }
                 break;
@@ -502,7 +705,7 @@ public class kegeln extends MainActivity{
             case MotionEvent.ACTION_UP:
                 if (phase == 3){
                     blue_dot2.setVisibility(View.VISIBLE);
-                    blue_dot2.setX(event.getX() - blue_dot2.getWidth()/2);
+                    blue_dot2.setX(event.getX() - blue_dot2.getWidth());
                     blue_dot2.setY(event.getY() - blue_dot2.getHeight());
                     destx = event.getX();
                     desty = event.getY();

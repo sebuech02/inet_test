@@ -5,7 +5,69 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:backgroundTint="#000000">
-
+        <ImageView
+            android:id="@+id/bier1"
+            android:layout_width="66dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/bier"
+            android:adjustViewBounds="true"
+            tools:ignore="MissingConstraints"/>
+        <ImageView
+            android:id="@+id/bier2"
+            android:layout_width="66dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/bier"
+            android:adjustViewBounds="true"
+            tools:ignore="MissingConstraints"/>
+        <ImageView
+            android:id="@+id/bier3"
+            android:layout_width="66dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/bier"
+            android:adjustViewBounds="true"
+            tools:ignore="MissingConstraints"/>
+        <ImageView
+            android:id="@+id/bier4"
+            android:layout_width="66dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/bier"
+            android:adjustViewBounds="true"
+            tools:ignore="MissingConstraints"/>
+        <ImageView
+            android:id="@+id/bier5"
+            android:layout_width="66dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/bier"
+            android:adjustViewBounds="true"
+            tools:ignore="MissingConstraints"/>
+        <ImageView
+            android:id="@+id/bier6"
+            android:layout_width="66dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/bier"
+            android:adjustViewBounds="true"
+            tools:ignore="MissingConstraints"/>
+        <ImageView
+            android:id="@+id/bier7"
+            android:layout_width="66dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/bier"
+            android:adjustViewBounds="true"
+            tools:ignore="MissingConstraints"/>
+        <ImageView
+            android:id="@+id/bier8"
+            android:layout_width="66dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/bier"
+            android:adjustViewBounds="true"
+            tools:ignore="MissingConstraints"/>
+        <ImageView
+            android:id="@+id/bier9"
+            android:layout_width="66dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/bier"
+            android:adjustViewBounds="true"
+            tools:ignore="MissingConstraints"/>
         <ImageView
             android:id="@+id/kugel"
             android:layout_width="66dp"
@@ -164,6 +226,14 @@
             tools:ignore="MissingConstraints"
             android:textColor="#ffffff"
             android:id="@+id/ergebnisse"/>
+        <ImageView
+            android:id="@+id/hit"
+            android:layout_width="66dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/hit"
+            android:adjustViewBounds="true"
+            tools:ignore="MissingConstraints"/>
+
         <!--
                 <ImageView
                     android:id="@+id/line"
