@@ -34,6 +34,7 @@ public class spielerstellen extends MainActivity implements View.OnClickListener
 
         String[] items = new String[]{"Jeder für sich oder alle gegen alle","2 Teams oder auch 3 große Teams","2er Teams, bzw recht kleine Teams","Bonusspiele (Trinkspiele)"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        dropdown.setBackgroundColor(000000);
         dropdown.setAdapter(adapter);
         submit.setOnClickListener(this);
     }
