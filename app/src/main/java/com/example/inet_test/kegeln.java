@@ -1,7 +1,5 @@
 package com.example.inet_test;
 
-
-import android.app.ActionBar;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -9,9 +7,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.RequiresApi;
-
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -212,7 +208,7 @@ public class kegeln extends MainActivity{
         hit.setVisibility(View.INVISIBLE);
 
         kugel.setX(width/2 - width/20);
-        kugel.setY(3*height/4 - kugel.getHeight());
+        kugel.setY(height-(5*width/20));
         position_bier();
         switch (levelid){
             case 1:
@@ -239,23 +235,23 @@ public class kegeln extends MainActivity{
                 bier8.getLayoutParams().width = bier_width;
                 bier9.getLayoutParams().width = bier_width;
                 bier1.setX(width/2-bier_width/2);
-                bier1.setY(height/2);
+                bier1.setY(3*bier1.getHeight());
                 bier2.setX(bier1.getX()-bier_width/2);
-                bier2.setY(height/2 - bier1.getHeight()/2);
+                bier2.setY(3*bier1.getHeight() - bier1.getHeight()/2);
                 bier3.setX(bier1.getX()+bier_width/2);
-                bier3.setY(height/2 - bier1.getHeight()/2);
+                bier3.setY(3*bier1.getHeight() - bier1.getHeight()/2);
                 bier4.setX(bier1.getX()-bier_width);
-                bier4.setY(height/2-bier1.getHeight());
+                bier4.setY(3*bier1.getHeight()-bier1.getHeight());
                 bier5.setX(bier1.getX());
-                bier5.setY(height/2-bier1.getHeight());
+                bier5.setY(3*bier1.getHeight()-bier1.getHeight());
                 bier6.setX(bier1.getX()+bier_width);
-                bier6.setY(height/2-bier1.getHeight());
+                bier6.setY(3*bier1.getHeight()-bier1.getHeight());
                 bier7.setX(bier1.getX()-bier_width/2);
-                bier7.setY(height/2 - 3*bier1.getHeight()/2);
+                bier7.setY(3*bier1.getHeight() - 3*bier1.getHeight()/2);
                 bier8.setX(bier1.getX()+bier_width/2);
-                bier8.setY(height/2 - 3*bier1.getHeight()/2);
+                bier8.setY(3*bier1.getHeight() - 3*bier1.getHeight()/2);
                 bier9.setX(bier1.getX());
-                bier9.setY(height/2-2*bier1.getHeight());
+                bier9.setY(3*bier1.getHeight()-2*bier1.getHeight());
             }
         });
     }
@@ -273,7 +269,7 @@ public class kegeln extends MainActivity{
             @Override
             public void run() {
                 kugel.setX(width/2 - width/20);
-                kugel.setY(3*height/4);
+                kugel.setY(height-(5*width/20));
                 kugel.setVisibility(View.VISIBLE);
                 carlosinbound = true;
             }
@@ -283,13 +279,13 @@ public class kegeln extends MainActivity{
 
     public void doturn(){
         lenge = Math.sqrt((destx-initalx)*(destx-initalx) + (desty-initaly)*(desty-initaly))/height;
-        speed = (100000/2) * (lenge/width);
+        speed = (height) * (1/lenge)/500;
         angle = Math.atan(Math.abs(destx-initalx)/Math.abs(desty-initaly));
         xdist = destx - initalx;
         ydist = desty - initaly;
         remainx = Math.abs(xdist);
         remainy = Math.abs(ydist);
-        if (depthcounter>5) {
+        if (depthcounter>2) {
             depth = (int) (depth + speed);
             depthcounter = 0;
         }
@@ -307,7 +303,7 @@ public class kegeln extends MainActivity{
                     zwischenergebx = remainx;
                     einmal = false;
                 } else{
-                    if (zwischenergebx / zwischenergeby > rate) {
+                    if (zwischenergebx / zwischenergeby > rate && zwischenergebx!=0) {
                         move_carlos(1 * (int) Math.signum(xdist), 0, depth);
                         zwischenergebx = zwischenergebx - 1;
                     } else{
@@ -346,7 +342,12 @@ public class kegeln extends MainActivity{
             if (kugel.getY()<=0){
                 carlosinbound = false;
                 turn_valid = true;
-                phase = 6;
+                phase = 7;
+            }
+            if (depth>leveldepth){
+                carlosinbound = false;
+                turn_valid = true;
+                phase = 7;
             }
         }
     }
@@ -364,7 +365,7 @@ public class kegeln extends MainActivity{
                 if (landungy < bier9.getY()){
                     publish_result("Zu weit gepfeffert");
                 } else {
-                    if (depth < leveldepth-toleranz){
+                    if (landungy > bier1.getY()+bier1.getHeight()){
                         publish_result("Leider zu kurz");
                     } else {
                         hitdetection();
@@ -665,6 +666,9 @@ public class kegeln extends MainActivity{
                         bier9.setVisibility(View.INVISIBLE);
                         publish_result("Ergebniss: 9");
                         nixgetroffen = false;
+                    }
+                    if(nixgetroffen){
+                        publish_result("Leider daneben oder dazwischen :-(");
                     }
                 } else {
                     //publish_result("mal wieder an allem vorbei, einfach schlecht");
