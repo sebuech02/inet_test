@@ -20,6 +20,7 @@ Geplante/dran gedachte Features:
   - alle Daten auf SQL-server packen
   - Animationen und visuals
   - Spiele online sync mit erstellen
+  - Kegelspiel mit gameengine (Work in Progress)
   - (Server fehlt)
 *****************
 Fertige Features:
