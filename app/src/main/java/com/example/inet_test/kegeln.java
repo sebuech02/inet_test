@@ -1,5 +1,6 @@
 package com.example.inet_test;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -13,82 +14,87 @@ import java.util.TimerTask;
 
 
 public class kegeln extends MainActivity{
-    public int phase = 1;
-    public int width;
-    public int height;
-    public ImageView kugel;
-    public ImageView kugel95;
-    public ImageView kugel90;
-    public ImageView kugel85;
-    public ImageView kugel80;
-    public ImageView kugel75;
-    public ImageView kugel70;
-    public ImageView kugel65;
-    public ImageView kugel60;
-    public ImageView kugel55;
-    public ImageView kugel50;
-    public ImageView kugel45;
-    public ImageView kugel40;
-    public ImageView kugel35;
-    public ImageView kugel30;
-    public ImageView kugel25;
-    public ImageView kugel20;
-    public ImageView kugel15;
-    public ImageView kugel10;
-    public ImageView kugel05;
-    public ImageView bier1;
-    public ImageView bier2;
-    public ImageView bier3;
-    public ImageView bier4;
-    public ImageView bier5;
-    public ImageView bier6;
-    public ImageView bier7;
-    public ImageView bier8;
-    public ImageView bier9;
+    private int phase = 1;
+    private int width;
+    private int height;
+    private ImageView kugel;
+    private ImageView kugel95;
+    private ImageView kugel90;
+    private ImageView kugel85;
+    private ImageView kugel80;
+    private ImageView kugel75;
+    private ImageView kugel70;
+    private ImageView kugel65;
+    private ImageView kugel60;
+    private ImageView kugel55;
+    private ImageView kugel50;
+    private ImageView kugel45;
+    private ImageView kugel40;
+    private ImageView kugel35;
+    private ImageView kugel30;
+    private ImageView kugel25;
+    private ImageView kugel20;
+    private ImageView kugel15;
+    private ImageView kugel10;
+    private ImageView kugel05;
+    private ImageView bier1;
+    private ImageView bier2;
+    private ImageView bier3;
+    private ImageView bier4;
+    private ImageView bier5;
+    private ImageView bier6;
+    private ImageView bier7;
+    private ImageView bier8;
+    private ImageView bier9;
 
-    public ImageView hit;
-    public ImageView blue_dot;
-    public ImageView blue_dot2;
-    public float initalx;
-    public float initaly;
-    public float destx;
-    public float desty;
-    public float zwischenstoppx;
-    public float zwischenstoppy;
-    public int line_lange;
-    public double speed;
-    public double angle;
-    public int imagewidth;
-    public int depth = 0;
-    public boolean once=true;
-    public int counter = 0;
-    public float xdist;
-    public float ydist;
-    public float remainx;
-    public float remainy;
-    public double rate;
-    public boolean einmal;
-    public double lenge;
-    public boolean carlosinbound;
-    public float zwischenergebx;
-    public float zwischenergeby;
-    public boolean turn_valid;
-    public TextView ergebniss;
-    public float landungx;
-    public float landungy;
-    public float landungz;
-    public int levelid;
-    public int leveldepth;
-    public int bier_width;
-    public int toleranz;
-    public int depthcounter = 0;
-    public boolean nixgetroffen = true;
+    private ImageView hit;
+    private ImageView blue_dot;
+    private ImageView blue_dot2;
+    private float initalx;
+    private float initaly;
+    private float destx;
+    private float desty;
+    private float zwischenstoppx;
+    private float zwischenstoppy;
+    private int line_lange;
+    private double speed;
+    private double angle;
+    private int imagewidth;
+    private int depth = 0;
+    private boolean once=true;
+    private int counter = 0;
+    private float xdist;
+    private float ydist;
+    private float remainx;
+    private float remainy;
+    private double rate;
+    private boolean einmal;
+    private double lenge;
+    private boolean carlosinbound;
+    private float zwischenergebx;
+    private float zwischenergeby;
+    private boolean turn_valid;
+    private TextView ergebniss;
+    private float landungx;
+    private float landungy;
+    private float landungz;
+    private int levelid = util.levelid;
+    private int leveldepth;
+    private int bier_width;
+    private int toleranz;
+    private int depthcounter = 0;
+    private boolean nixgetroffen = true;
+    private int heighscore = util.heighscore;
+    private int versuche = util.versuche;
+    private  int current_result;
+    private boolean einmalzwei = true;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.kegeln);
+        util.levelid = 1;
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         height = displayMetrics.heightPixels;
@@ -96,7 +102,6 @@ public class kegeln extends MainActivity{
         kugel = (ImageView) findViewById(R.id.kugel);
         kugel.getLayoutParams().width = width/10;
         imagewidth = width/10;
-        levelid = 1;
         kugel95 = (ImageView) findViewById(R.id.kugel95);
         kugel90 = (ImageView) findViewById(R.id.kugel90);
         kugel85 = (ImageView) findViewById(R.id.kugel85);
@@ -184,6 +189,69 @@ public class kegeln extends MainActivity{
     }
 
     public void initialize_game() {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        height = displayMetrics.heightPixels;
+        width = displayMetrics.widthPixels;
+        kugel = (ImageView) findViewById(R.id.kugel);
+        kugel.getLayoutParams().width = width/10;
+        imagewidth = width/10;
+        einmal=true;
+        einmalzwei=true;
+        kugel95 = (ImageView) findViewById(R.id.kugel95);
+        kugel90 = (ImageView) findViewById(R.id.kugel90);
+        kugel85 = (ImageView) findViewById(R.id.kugel85);
+        kugel80 = (ImageView) findViewById(R.id.kugel80);
+        kugel75 = (ImageView) findViewById(R.id.kugel75);
+        kugel70 = (ImageView) findViewById(R.id.kugel70);
+        kugel65 = (ImageView) findViewById(R.id.kugel65);
+        kugel60 = (ImageView) findViewById(R.id.kugel60);
+        kugel55 = (ImageView) findViewById(R.id.kugel55);
+        kugel50 = (ImageView) findViewById(R.id.kugel50);
+        kugel45 = (ImageView) findViewById(R.id.kugel45);
+        kugel40 = (ImageView) findViewById(R.id.kugel40);
+        kugel35 = (ImageView) findViewById(R.id.kugel35);
+        kugel30 = (ImageView) findViewById(R.id.kugel30);
+        kugel25 = (ImageView) findViewById(R.id.kugel25);
+        kugel20 = (ImageView) findViewById(R.id.kugel20);
+        kugel15 = (ImageView) findViewById(R.id.kugel15);
+        kugel10 = (ImageView) findViewById(R.id.kugel10);
+        kugel05 = (ImageView) findViewById(R.id.kugel05);
+        ergebniss = (TextView) findViewById(R.id.ergebnisse);
+        hit = (ImageView) findViewById(R.id.hit);
+        bier1 = (ImageView) findViewById(R.id.bier1);
+        bier2 = (ImageView) findViewById(R.id.bier2);
+        bier3 = (ImageView) findViewById(R.id.bier3);
+        bier4 = (ImageView) findViewById(R.id.bier4);
+        bier5 = (ImageView) findViewById(R.id.bier5);
+        bier6 = (ImageView) findViewById(R.id.bier6);
+        bier7 = (ImageView) findViewById(R.id.bier7);
+        bier8 = (ImageView) findViewById(R.id.bier8);
+        bier9 = (ImageView) findViewById(R.id.bier9);
+
+        kugel95.getLayoutParams().width =(int) ((width/10) * 0.95);
+        kugel90.getLayoutParams().width =(int) ((width/10) * 0.90);
+        kugel85.getLayoutParams().width =(int) ((width/10) * 0.85);
+        kugel80.getLayoutParams().width =(int) ((width/10) * 0.80);
+        kugel75.getLayoutParams().width =(int) ((width/10) * 0.75);
+        kugel70.getLayoutParams().width =(int) ((width/10) * 0.70);
+        kugel65.getLayoutParams().width =(int) ((width/10) * 0.65);
+        kugel60.getLayoutParams().width =(int) ((width/10) * 0.60);
+        kugel55.getLayoutParams().width =(int) ((width/10) * 0.55);
+        kugel50.getLayoutParams().width =(int) ((width/10) * 0.50);
+        kugel45.getLayoutParams().width =(int) ((width/10) * 0.45);
+        kugel40.getLayoutParams().width =(int) ((width/10) * 0.40);
+        kugel35.getLayoutParams().width =(int) ((width/10) * 0.35);
+        kugel30.getLayoutParams().width =(int) ((width/10) * 0.30);
+        kugel25.getLayoutParams().width =(int) ((width/10) * 0.25);
+        kugel20.getLayoutParams().width =(int) ((width/10) * 0.20);
+        kugel15.getLayoutParams().width =(int) ((width/10) * 0.15);
+        kugel10.getLayoutParams().width =(int) ((width/10) * 0.10);
+        kugel05.getLayoutParams().width =(int) ((width/10) * 0.05);
+        hit.getLayoutParams().width = (int) (width/10);
+
+        blue_dot = (ImageView) findViewById(R.id.blue_dot);
+        blue_dot2 = (ImageView) findViewById(R.id.blue_dot2);
         blue_dot.setVisibility(View.INVISIBLE);
         blue_dot2.setVisibility(View.INVISIBLE);
         kugel95.setVisibility(View.INVISIBLE);
@@ -206,25 +274,47 @@ public class kegeln extends MainActivity{
         kugel10.setVisibility(View.INVISIBLE);
         kugel05.setVisibility(View.INVISIBLE);
         hit.setVisibility(View.INVISIBLE);
-
-        kugel.setX(width/2 - width/20);
-        kugel.setY(height-(5*width/20));
-        position_bier();
+        inikugel();
         switch (levelid){
             case 1:
                 leveldepth = 5000;
                 toleranz = 2000;
-                publish_result("Level " + levelid+System.lineSeparator() + "Tiefe: " + leveldepth);
+                versuche = 2;
+                publish_result("");
+                break;
+            case 2:
+                leveldepth = 6000;
+                toleranz = 2000;
+                publish_result("");
                 break;
         }
+        position_bier();
         phase = 2;
+    }
+    public void inikugel(){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                kugel.setX(width/2 - width/20);
+                kugel.setY(height-(5*width/20));
+            }
+        });
     }
 
     public void position_bier(){
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                bier_width = (width/10)*((11-levelid)/10);
+                bier_width =(int) ((width/10)*((11-levelid)/10));
+                bier1.setVisibility(View.VISIBLE);
+                bier2.setVisibility(View.VISIBLE);
+                bier3.setVisibility(View.VISIBLE);
+                bier4.setVisibility(View.VISIBLE);
+                bier5.setVisibility(View.VISIBLE);
+                bier6.setVisibility(View.VISIBLE);
+                bier7.setVisibility(View.VISIBLE);
+                bier8.setVisibility(View.VISIBLE);
+                bier9.setVisibility(View.VISIBLE);
                 bier1.getLayoutParams().width = bier_width;
                 bier2.getLayoutParams().width = bier_width;
                 bier3.getLayoutParams().width = bier_width;
@@ -320,7 +410,7 @@ public class kegeln extends MainActivity{
                     zwischenergebx = remainx;
                     einmal = false;
                 } else {
-                    if (zwischenergeby / zwischenergebx > rate || (zwischenergebx<1)) {
+                    if (zwischenergeby / zwischenergebx > rate) {
                         move_carlos(0, 1 * (int) Math.signum(ydist), depth);
                         zwischenergeby = zwischenergeby - 1;
                     } else {
@@ -361,12 +451,16 @@ public class kegeln extends MainActivity{
             landungz = depth;
             if ((landungx<bier4.getX()) || (landungx>bier6.getX()+bier6.getWidth())){
                 publish_result("nix getroffen, leider daneben");
+                current_result=0;
+
             } else {
                 if (landungy < bier9.getY()){
                     publish_result("Zu weit gepfeffert");
+                    current_result=0;
                 } else {
                     if (landungy > bier1.getY()+bier1.getHeight()){
                         publish_result("Leider zu kurz");
+                        current_result=0;
                     } else {
                         hitdetection();
                         //publish_result("schöner Strike!");
@@ -376,7 +470,29 @@ public class kegeln extends MainActivity{
         } else {
             publish_result("Out of bounds, besser zielen");
         }
-        phase = phase + 1;
+        publish_result(""+current_result);
+        if (current_result == 0) {
+            levelid = levelid;
+            if (einmalzwei){
+                util.versuche = util.versuche - 1;
+                einmalzwei = false;
+            }
+            if (util.versuche >= 0) {
+                phase = 1;
+                //startActivity(new Intent(kegeln.this, kegeln.class));
+            } else{
+                publish_result("Leider Game Over");
+                phase = -1;
+            }
+        } else {
+            if (einmalzwei) {
+                util.heighscore = util.heighscore + current_result;
+                util.levelid = util.levelid + 1;
+                phase = 1;
+                einmalzwei = false;
+            }
+            //startActivity(new Intent(kegeln.this, kegeln2.class));
+        }
     }
     public void showhit(){
         runOnUiThread(new Runnable() {
@@ -394,7 +510,7 @@ public class kegeln extends MainActivity{
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                ergebniss.setText(msg);
+                ergebniss.setText("Level " + util.levelid +", Tiefe " + leveldepth+System.lineSeparator()+ "Heigscore: "+util.heighscore+" Versuche übrig "+util.versuche+System.lineSeparator()+msg);
             }
         });
     }
@@ -411,7 +527,6 @@ public class kegeln extends MainActivity{
         } else{
             phase = 7;
         }
-
     }
 
     public boolean nichtvonobengetroffen(){
@@ -457,6 +572,7 @@ public class kegeln extends MainActivity{
             public void run() {
                 kugel.setX(kugel.getX()+x);
                 kugel.setY(kugel.getY()+y);
+                //kugel.getLayoutParams().width = (width/10) - (depth/10000) * (width/10);
                 if ((depth < 1001) && (depth > 500)){
                     kugel.setVisibility(View.INVISIBLE);
                     kugel95.setVisibility(View.VISIBLE);
@@ -601,24 +717,32 @@ public class kegeln extends MainActivity{
                 if (nixgetroffen){
                     if ((landungx>bier9.getX() && (landungx<bier9.getX()+bier9.getWidth()) && (landungy<bier9.getY()+bier9.getHeight()) && (landungy>bier9.getY()))) {
                         bier9.setVisibility(View.INVISIBLE);
+                        heighscore = heighscore + 1;
+                        current_result=1;
                         publish_result("Ergebniss: 1");
                         nixgetroffen = false;
                     }
                     if ((landungx>bier8.getX() && (landungx<bier8.getX()+bier8.getWidth()) && (landungy<bier8.getY()+bier8.getHeight()) && (landungy>bier8.getY()))) {
                         bier9.setVisibility(View.INVISIBLE);
                         bier8.setVisibility(View.INVISIBLE);
+                        heighscore = heighscore + 2;
+                        current_result=2;
                         publish_result("Ergebniss: 2");
                         nixgetroffen = false;
                     }
                     if ((landungx>bier7.getX() && (landungx<bier7.getX()+bier7.getWidth()) && (landungy<bier7.getY()+bier7.getHeight()) && (landungy>bier7.getY()))) {
                         bier9.setVisibility(View.INVISIBLE);
                         bier7.setVisibility(View.INVISIBLE);
+                        heighscore = heighscore + 2;
+                        current_result=2;
                         publish_result("Ergebniss: 2");
                         nixgetroffen = false;
                     }
                     if ((landungx>bier6.getX() && (landungx<bier6.getX()+bier6.getWidth()) && (landungy<bier6.getY()+bier6.getHeight()) && (landungy>bier6.getY()))) {
                         bier6.setVisibility(View.INVISIBLE);
+                        heighscore = heighscore + 1;
                         publish_result("Ergebniss: 1");
+                        current_result=1;
                         nixgetroffen = false;
                     }
                     if ((landungx>bier5.getX() && (landungx<bier5.getX()+bier5.getWidth()) && (landungy<bier5.getY()+bier5.getHeight()) && (landungy>bier5.getY()))) {
@@ -626,11 +750,15 @@ public class kegeln extends MainActivity{
                         bier7.setVisibility(View.INVISIBLE);
                         bier8.setVisibility(View.INVISIBLE);
                         bier9.setVisibility(View.INVISIBLE);
+                        heighscore = heighscore + 4;
+                        current_result=4;
                         publish_result("Ergebniss: 4");
                         nixgetroffen = false;
                     }
                     if ((landungx>bier4.getX() && (landungx<bier4.getX()+bier4.getWidth()) && (landungy<bier4.getY()+bier4.getHeight()) && (landungy>bier4.getY()))) {
                         bier4.setVisibility(View.INVISIBLE);
+                        heighscore = heighscore + 1;
+                        current_result=1;
                         publish_result("Ergebniss: 1");
                         nixgetroffen = false;
                     }
@@ -641,6 +769,8 @@ public class kegeln extends MainActivity{
                         bier7.setVisibility(View.INVISIBLE);
                         bier8.setVisibility(View.INVISIBLE);
                         bier9.setVisibility(View.INVISIBLE);
+                        heighscore = heighscore + 6;
+                        current_result=6;
                         publish_result("Ergebniss: 6");
                         nixgetroffen = false;
                     }
@@ -651,6 +781,8 @@ public class kegeln extends MainActivity{
                         bier7.setVisibility(View.INVISIBLE);
                         bier8.setVisibility(View.INVISIBLE);
                         bier9.setVisibility(View.INVISIBLE);
+                        heighscore = heighscore + 6;
+                        current_result=6;
                         publish_result("Ergebniss: 6");
                         nixgetroffen = false;
                     }
@@ -664,11 +796,14 @@ public class kegeln extends MainActivity{
                         bier7.setVisibility(View.INVISIBLE);
                         bier8.setVisibility(View.INVISIBLE);
                         bier9.setVisibility(View.INVISIBLE);
+                        heighscore = heighscore + 9;
                         publish_result("Ergebniss: 9");
+                        current_result=9;
                         nixgetroffen = false;
                     }
                     if(nixgetroffen){
                         publish_result("Leider daneben oder dazwischen :-(");
+                        current_result=0;
                     }
                 } else {
                     //publish_result("mal wieder an allem vorbei, einfach schlecht");
