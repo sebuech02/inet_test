@@ -12,7 +12,7 @@ import java.util.TimerTask;
 public class main_game extends MainActivity {
     private game_carlosfly gameview;
     private Handler handler = new Handler();
-    private final static long intervall = 30;
+    private final static long intervall = 15;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
