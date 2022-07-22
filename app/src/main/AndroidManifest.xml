@@ -38,6 +38,12 @@
         <activity android:name=".kegeln2"
             android:theme="@style/Theme.Inet_test2"
             android:screenOrientation="portrait"/>
+        <activity android:name=".game_start"
+            android:theme="@style/Theme.Inet_test2"
+            android:screenOrientation="portrait" />
+        <activity android:name=".main_game"
+            android:theme="@style/Theme.Inet_test2"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
