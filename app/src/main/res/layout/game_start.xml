@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/dummyid1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:text="Sammel das Bier ein für Carlos"
+        android:textAlignment="center"
+        android:textColor="#ff0000" />
+
+    <Button
+        android:id="@+id/game_start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/dummyid1"
+        android:background="@android:color/transparent"
+        android:text="Starte das spiel"
+        android:textAlignment="center"
+        android:textColor="#ff0000"
+        android:textSize="44dp" />
+    </LinearLayout>
+</RelativeLayout>

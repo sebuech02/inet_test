@@ -97,7 +97,7 @@ public class zweiteSeite extends MainActivity implements View.OnClickListener{
                 startActivity(new Intent(zweiteSeite.this, spielerstellen.class));
                 break;
             case R.id.button11:
-                startActivity(new Intent(zweiteSeite.this, kegeln.class));
+                startActivity(new Intent(zweiteSeite.this, game_start.class));
                 break;
             default:
                 break;
