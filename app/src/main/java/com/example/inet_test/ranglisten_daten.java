@@ -9,6 +9,7 @@ public class ranglisten_daten {
     public static ArrayList<stringstring> nhaus;
     public static ArrayList<stringinteger> bier;
     public static ArrayList<String> misc;
+    public static ArrayList<stringinteger> scores;
 
     public static void set_prangliste(ArrayList<stringinteger> a){
         prangliste=a;
@@ -28,6 +29,7 @@ public class ranglisten_daten {
     public static void set_misc(ArrayList<String> f){
         misc=f;
     }
+    public static void set_scores(ArrayList<stringinteger> g){ scores=g; }
     public static ArrayList<stringinteger> get_prangliste(){
         return prangliste;
     }
@@ -46,4 +48,5 @@ public class ranglisten_daten {
     public static ArrayList<String> get_misc(){
         return misc;
     }
+    public static ArrayList<stringinteger> get_scores(){ return scores; }
 }
