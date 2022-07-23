@@ -18,13 +18,16 @@ public class game_carlosfly extends View{
     private Bitmap background_img;
     private Bitmap carlos[] = new Bitmap[2];
     private Bitmap live[] = new Bitmap[2];
-    private Bitmap bier, schnapps, light, light2;
+    private Bitmap bier, schnapps, light, light2, vodka_e, wasser;
     public int width, height;
     private int carlosX = 10;
     private int carlosY;
     private int carlosspeed;
+    private boolean vodkamode = false;
+    private boolean redc = true;
 
     private int score, lives;
+    private int counter;
 
     private int yellowx, yellowy, yellowspeed=7;
     private Paint yellowpaint = new Paint();
@@ -34,7 +37,8 @@ public class game_carlosfly extends View{
     private Paint redpaint = new Paint();
     private int redx2, redy2, redspeed2=15;
     private Paint redpaint2 = new Paint();
-
+    private int vodkax = -500, vodkay, vodkaspeed = 17;
+    private int wasserx = -500, wassery, wasserspeed = 20;
     private Paint score_paint = new Paint();
     private boolean touch = false;
 
@@ -58,6 +62,10 @@ public class game_carlosfly extends View{
         light = Bitmap.createScaledBitmap(light, width/10, height/10, false);
         light2 = BitmapFactory.decodeResource(getResources(), R.drawable.light);
         light2 = Bitmap.createScaledBitmap(light2,width/10, height/10, false);
+        vodka_e = BitmapFactory.decodeResource(getResources(), R.drawable.vodka_e);
+        vodka_e = Bitmap.createScaledBitmap(vodka_e,width/10, height/10, false);
+        wasser = BitmapFactory.decodeResource(getResources(), R.drawable.wasser);
+        wasser = Bitmap.createScaledBitmap(wasser,width/10, height/10, false);
         yellowpaint.setColor(Color.YELLOW);
         yellowpaint.setAntiAlias(false);
         greenpaint.setColor(Color.GREEN);
@@ -77,6 +85,7 @@ public class game_carlosfly extends View{
         carlosY = 550;
         score = 0;
         lives = 3;
+        counter = 0;
     }
 
     @Override
@@ -90,19 +99,40 @@ public class game_carlosfly extends View{
         int mincY = carlos[0].getHeight();
         int maxcY = height - 1*carlos[0].getHeight();
         carlosY = carlosY + carlosspeed;
-        if (carlosY < mincY){
-            carlosY = mincY;
+        if (carlosY < mincY-3*carlos[0].getHeight()){
+            carlosY = mincY-3*carlos[0].getHeight();
         }
         if (carlosY > maxcY){
             carlosY = maxcY;
         }
         carlosspeed = carlosspeed + 1;
-        if (touch || carlosspeed<0){
-            canvas.drawBitmap(carlos[1], carlosX, carlosY, null);
-            touch = false;
+        //Animation zu Carlos speed und ausrichtung einbauen
+
+        if (vodkamode){
+            counter = counter  + 1;
+            if (counter%12<7){
+                canvas.drawBitmap(carlos[1], carlosX, carlosY, null);
+                redc = false;
+            } else {
+                canvas.drawBitmap(carlos[0], carlosX, carlosY, null);
+                redc = true;
+            }
+
         } else {
+            redc = true;
             canvas.drawBitmap(carlos[0], carlosX, carlosY, null);
         }
+        if (counter>=420){
+            vodkamode = false;
+            counter  = 0;
+        }
+
+        //if (touch || carlosspeed<0){
+        //    canvas.drawBitmap(carlos[0], carlosX, carlosY, null);
+        //    touch = false;
+        //} else {
+        //    canvas.drawBitmap(carlos[0], carlosX, carlosY, null);
+        //}
 
         yellowx = yellowx - yellowspeed;
 
@@ -128,7 +158,7 @@ public class game_carlosfly extends View{
         canvas.drawBitmap(schnapps, greenx, greeny, null);
 
         redx = redx - redspeed;
-        if (hitchecker(redx, redy)){
+        if (hitchecker(redx, redy) && !vodkamode){
             //score = score + 3;
             lives = lives - 1;
             if (lives == 0){
@@ -147,15 +177,17 @@ public class game_carlosfly extends View{
 
         if (score > 27){
             redx2 = redx2 - redspeed2;
-            if (hitchecker(redx2, redy2)){
-                //score = score + 3;
-                lives = lives - 1;
-                if (lives == 0){
-                    Toast.makeText(getContext(), "Game Over", Toast.LENGTH_LONG).show();
-                    Intent gameover = new Intent(getContext(), game_over.class);
-                    gameover.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    gameover.putExtra("score", score);
-                    getContext().startActivity(gameover);
+            if (hitchecker(redx2, redy2) && !vodkamode){
+                if (!vodkamode) {
+                    //score = score + 3;
+                    lives = lives - 1;
+                    if (lives == 0) {
+                        Toast.makeText(getContext(), "Game Over", Toast.LENGTH_LONG).show();
+                        Intent gameover = new Intent(getContext(), game_over.class);
+                        gameover.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        gameover.putExtra("score", score);
+                        getContext().startActivity(gameover);
+                    }
                 }
                 redx2 = -100;
             }
@@ -165,8 +197,50 @@ public class game_carlosfly extends View{
             }
             canvas.drawBitmap(light2, redx2 ,redy2, null);
         }
-
         canvas.drawBitmap(light, redx, redy, null);
+
+        if (((wasserx > -500) || (Math.random() < 0.0016)) && score > 55){
+            wasserx = wasserx - wasserspeed;
+            if (hitchecker(wasserx, wassery)){
+                //score = score + 3;
+                if (!vodkamode){
+                    lives = 0;
+                    Toast.makeText(getContext(), "Game Over", Toast.LENGTH_LONG).show();
+                    Intent gameover = new Intent(getContext(), game_over.class);
+                    gameover.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    gameover.putExtra("score", score);
+                    getContext().startActivity(gameover);
+                }
+                wasserx = -500;
+            }
+            if (wasserx <= -500){
+                wasserx = width + 21;
+                wassery = (int) Math.floor(Math.random() * (maxcY-mincY)) + mincY;
+            }
+            if (wasserx<0){
+                wasserx = -500;
+            }
+            canvas.drawBitmap(wasser, wasserx, wassery, null);
+        }
+
+        if (((vodkax > -500) || (Math.random() < 0.001)) && !vodkamode){
+            vodkax = vodkax - vodkaspeed;
+            if (hitchecker(vodkax, vodkay)){
+                //score = score + 3;
+                vodkamode = true;
+                Toast.makeText(getContext(), "Vodka E!!!", Toast.LENGTH_SHORT).show();
+                vodkax = -500;
+            }
+            if (vodkax <= -500){
+                vodkax = width + 21;
+                vodkay = (int) Math.floor(Math.random() * (maxcY-mincY)) + mincY;
+            }
+            if (vodkax<0){
+                vodkax = -500;
+            }
+            canvas.drawBitmap(vodka_e, vodkax, vodkay, null);
+        }
+
         canvas.drawText("Score: "+score, 20,60,score_paint);
 
         for (int i = 0; i<3; i++){
