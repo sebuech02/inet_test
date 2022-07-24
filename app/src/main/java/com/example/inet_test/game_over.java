@@ -19,7 +19,8 @@ public class game_over extends MainActivity implements View.OnClickListener {
     private TextView scoreboard, scores;
     private Button newgame, menu, send_score;
     private EditText name_score;
-    private ArrayList<stringinteger> besten = new ArrayList<stringinteger>();
+    private ArrayList<strintstr> besten = new ArrayList<strintstr>();
+    private int i;
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,7 @@ public class game_over extends MainActivity implements View.OnClickListener {
         name_score = (EditText) findViewById(R.id.name_score);
         StringBuilder builder = new StringBuilder();
         builder.append("GAME OVER"+System.lineSeparator()+"*************"+System.lineSeparator()+System.lineSeparator());
-        builder.append("Dein Score war eine: " + getIntent().getExtras().getInt("score"));
+        builder.append("Dein Score war eine: " + getIntent().getExtras().getInt("score")+System.lineSeparator()+"Gestorben durch "+getIntent().getExtras().getString("ursache"));
         scoreboard.setText(builder.toString());
         newgame.setOnClickListener(this);
         menu.setOnClickListener(this);
@@ -41,9 +42,11 @@ public class game_over extends MainActivity implements View.OnClickListener {
         besten = ranglisten_daten.get_scores();
         StringBuilder liste = new StringBuilder();
         //liste.append("test"+System.lineSeparator());
-        for (stringinteger e: besten){
-            liste.append(e.zahl+"   "+e.text);
+        i = 1;
+        for (strintstr e: besten){
+            liste.append(i+". "+e.text1+"   "+e.zahl+"   "+e.text2);
             liste.append(System.lineSeparator());
+            i = i + 1;
         }
         scores.setText(liste.toString());
     }
@@ -70,6 +73,7 @@ public class game_over extends MainActivity implements View.OnClickListener {
         build.append("<score>"+System.lineSeparator() +
                 "        <name>"+name_score.getText()+"</name>"+System.lineSeparator() +
                 "        <punkte>"+getIntent().getExtras().getInt("score")+"</punkte>"+System.lineSeparator() +
+                "        <ursche>"+getIntent().getExtras().getString("ursache")+"</ursache>"+System.lineSeparator() +
                 "    </score>");
         String message = build.toString();
         String mail = "sebastian.buechler@tutanota.de";

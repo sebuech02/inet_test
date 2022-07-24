@@ -3,6 +3,7 @@ package com.example.inet_test;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     final ArrayList<stringstring> nhaus = new ArrayList<stringstring>();
     final ArrayList<stringinteger> bier = new ArrayList<stringinteger>();
     final ArrayList<String> misc = new ArrayList<String>();
-    final ArrayList<stringinteger> score = new ArrayList<stringinteger>();
+    final ArrayList<strintstr> score = new ArrayList<strintstr>();
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 stringstring current_nhaus = null;
                 stringinteger current_bier = null;
                 String current_misc = null;
-                stringinteger current_scores = null;
+                strintstr current_scores = null;
             try {
                 Document doc = Jsoup.connect("https://raw.githubusercontent.com/sebuech02/kegliege_xml/main/data.xml").get();
                 Elements elemente = doc.select("spiel");
@@ -139,12 +140,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 Elements elemente6 = doc2.select("score");
                 for (Element element : elemente6){
-                    current_scores = new stringinteger();
+                    current_scores = new strintstr();
                     String name2=element.select("name").text();
                     String punkte=element.select("punkte").text();
+                    String name3 = element.select("ursache").text();
                     int punkt=Integer.parseInt(punkte);
-                    current_scores.text=name2;
+                    current_scores.text1=name2;
                     current_scores.zahl=punkt;
+                    current_scores.text2=name3;
                     score.add(current_scores);
                 }
                 ranglisten_daten.set_prangliste(rangliste);
@@ -155,6 +158,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 ranglisten_daten.set_misc(misc);
                 ranglisten_daten.set_scores(score);
             } catch(IOException e){
+                startActivity(new Intent(MainActivity.this, main_game.class));
                 Toast.makeText(getApplicationContext(),"ERROR, keine Spiele", Toast.LENGTH_LONG).show();
             }
             runOnUiThread(new Runnable() {

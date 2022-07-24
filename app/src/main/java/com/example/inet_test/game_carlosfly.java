@@ -18,6 +18,7 @@ public class game_carlosfly extends View{
     private Bitmap background_img;
     private Bitmap carlos[] = new Bitmap[2];
     private Bitmap live[] = new Bitmap[2];
+    private Bitmap pilger;
     private Bitmap bier, schnapps, light, light2, vodka_e, wasser;
     public int width, height;
     private int carlosX = 10;
@@ -39,6 +40,7 @@ public class game_carlosfly extends View{
     private Paint redpaint2 = new Paint();
     private int vodkax = -500, vodkay, vodkaspeed = 17;
     private int wasserx = -500, wassery, wasserspeed = 20;
+    private int pilgerx, pilgery, pilgerspeed = 16;
     private Paint score_paint = new Paint();
     private boolean touch = false;
 
@@ -66,6 +68,8 @@ public class game_carlosfly extends View{
         vodka_e = Bitmap.createScaledBitmap(vodka_e,width/10, height/10, false);
         wasser = BitmapFactory.decodeResource(getResources(), R.drawable.wasser);
         wasser = Bitmap.createScaledBitmap(wasser,width/10, height/10, false);
+        pilger = BitmapFactory.decodeResource(getResources(), R.drawable.pilger);
+        pilger = Bitmap.createScaledBitmap(pilger,width/10, height/10, false);
         yellowpaint.setColor(Color.YELLOW);
         yellowpaint.setAntiAlias(false);
         greenpaint.setColor(Color.GREEN);
@@ -157,6 +161,19 @@ public class game_carlosfly extends View{
         canvas.drawBitmap(bier, yellowx, yellowy, null);
         canvas.drawBitmap(schnapps, greenx, greeny, null);
 
+        if (score > 50){
+            pilgerx = pilgerx - pilgerspeed;
+            if (hitchecker(pilgerx, pilgery)){
+                score = score + 2;
+                pilgerx = -100;
+            }
+            if (pilgerx < 0){
+                pilgerx = width + 21;
+                pilgery = (int) Math.floor(Math.random() * (maxcY-mincY)) + mincY;
+            }
+            canvas.drawBitmap(pilger, pilgerx ,pilgery, null);
+        }
+
         redx = redx - redspeed;
         if (hitchecker(redx, redy) && !vodkamode){
             //score = score + 3;
@@ -166,6 +183,7 @@ public class game_carlosfly extends View{
                 Intent gameover = new Intent(getContext(), game_over.class);
                 gameover.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 gameover.putExtra("score", score);
+                gameover.putExtra("ursache", "Cola");
                 getContext().startActivity(gameover);
             }
             redx = -100;
@@ -174,8 +192,9 @@ public class game_carlosfly extends View{
             redx = width + 21;
             redy = (int) Math.floor(Math.random() * (maxcY-mincY)) + mincY;
         }
+        canvas.drawBitmap(light, redx, redy, null);
 
-        if (score > 27){
+        if (score > 40){
             redx2 = redx2 - redspeed2;
             if (hitchecker(redx2, redy2) && !vodkamode){
                 if (!vodkamode) {
@@ -186,6 +205,7 @@ public class game_carlosfly extends View{
                         Intent gameover = new Intent(getContext(), game_over.class);
                         gameover.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         gameover.putExtra("score", score);
+                        gameover.putExtra("ursache", "Cola");
                         getContext().startActivity(gameover);
                     }
                 }
@@ -197,9 +217,9 @@ public class game_carlosfly extends View{
             }
             canvas.drawBitmap(light2, redx2 ,redy2, null);
         }
-        canvas.drawBitmap(light, redx, redy, null);
 
-        if (((wasserx > -500) || (Math.random() < 0.0016)) && score > 55){
+
+        if (((wasserx > -500) || (Math.random() < 0.001)) && score > 60){
             wasserx = wasserx - wasserspeed;
             if (hitchecker(wasserx, wassery)){
                 //score = score + 3;
@@ -209,6 +229,7 @@ public class game_carlosfly extends View{
                     Intent gameover = new Intent(getContext(), game_over.class);
                     gameover.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     gameover.putExtra("score", score);
+                    gameover.putExtra("ursache", "Wasser");
                     getContext().startActivity(gameover);
                 }
                 wasserx = -500;
