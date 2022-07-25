@@ -10,17 +10,23 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.media.MediaPlayer;
+import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
+
 public class game_carlosfly extends View{
     private Bitmap background_img;
     private Bitmap carlos[] = new Bitmap[2];
     private Bitmap carlos_anpas[] = new Bitmap[2];
+    private Bitmap carlos1[] = new Bitmap[360];
+    private Bitmap carlos2[] = new Bitmap[360];
     private Bitmap live[] = new Bitmap[2];
     private Bitmap pilger;
+    private Bitmap majo;
     private Bitmap bier, schnapps, light, light2, vodka_e, wasser;
     public int width, height;
     private int carlosX = 10;
@@ -28,24 +34,32 @@ public class game_carlosfly extends View{
     private int carlosspeed;
     private boolean vodkamode = false;
     private boolean redc = true;
+    private boolean majomode = false;
 
     private int score, lives;
     private int counter;
 
+    private int majox=-500, majoy, majospeed=11;
     private int yellowx, yellowy, yellowspeed=7;
     private Paint yellowpaint = new Paint();
     private int greenx, greeny, greenspeed=10;
     private Paint greenpaint = new Paint();
     private int redx, redy, redspeed=13;
     private Paint redpaint = new Paint();
-    private int redx2, redy2, redspeed2=15;
+    private int redx2 = -500, redy2, redspeed2=15;
     private Paint redpaint2 = new Paint();
     private int vodkax = -500, vodkay, vodkaspeed = 17;
     private int wasserx = -500, wassery, wasserspeed = 20;
-    private int pilgerx, pilgery, pilgerspeed = 16;
+    private int pilgerx = -500, pilgery, pilgerspeed = 16;
     private Paint score_paint = new Paint();
     private boolean touch = false;
     private float speedfac1, speedfac2;
+    public MediaPlayer burp, burp2;
+    public MediaPlayer hit, hit2, hit3;
+    public MediaPlayer vode;
+    public MediaPlayer back;
+    public MediaPlayer schrei;
+    public MediaPlayer mexiko;
 
     public game_carlosfly(Context context) {
         super(context);
@@ -57,6 +71,14 @@ public class game_carlosfly extends View{
         carlos[0] = Bitmap.createScaledBitmap(carlos[0], width/10, height/10, false);
         carlos[1] = BitmapFactory.decodeResource(getResources(), R.drawable.bild1);
         carlos[1] = Bitmap.createScaledBitmap(carlos[1], width/10, height/10, false);
+        int zahler = 0;
+        while (zahler < 360){
+            carlos1[zahler] = RotateBitmap(carlos[0], zahler);
+            carlos2[zahler] = RotateBitmap(carlos[1], zahler);
+            zahler = zahler + 1;
+        }
+        majo = BitmapFactory.decodeResource(getResources(), R.drawable.majo);
+        majo = Bitmap.createScaledBitmap(majo, width/10, height/10, false);
         background_img = BitmapFactory.decodeResource(getResources(), R.drawable.sky);
         background_img = Bitmap.createScaledBitmap(background_img, width, height, false);
         bier = BitmapFactory.decodeResource(getResources(), R.drawable.bier);
@@ -95,6 +117,20 @@ public class game_carlosfly extends View{
         counter = 0;
         speedfac1 =(float) -3.5;
         speedfac2 =(float) 1.5;
+
+        burp = MediaPlayer.create(getContext(), R.raw.burp);
+        burp2 = MediaPlayer.create(getContext(), R.raw.burp2);
+        hit = MediaPlayer.create(getContext(), R.raw.hit);
+        hit2 = MediaPlayer.create(getContext(), R.raw.hit3);
+        hit3 = MediaPlayer.create(getContext(), R.raw.hit2);
+        vode = MediaPlayer.create(getContext(), R.raw.vode);
+        schrei = MediaPlayer.create(getContext(),R.raw.schrei);
+        mexiko = MediaPlayer.create(getContext(), R.raw.mex);
+        mexiko.isLooping();
+        back = MediaPlayer.create(getContext(), R.raw.back);
+        back.isLooping();
+        back.start();
+
     }
 
     @Override
@@ -117,23 +153,39 @@ public class game_carlosfly extends View{
         }
         carlosspeed = carlosspeed + 1;
         //Animation zu Carlos speed und ausrichtung einbauen
+        if (majomode && !vodkamode){
+            back.stop();
+            mexiko.start();
+        }
+        if (majomode){
+            speedfac1 =(float) -16.5;
+            speedfac2 =(float) 12;
+        }
         if (carlosspeed<0){
-            float temp = (float) ((Math.abs(carlosspeed))*(speedfac1));
-            carlos_anpas[0] = RotateBitmap(carlos[0], temp);
-            carlos_anpas[1] = RotateBitmap(carlos[1], temp);
+            int temp = (int) ((Math.abs(carlosspeed))*(speedfac1)+360);
+            carlos_anpas[0] = carlos1[(int)Math.floor(temp)%360];
+            carlos_anpas[1] = carlos2[(int)Math.floor(temp)%360];
             male_carlos(canvas,carlos_anpas);
         } else {
-            float temp = (float) (Math.abs(carlosspeed)*(speedfac2));
-            carlos_anpas[0] = RotateBitmap(carlos[0], temp);
-            carlos_anpas[1] = RotateBitmap(carlos[1], temp);
+            int temp = (int) (Math.abs(carlosspeed)*(speedfac2));
+            carlos_anpas[0] = carlos1[(int)Math.floor(temp)%360];
+            carlos_anpas[1] = carlos2[(int)Math.floor(temp)%360];
             male_carlos(canvas,carlos_anpas);
         }
 
 
 
 
-        if (counter>=420){
+        if (counter>=888){
             vodkamode = false;
+            vode.pause();
+            if (majomode){
+                mexiko.start();
+                back.stop();
+            } else{
+                back.start();
+            }
+
             counter  = 0;
         }
 
@@ -147,6 +199,7 @@ public class game_carlosfly extends View{
         yellowx = yellowx - yellowspeed;
 
         if (hitchecker(yellowx, yellowy)){
+            burp.start();
             score = score + 1;
             yellowx = -100;
         }
@@ -156,6 +209,7 @@ public class game_carlosfly extends View{
         }
         greenx = greenx - greenspeed;
         if (hitchecker(greenx, greeny)){
+            burp2.start();
             score = score + 3;
             greenx = -100;
         }
@@ -170,6 +224,7 @@ public class game_carlosfly extends View{
         if (score > 50){
             pilgerx = pilgerx - pilgerspeed;
             if (hitchecker(pilgerx, pilgery)){
+                burp.start();
                 score = score + 2;
                 pilgerx = -100;
             }
@@ -180,13 +235,39 @@ public class game_carlosfly extends View{
             canvas.drawBitmap(pilger, pilgerx ,pilgery, null);
         }
 
+        if (((majox > -500) || (Math.random() < 0.00005)) && !majomode){
+            majox = majox - majospeed;
+            if (hitchecker(majox, majoy)){
+                score = score + 22;
+                majomode = true;
+                schrei.start();
+                Toast.makeText(getContext(), "MAJONÄSE!!!", Toast.LENGTH_SHORT).show();
+                majox = -500;
+                if (lives<3) {
+                    lives = lives + 1;
+                }
+            }
+            if (majox <= -500 && !majomode){
+                majox = width + 21;
+                majoy = (int) Math.floor(Math.random() * (maxcY-mincY)) + mincY;
+            }
+            if (majox<-carlos[0].getWidth()){
+                majox = -500;
+            }
+            canvas.drawBitmap(majo, majox, majoy, null);
+        }
+
         redx = redx - redspeed;
         if (hitchecker(redx, redy) && !vodkamode){
             //score = score + 3;
+            hit.start();
             lives = lives - 1;
             if (lives == 0){
                 Toast.makeText(getContext(), "Game Over", Toast.LENGTH_LONG).show();
                 Intent gameover = new Intent(getContext(), game_over.class);
+                back.stop();
+                vode.stop();
+                mexiko.stop();
                 gameover.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 gameover.putExtra("score", score);
                 gameover.putExtra("ursache", "Cola");
@@ -206,9 +287,13 @@ public class game_carlosfly extends View{
                 if (!vodkamode) {
                     //score = score + 3;
                     lives = lives - 1;
+                    hit3.start();
                     if (lives == 0) {
                         Toast.makeText(getContext(), "Game Over", Toast.LENGTH_LONG).show();
                         Intent gameover = new Intent(getContext(), game_over.class);
+                        back.stop();
+                        mexiko.stop();
+                        vode.stop();
                         gameover.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         gameover.putExtra("score", score);
                         gameover.putExtra("ursache", "Cola");
@@ -225,14 +310,18 @@ public class game_carlosfly extends View{
         }
 
 
-        if (((wasserx > -500) || (Math.random() < 0.001)) && score > 60){
+        if (((wasserx > -500) || (Math.random() < 0.001)) && score > 60 || (((Math.random() < 0.002)) && score > 100)){
             wasserx = wasserx - wasserspeed;
             if (hitchecker(wasserx, wassery)){
                 //score = score + 3;
                 if (!vodkamode){
                     lives = 0;
+                    hit2.start();
                     Toast.makeText(getContext(), "Game Over", Toast.LENGTH_LONG).show();
                     Intent gameover = new Intent(getContext(), game_over.class);
+                    back.stop();
+                    mexiko.stop();
+                    vode.stop();
                     gameover.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     gameover.putExtra("score", score);
                     gameover.putExtra("ursache", "Wasser");
@@ -250,10 +339,13 @@ public class game_carlosfly extends View{
             canvas.drawBitmap(wasser, wasserx, wassery, null);
         }
 
-        if (((vodkax > -500) || (Math.random() < 0.0008)) && !vodkamode){
+        if (((vodkax > -500) || (Math.random() < 0.0003)) && !vodkamode){
             vodkax = vodkax - vodkaspeed;
             if (hitchecker(vodkax, vodkay)){
                 //score = score + 3;
+                back.pause();
+                mexiko.pause();
+                vode.start();
                 vodkamode = true;
                 Toast.makeText(getContext(), "Vodka E!!!", Toast.LENGTH_SHORT).show();
                 vodkax = -500;
@@ -322,4 +414,5 @@ public class game_carlosfly extends View{
             canvas.drawBitmap(penner[0], carlosX, carlosY, null);
         }
     }
+
 }

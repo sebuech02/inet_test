@@ -11,6 +11,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 
@@ -63,6 +64,7 @@ public class game_over extends MainActivity implements View.OnClickListener {
     public void onClick(View v){
         switch (v.getId()){
             case R.id.new_game:
+                Toast.makeText(this,"Lade Assets ...", Toast.LENGTH_LONG).show();
                 startActivity(new Intent(game_over.this, main_game.class));
                 break;
             case R.id.menu:
@@ -87,7 +89,7 @@ public class game_over extends MainActivity implements View.OnClickListener {
         build.append("<score>"+System.lineSeparator() +
                 "        <name>"+name_score.getText()+"</name>"+System.lineSeparator() +
                 "        <punkte>"+getIntent().getExtras().getInt("score")+"</punkte>"+System.lineSeparator() +
-                "        <ursche>"+getIntent().getExtras().getString("ursache")+"</ursache>"+System.lineSeparator() +
+                "        <ursache>"+getIntent().getExtras().getString("ursache")+"</ursache>"+System.lineSeparator() +
                 "    </score>");
         String message = build.toString();
         String mail = "sebastian.buechler@tutanota.de";
