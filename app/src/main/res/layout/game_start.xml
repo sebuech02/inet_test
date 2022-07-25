@@ -3,7 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background">
+    android:background="#000000"
+    android:backgroundTint="#000000">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -14,8 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
-        android:text="Sammel das Bier ein für Carlos"
-        android:textAlignment="center"
+        android:textSize="20dp"
         android:textColor="#ff0000" />
 
     <Button
@@ -26,7 +29,8 @@
         android:background="@android:color/transparent"
         android:text="Starte das spiel"
         android:textAlignment="center"
-        android:textColor="#ff0000"
-        android:textSize="44dp" />
+        android:textColor="#00ff00"
+        android:textSize="33dp" />
     </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.util.DisplayMetrics;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 public class game_carlosfly extends View{
     private Bitmap background_img;
     private Bitmap carlos[] = new Bitmap[2];
+    private Bitmap carlos_anpas[] = new Bitmap[2];
     private Bitmap live[] = new Bitmap[2];
     private Bitmap pilger;
     private Bitmap bier, schnapps, light, light2, vodka_e, wasser;
@@ -43,6 +45,7 @@ public class game_carlosfly extends View{
     private int pilgerx, pilgery, pilgerspeed = 16;
     private Paint score_paint = new Paint();
     private boolean touch = false;
+    private float speedfac1, speedfac2;
 
     public game_carlosfly(Context context) {
         super(context);
@@ -90,6 +93,8 @@ public class game_carlosfly extends View{
         score = 0;
         lives = 3;
         counter = 0;
+        speedfac1 =(float) -3.5;
+        speedfac2 =(float) 1.5;
     }
 
     @Override
@@ -107,25 +112,26 @@ public class game_carlosfly extends View{
             carlosY = mincY-3*carlos[0].getHeight();
         }
         if (carlosY > maxcY){
+            carlosspeed = 0;
             carlosY = maxcY;
         }
         carlosspeed = carlosspeed + 1;
         //Animation zu Carlos speed und ausrichtung einbauen
-
-        if (vodkamode){
-            counter = counter  + 1;
-            if (counter%12<7){
-                canvas.drawBitmap(carlos[1], carlosX, carlosY, null);
-                redc = false;
-            } else {
-                canvas.drawBitmap(carlos[0], carlosX, carlosY, null);
-                redc = true;
-            }
-
+        if (carlosspeed<0){
+            float temp = (float) ((Math.abs(carlosspeed))*(speedfac1));
+            carlos_anpas[0] = RotateBitmap(carlos[0], temp);
+            carlos_anpas[1] = RotateBitmap(carlos[1], temp);
+            male_carlos(canvas,carlos_anpas);
         } else {
-            redc = true;
-            canvas.drawBitmap(carlos[0], carlosX, carlosY, null);
+            float temp = (float) (Math.abs(carlosspeed)*(speedfac2));
+            carlos_anpas[0] = RotateBitmap(carlos[0], temp);
+            carlos_anpas[1] = RotateBitmap(carlos[1], temp);
+            male_carlos(canvas,carlos_anpas);
         }
+
+
+
+
         if (counter>=420){
             vodkamode = false;
             counter  = 0;
@@ -144,7 +150,7 @@ public class game_carlosfly extends View{
             score = score + 1;
             yellowx = -100;
         }
-        if (yellowx < 0){
+        if (yellowx < -carlos[0].getWidth()){
             yellowx = width + 21;
             yellowy = (int) Math.floor(Math.random() * (maxcY-mincY)) + mincY;
         }
@@ -153,7 +159,7 @@ public class game_carlosfly extends View{
             score = score + 3;
             greenx = -100;
         }
-        if (greenx < 0){
+        if (greenx < -carlos[0].getWidth()){
             greenx = width + 21;
             greeny = (int) Math.floor(Math.random() * (maxcY-mincY)) + mincY;
         }
@@ -167,7 +173,7 @@ public class game_carlosfly extends View{
                 score = score + 2;
                 pilgerx = -100;
             }
-            if (pilgerx < 0){
+            if (pilgerx < -carlos[0].getWidth()){
                 pilgerx = width + 21;
                 pilgery = (int) Math.floor(Math.random() * (maxcY-mincY)) + mincY;
             }
@@ -188,7 +194,7 @@ public class game_carlosfly extends View{
             }
             redx = -100;
         }
-        if (redx < 0){
+        if (redx < -carlos[0].getWidth()){
             redx = width + 21;
             redy = (int) Math.floor(Math.random() * (maxcY-mincY)) + mincY;
         }
@@ -211,7 +217,7 @@ public class game_carlosfly extends View{
                 }
                 redx2 = -100;
             }
-            if (redx2 < 0){
+            if (redx2 < -carlos[0].getWidth()){
                 redx2 = width + 21;
                 redy2 = (int) Math.floor(Math.random() * (maxcY-mincY)) + mincY;
             }
@@ -238,13 +244,13 @@ public class game_carlosfly extends View{
                 wasserx = width + 21;
                 wassery = (int) Math.floor(Math.random() * (maxcY-mincY)) + mincY;
             }
-            if (wasserx<0){
+            if (wasserx<-carlos[0].getWidth()){
                 wasserx = -500;
             }
             canvas.drawBitmap(wasser, wasserx, wassery, null);
         }
 
-        if (((vodkax > -500) || (Math.random() < 0.001)) && !vodkamode){
+        if (((vodkax > -500) || (Math.random() < 0.0008)) && !vodkamode){
             vodkax = vodkax - vodkaspeed;
             if (hitchecker(vodkax, vodkay)){
                 //score = score + 3;
@@ -256,7 +262,7 @@ public class game_carlosfly extends View{
                 vodkax = width + 21;
                 vodkay = (int) Math.floor(Math.random() * (maxcY-mincY)) + mincY;
             }
-            if (vodkax<0){
+            if (vodkax<-carlos[0].getWidth()){
                 vodkax = -500;
             }
             canvas.drawBitmap(vodka_e, vodkax, vodkay, null);
@@ -278,7 +284,7 @@ public class game_carlosfly extends View{
     }
 
     public boolean hitchecker(int x,int y){
-        if (carlosX < x && x < (carlosX + carlos[0].getWidth()) && carlosY-schnapps.getHeight() < y && y < (carlosY + carlos[0].getHeight())){
+        if (carlosX-schnapps.getWidth() < x && x < (carlosX + carlos[0].getWidth()) && carlosY-schnapps.getHeight() < y && y < (carlosY + carlos[0].getHeight())){
             return true;
         }
         return false;
@@ -291,5 +297,29 @@ public class game_carlosfly extends View{
             carlosspeed = -22;
         }
         return true;
+    }
+
+    public static Bitmap RotateBitmap(Bitmap source, float angle)
+    {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(angle);
+        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
+    }
+
+    public void male_carlos(Canvas canvas, Bitmap[] penner){
+        if (vodkamode){
+            counter = counter  + 1;
+            if (counter%12<7){
+                canvas.drawBitmap(penner[1], carlosX, carlosY, null);
+                redc = false;
+            } else {
+                canvas.drawBitmap(penner[0], carlosX, carlosY, null);
+                redc = true;
+            }
+
+        } else {
+            redc = true;
+            canvas.drawBitmap(penner[0], carlosX, carlosY, null);
+        }
     }
 }

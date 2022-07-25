@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.lang.annotation.ElementType;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private Button but1;
@@ -156,6 +157,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 ranglisten_daten.set_nhaus(nhaus);
                 ranglisten_daten.set_bier(bier);
                 ranglisten_daten.set_misc(misc);
+                Collections.sort(score, new strintstrComparator());
                 ranglisten_daten.set_scores(score);
             } catch(IOException e){
                 startActivity(new Intent(MainActivity.this, main_game.class));
