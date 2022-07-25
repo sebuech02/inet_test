@@ -20,11 +20,11 @@ Geplante/dran gedachte Features:
   - alle Daten auf SQL-server packen
   - Animationen und visuals
   - Spiele online sync mit erstellen
-  - Kegelspiel mit gameengine (Work in Progress)
   - (Server fehlt)
 *****************
 Fertige Features:
 
-  - online Strichliste für Bier bestellen, damit man dem Bierbesteller per knopfdruck klar machen kann was man möchte.
+  - online Strichliste für Bier bestellen, damit man dem Bierbesteller per knopfdruck klar machen kann was man möchte (Server tot).
+  - Kegelspiel mit gameengine (Work in Progress)
   - spiele einlesen aus xml (web-basiert) + rangliste einlesen 
     - hinzufügen von Spielen in der app. (benötigt noch manuelle Freigabe)
