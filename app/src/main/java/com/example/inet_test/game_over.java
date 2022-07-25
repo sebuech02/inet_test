@@ -51,13 +51,15 @@ public class game_over extends MainActivity implements View.OnClickListener {
         besten = ranglisten_daten.get_scores();
         StringBuilder liste = new StringBuilder();
         //liste.append("test"+System.lineSeparator());
-        i = 1;
-        for (strintstr e: besten){
-            liste.append(i+". "+e.text1+"   "+e.zahl+"   "+e.text2);
-            liste.append(System.lineSeparator());
-            i = i + 1;
+        if(besten != null) {
+            i = 1;
+            for (strintstr e : besten) {
+                liste.append(i + ". " + e.text1 + "   " + e.zahl + "   " + e.text2);
+                liste.append(System.lineSeparator());
+                i = i + 1;
+            }
+            scores.setText(liste.toString());
         }
-        scores.setText(liste.toString());
     }
 
     @Override
