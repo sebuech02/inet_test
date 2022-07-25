@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/krank">
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -8,7 +14,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#000000"
+    android:background="@android:color/transparent"
     android:backgroundTint="#000000">
 
     <TextView
@@ -24,15 +30,15 @@
         android:layout_height="wrap_content"
         android:text="Neuer Versuch"
         android:textSize="22dp"
-        android:textColor="#ffffff"
-        android:backgroundTint="#000000">
+        android:textColor="#00ff00"
+        android:background="@android:color/transparent">
     </Button>
     <Button
         android:id="@+id/menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#000000"
-        android:textColor="#ffffff"
+        android:background="@android:color/transparent"
+        android:textColor="#ff0000"
         android:textSize="22dp"
         android:text="Ende"/>
     <TextView
@@ -47,7 +53,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="#ffffff"
-        android:backgroundTint="#000000"
+        android:clickable="true"
+        android:background="@android:color/transparent"
         android:ems="10"
         android:textSize="22dp">
     <requestFocus />
@@ -56,17 +63,19 @@
         android:id="@+id/send_score"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#000000"
-        android:textColor="#ffffff"
+        android:background="@android:color/transparent"
+        android:textColor="#00ff00"
         android:textSize="22dp"
         android:text="Sende Score"/>
     <TextView
         android:id="@+id/scores"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#ffffff"
+        android:textColor="#0000ff"
+        android:background="@android:color/transparent"
         android:textSize="25dp">
     </TextView>
 
 </LinearLayout>
 </ScrollView>
+</LinearLayout>
