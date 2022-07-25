@@ -60,6 +60,13 @@
     <requestFocus />
     </EditText>
     <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:textColor="@android:color/transparent"
+        android:textSize="22dp"
+        android:text="Sende Score"/>
+    <Button
         android:id="@+id/send_score"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

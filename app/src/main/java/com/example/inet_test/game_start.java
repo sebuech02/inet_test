@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 
@@ -32,6 +33,7 @@ public class game_start  extends MainActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.game_start:
+                Toast.makeText(this, "Lade Assets ...", Toast.LENGTH_LONG).show();
                 startActivity(new Intent(game_start.this, main_game.class));
                 break;
             default:
