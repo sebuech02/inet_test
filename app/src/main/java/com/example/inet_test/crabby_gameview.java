@@ -19,6 +19,7 @@ public class crabby_gameview extends View{
     private Bitmap background_img;
     private int width, height;
     private Bitmap crab;
+    private float crabspeed = 0;
     private Bitmap pineapple;
     private Bitmap coconut;
     private Bitmap bananas;
@@ -61,6 +62,7 @@ public class crabby_gameview extends View{
             @Override
             public void onSensorChanged(SensorEvent event) {
                 input = event.values[1];
+                crabspeed = crabspeed + input/20;
             }
 
             @Override
@@ -93,13 +95,20 @@ public class crabby_gameview extends View{
         int mincX = crab.getWidth();
         int maxcX = height - 1*crab.getWidth();
 
-        crabX =(int) (crabX + input);
+        if (crabspeed>0){
+            crabspeed =(float) (crabspeed - 0.2);
+        }
+        if (crabspeed<0){
+            crabspeed =(float) (crabspeed + 0.2);
+        }
+
         if (crabX >width-crab.getWidth()){
             crabX = width-crab.getWidth();
         }
         if (crabX <0){
             crabX = 0;
         }
+        crabX =(int) (crabX + crabspeed);
 
         pineappleY = pineappleY - pineappleSpeed;
 
