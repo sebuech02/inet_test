@@ -23,8 +23,8 @@ public class crabby_splash extends MainActivity implements View.OnClickListener 
         build.append("CRABBY NIECKLAß"+System.lineSeparator());
         build.append("******************"+System.lineSeparator());
         build.append(System.lineSeparator());
-        build.append("In diesem Spiel muss Carlos möglichst betrunken werden, dafür stehen ihm Bier und Jägermeister zur Verfügung. Aufpassen muss er jedoch auf die Cola und das ekliege Wasser. Trinkt er zuviel davon, so muss Carlos leider ins Krankenhaus. Ab und zu gibt es noch die Chance auf Vodka-E, dann dreht Carlos durch und die Cola kann ihm nichtmehr wehtun."+System.lineSeparator());
-        build.append("Viel Erfolg Carlos möglichst betrunken zu machen!");
+        build.append("In diesem Spiel muss Niecklaß möglichst viele leckere Südfrüchte fressen, dafür steht ihm eine große Auswahl zur Verfügung. Aufpassen muss er jedoch auf die ungenießbaren Früchte. Isst er zuviel davon, so muss Dennemark leider ins Krankenhaus. Ab und zu gibt es noch die Chance auf **Placeholder**, dann dreht Niecklaß komplett durch und die bösen Früchte können ihm nichtmehr wehtun."+System.lineSeparator());
+        build.append("Viel Erfolg Niecklaß möglichst satt zu machen!");
         beschreibung.setText(build.toString());
         start_game.setOnClickListener(this);
     }
