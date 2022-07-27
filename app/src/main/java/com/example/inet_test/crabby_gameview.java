@@ -35,6 +35,7 @@ public class crabby_gameview extends View{
     private Paint pineapplePaint = new Paint();
 
     public MediaPlayer burp, burp2;
+    public MediaPlayer crabrave;
 
     public crabby_gameview(Context context) {
         super(context);
@@ -74,9 +75,11 @@ public class crabby_gameview extends View{
         crabY = height-2*crab.getHeight();
         crabX = (width-crab.getWidth())/2;
 
-        // Sounds
+        // Sounds und Musik
         burp = MediaPlayer.create(getContext(), R.raw.burp);
-
+        crabrave = MediaPlayer.create(getContext(), R.raw.crabrave);
+        crabrave.isLooping();
+        crabrave.start();
     }
 
     @Override
