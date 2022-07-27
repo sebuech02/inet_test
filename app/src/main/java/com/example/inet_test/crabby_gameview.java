@@ -62,7 +62,7 @@ public class crabby_gameview extends View{
             @Override
             public void onSensorChanged(SensorEvent event) {
                 input = event.values[1];
-                crabspeed = crabspeed + input/20;
+                crabspeed = crabspeed + input/30;
             }
 
             @Override
