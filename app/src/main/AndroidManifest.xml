@@ -47,6 +47,15 @@
         <activity android:name=".game_over"
             android:theme="@style/Theme.Inet_test2"
             android:screenOrientation="portrait" />
+        <activity android:name=".crabby_splash"
+            android:theme="@style/Theme.Inet_test2"
+            android:screenOrientation="landscape" />
+        <activity android:name=".crabby_main"
+            android:theme="@style/Theme.Inet_test2"
+            android:screenOrientation="landscape" />
+        <activity android:name=".crabby_over"
+            android:theme="@style/Theme.Inet_test2"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>
