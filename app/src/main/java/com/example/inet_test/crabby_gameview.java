@@ -93,7 +93,7 @@ public class crabby_gameview extends View{
 
         // This needs change
         int mincX = 0;
-        int maxcX = width - 1*crab.getWidth();
+        int maxcX = width-crab.getWidth();
 
         if (crabspeed>0){
             crabspeed =(float) (crabspeed - 0.2);
@@ -116,10 +116,11 @@ public class crabby_gameview extends View{
             burp.start();
             score = score + 1;
             pineappleY =  -2*pineapple.getHeight();
+            pineappleX = (int) Math.floor(Math.random() * (maxcX));
         }
         if (pineappleY > height+2*crab.getWidth()){
             pineappleY = -2*pineapple.getHeight();
-            pineappleX = (int) Math.floor(Math.random() * (maxcX-mincX)) + mincX;
+            pineappleX = (int) Math.floor(Math.random() * (maxcX));
         }
         canvas.drawBitmap(crab, crabX, crabY,null);
         canvas.drawBitmap(pineapple, pineappleX, pineappleY, null);
