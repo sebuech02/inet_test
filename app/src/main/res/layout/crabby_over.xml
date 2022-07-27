@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/krank">
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        >
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@android:color/transparent"
+            android:backgroundTint="#000000">
+
+            <TextView
+                android:id="@+id/scoreboard2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:textSize="25dp">
+            </TextView>
+            <Button
+                android:id="@+id/new_game2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Neuer Versuch"
+                android:textSize="22dp"
+                android:textColor="#00ff00"
+                android:background="@android:color/transparent">
+            </Button>
+            <Button
+                android:id="@+id/menu2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:textColor="#ff0000"
+                android:textSize="22dp"
+                android:text="Ende"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:text="Dein Name:"
+                android:background="#614203"
+                android:textSize="22dp"/>
+            <EditText
+                android:id="@+id/name_score2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:clickable="true"
+                android:background="@android:color/transparent"
+                android:ems="10"
+                android:textSize="22dp">
+                <requestFocus />
+            </EditText>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:textColor="@android:color/transparent"
+                android:textSize="22dp"
+                android:text="Sende Score"/>
+            <Button
+                android:id="@+id/send_score2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:textColor="#00ff00"
+                android:textSize="22dp"
+                android:text="Sende Score"/>
+            <TextView
+                android:id="@+id/scores2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#0000ff"
+                android:background="@android:color/transparent"
+                android:textSize="25dp">
+            </TextView>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
