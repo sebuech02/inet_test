@@ -42,8 +42,8 @@ public class crabby_gameview extends View{
         super(context);
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        height = displayMetrics.heightPixels;
-        width = displayMetrics.widthPixels;
+        height = displayMetrics.heightPixels+66;
+        width = displayMetrics.widthPixels+200;
 
         // Hintergrundbild
         background_img = BitmapFactory.decodeResource(getResources(), R.drawable.beach);
@@ -74,7 +74,7 @@ public class crabby_gameview extends View{
         //Hier wird das game Initialisiert, Assets laden und anzeigen.
         crab = BitmapFactory.decodeResource(getResources(), R.drawable.niklas_slav2);
         crab = Bitmap.createScaledBitmap(crab, width/10, height/10, false);
-        crabY = height-2*crab.getHeight();
+        crabY =(int) (height-1.3*crab.getHeight());
         crabX = (width-crab.getWidth())/2;
 
         // Sounds und Musik
