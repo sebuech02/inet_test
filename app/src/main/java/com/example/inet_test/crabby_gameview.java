@@ -6,8 +6,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.Typeface;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -16,6 +19,8 @@ import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.util.DisplayMetrics;
 import android.view.View;
+
+import androidx.core.content.ContextCompat;
 
 public class crabby_gameview extends View{
     private Bitmap background_img;
@@ -38,7 +43,9 @@ public class crabby_gameview extends View{
     private int duration = 66;
     private Paint score_paint = new Paint();
     private Bitmap live[] = new Bitmap[2];
-    private int score, lives, counter;
+    private int score, lives, counter=0;
+    private boolean gothit = false;
+    private Paint paint2 = new Paint();
 
     private int pineappleX, pineappleY, pineappleSpeed=7;
 
@@ -56,6 +63,8 @@ public class crabby_gameview extends View{
         // Hintergrundbild
         background_img = BitmapFactory.decodeResource(getResources(), R.drawable.beach);
         background_img = Bitmap.createScaledBitmap(background_img, width, height, false);
+        paint2.setColor(Color.RED);
+        paint2.setStyle(Paint.Style.FILL);
 
 
         // Die Früchte und andere Objekte
@@ -97,7 +106,7 @@ public class crabby_gameview extends View{
 
         // Sounds und Musik
         burp = MediaPlayer.create(getContext(), R.raw.burp);
-        crabrave = MediaPlayer.create(getContext(), R.raw.crabrave);
+        crabrave = MediaPlayer.create(getContext(), R.raw.crabrave_short);
         crabrave.isLooping();
         crabrave.start();
 
@@ -160,6 +169,8 @@ public class crabby_gameview extends View{
         if (hitchecker(pineappleX, pineappleY)){
             burp.start();
             score = score + 1;
+            // gothit für hitanimation als Test
+            gothit = true;
             pineappleY =  -2*pineapple.getHeight();
             pineappleX = (int) Math.floor(Math.random() * (maxcX));
         }
@@ -167,7 +178,19 @@ public class crabby_gameview extends View{
             pineappleY = -2*pineapple.getHeight();
             pineappleX = (int) Math.floor(Math.random() * (maxcX));
         }
-        canvas.drawBitmap(crab, crabX, crabY,null);
+        if (gothit) {
+            if (counter>44) {
+                counter = 0;
+                gothit = false;
+            } else {
+                counter = counter + 1;
+            }
+        } else {
+            counter = 0;
+        }
+        male_crab(canvas);
+        //canvas.drawBitmap(crab, crabX, crabY,null);
+
         canvas.drawBitmap(pineapple, pineappleX, pineappleY, null);
         //Hier findet das Spiel statt. Diese Funktion wird 66 mal pro sekunde aufgerufen
         canvas.drawText("Score: "+score, 20,60,score_paint);
@@ -197,5 +220,18 @@ public class crabby_gameview extends View{
         return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
     }
 
+    private void male_crab(Canvas canvas){
+        if (gothit){
+            Paint hitpaint = new Paint();
+            ColorFilter filter = new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.red), PorterDuff.Mode.SRC_IN);
+            hitpaint.setColorFilter(filter);
+            //crab flash red
+            canvas.drawBitmap(crab,crabX,crabY,hitpaint);
+            //Screen flash red
+            canvas.drawPaint(paint2);
+        }else {
+            canvas.drawBitmap(crab, crabX, crabY,null);
+        }
+    }
 
 }
