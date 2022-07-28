@@ -41,7 +41,7 @@ public class crabby_gameview extends View{
     private int score, lives, counter;
 
     private int pineappleX, pineappleY, pineappleSpeed=7;
-    private Paint pineapplePaint = new Paint();
+
 
     public MediaPlayer burp, burp2;
     public MediaPlayer crabrave;
