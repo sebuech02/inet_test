@@ -2,6 +2,7 @@ package com.example.inet_test;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -19,6 +20,7 @@ import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 
@@ -47,8 +49,8 @@ public class crabby_gameview extends View{
     private boolean gothit = false;
     private Paint paint2 = new Paint();
 
+    private int coconutx, coconuty, coconutspeed=10;
     private int pineappleX, pineappleY, pineappleSpeed=7;
-
 
     public MediaPlayer burp, burp2;
     public MediaPlayer crabrave;
@@ -70,6 +72,8 @@ public class crabby_gameview extends View{
         // Die Früchte und andere Objekte
         pineapple = BitmapFactory.decodeResource(getResources(), R.drawable.ananas1);
         pineapple = Bitmap.createScaledBitmap(pineapple, width/10, height/10, false);
+        coconut = BitmapFactory.decodeResource(getResources(), R.drawable.kokosnuss);
+        coconut = Bitmap.createScaledBitmap(coconut, width/10, height/10, false);
         score_paint.setColor(Color.GREEN);
         score_paint.setTextSize(70);
         score_paint.setTypeface(Typeface.DEFAULT_BOLD);
@@ -107,7 +111,7 @@ public class crabby_gameview extends View{
         // Sounds und Musik
         burp = MediaPlayer.create(getContext(), R.raw.burp);
         crabrave = MediaPlayer.create(getContext(), R.raw.crabrave_short);
-        crabrave.isLooping();
+        crabrave.setLooping(true);
         crabrave.start();
 
     }
@@ -169,8 +173,6 @@ public class crabby_gameview extends View{
         if (hitchecker(pineappleX, pineappleY)){
             burp.start();
             score = score + 1;
-            // gothit für hitanimation als Test
-            gothit = true;
             pineappleY =  -2*pineapple.getHeight();
             pineappleX = (int) Math.floor(Math.random() * (maxcX));
         }
@@ -178,6 +180,22 @@ public class crabby_gameview extends View{
             pineappleY = -2*pineapple.getHeight();
             pineappleX = (int) Math.floor(Math.random() * (maxcX));
         }
+
+        coconuty = coconuty + coconutspeed;
+
+        if (hitchecker(coconutx, coconuty)){
+            burp.start();
+            lives = lives - 1;
+            // gothit für hitanimation als Test
+            gothit = true;
+            coconuty =  -2*coconut.getHeight();
+            coconutx = (int) Math.floor(Math.random() * (maxcX));
+        }
+        if (coconuty > height+2*crab.getWidth()){
+            coconuty = -2*coconut.getHeight();
+            coconutx = (int) Math.floor(Math.random() * (maxcX));
+        }
+
         if (gothit) {
             if (counter>44) {
                 counter = 0;
@@ -192,6 +210,7 @@ public class crabby_gameview extends View{
         //canvas.drawBitmap(crab, crabX, crabY,null);
 
         canvas.drawBitmap(pineapple, pineappleX, pineappleY, null);
+        canvas.drawBitmap(coconut,coconutx,coconuty,null);
         //Hier findet das Spiel statt. Diese Funktion wird 66 mal pro sekunde aufgerufen
         canvas.drawText("Score: "+score, 20,60,score_paint);
 
@@ -203,6 +222,19 @@ public class crabby_gameview extends View{
             } else {
                 canvas.drawBitmap(live[1],x,y,null);
             }
+        }
+        if (lives<=0){
+            //TODO Toast message fixen (ist der Activity Context kaputt?)
+            //Toast.makeText(getContext(), "Game Over", Toast.LENGTH_LONG).show();
+            //TODO Music fixen, lässt sich nicht beenden
+            //crabrave.stop();
+            //crabrave.release();
+            Intent gameover = new Intent(getContext(), game_over.class);
+            gameover.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            gameover.putExtra("score", score);
+            gameover.putExtra("ursache", "Tod");
+            //TODO gameover Activity öffnen, aktuell verbugt
+            //getContext().startActivity(gameover);
         }
     }
 
