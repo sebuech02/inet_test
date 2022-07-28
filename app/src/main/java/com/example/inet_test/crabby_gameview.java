@@ -106,7 +106,7 @@ public class crabby_gameview extends View{
 
         // Sounds und Musik
         burp = MediaPlayer.create(getContext(), R.raw.burp);
-        crabrave = MediaPlayer.create(getContext(), R.raw.crabrave);
+        crabrave = MediaPlayer.create(getContext(), R.raw.crabrave_short);
         crabrave.isLooping();
         crabrave.start();
 
