@@ -45,6 +45,7 @@ public class crabby_gameview extends View{
     private Bitmap live[] = new Bitmap[2];
     private int score, lives, counter=0;
     private boolean gothit = false;
+    private Paint paint2 = new Paint();
 
     private int pineappleX, pineappleY, pineappleSpeed=7;
 
@@ -62,6 +63,8 @@ public class crabby_gameview extends View{
         // Hintergrundbild
         background_img = BitmapFactory.decodeResource(getResources(), R.drawable.beach);
         background_img = Bitmap.createScaledBitmap(background_img, width, height, false);
+        paint2.setColor(Color.RED);
+        paint2.setStyle(Paint.Style.FILL);
 
 
         // Die Früchte und andere Objekte
@@ -222,7 +225,10 @@ public class crabby_gameview extends View{
             Paint hitpaint = new Paint();
             ColorFilter filter = new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.red), PorterDuff.Mode.SRC_IN);
             hitpaint.setColorFilter(filter);
+            //crab flash red
             canvas.drawBitmap(crab,crabX,crabY,hitpaint);
+            //Screen flash red
+            canvas.drawPaint(paint2);
         }else {
             canvas.drawBitmap(crab, crabX, crabY,null);
         }
