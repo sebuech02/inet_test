@@ -39,6 +39,7 @@ public class crabby_gameview extends View{
     private Paint score_paint = new Paint();
     private Bitmap live[] = new Bitmap[2];
     private int score, lives, counter;
+    private boolean gothit = false;
 
     private int pineappleX, pineappleY, pineappleSpeed=7;
 
@@ -167,7 +168,9 @@ public class crabby_gameview extends View{
             pineappleY = -2*pineapple.getHeight();
             pineappleX = (int) Math.floor(Math.random() * (maxcX));
         }
+
         canvas.drawBitmap(crab, crabX, crabY,null);
+
         canvas.drawBitmap(pineapple, pineappleX, pineappleY, null);
         //Hier findet das Spiel statt. Diese Funktion wird 66 mal pro sekunde aufgerufen
         canvas.drawText("Score: "+score, 20,60,score_paint);
@@ -197,5 +200,12 @@ public class crabby_gameview extends View{
         return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
     }
 
+    private void male_crab(Canvas canvas){
+        if (gothit){
+
+        }else {
+            canvas.drawBitmap(crab, crabX, crabY,null);
+        }
+    }
 
 }
