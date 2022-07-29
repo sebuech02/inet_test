@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.lang.annotation.ElementType;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -30,12 +31,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageButton but2;
     private ImageButton but3;
     private ProgressBar pgb;
+    private ArrayList<String> names= new ArrayList<String>();
     final ArrayList<spiel> Spiele= new ArrayList<spiel>();
     final ArrayList<stringinteger> rangliste = new ArrayList<stringinteger>();
     final ArrayList<stringstring> nhaus = new ArrayList<stringstring>();
     final ArrayList<stringinteger> bier = new ArrayList<stringinteger>();
     final ArrayList<String> misc = new ArrayList<String>();
     final ArrayList<strintstr> score = new ArrayList<strintstr>();
+    final ArrayList<strintstr> score_temp = new ArrayList<strintstr>();
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,7 +161,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 ranglisten_daten.set_bier(bier);
                 ranglisten_daten.set_misc(misc);
                 Collections.sort(score, new strintstrComparator());
-                ranglisten_daten.set_scores(score);
+                bereinige(score);
+                ranglisten_daten.set_scores(score_temp);
             } catch(Exception e){
                 //startActivity(new Intent(MainActivity.this, main_game.class));
                 //Toast.makeText(getApplicationContext(),"ERROR, keine Spiele", Toast.LENGTH_LONG).show();
@@ -170,5 +174,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             });
             }
         }).start();
+    }
+
+    public void bereinige(ArrayList<strintstr> score){
+        for (strintstr e: score){
+            if (!(names.contains(e.text1))){
+                names.add(e.text1);
+                score_temp.add(e);
+            }
+        }
+        //return score_temp;
     }
 }
