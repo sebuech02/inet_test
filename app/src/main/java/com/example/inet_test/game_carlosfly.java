@@ -69,6 +69,7 @@ public class game_carlosfly extends View{
     private boolean mustafarmode = false, mustafarinit = true;
     private int mustafarcounter=0;
     private Bitmap mustafarback;
+    private MediaPlayer choosen;
 
     public game_carlosfly(Context context) {
         super(context);
@@ -76,6 +77,7 @@ public class game_carlosfly extends View{
         ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         height = displayMetrics.heightPixels;
         width = displayMetrics.widthPixels;
+        choosen = MediaPlayer.create(getContext(),R.raw.mustafar_over);
         carlos[0] = BitmapFactory.decodeResource(getResources(), R.drawable.carlrot);
         carlos[0] = Bitmap.createScaledBitmap(carlos[0], width/10, height/10, false);
         carlos[1] = BitmapFactory.decodeResource(getResources(), R.drawable.bild1);
@@ -626,6 +628,7 @@ public class game_carlosfly extends View{
                     lives = lives - 1;
                     if (lives == 0) {
                         Toast.makeText(getContext(), "Game Over", Toast.LENGTH_LONG).show();
+                        choosen.start();
                         Intent gameover = new Intent(getContext(), game_over.class);
                         back.stop();
                         vode.stop();
@@ -652,6 +655,7 @@ public class game_carlosfly extends View{
                             hit3.start();
                             if (lives == 0) {
                                 Toast.makeText(getContext(), "Game Over", Toast.LENGTH_LONG).show();
+                                choosen.start();
                                 Intent gameover = new Intent(getContext(), game_over.class);
                                 back.stop();
                                 mexiko.stop();
@@ -679,6 +683,7 @@ public class game_carlosfly extends View{
                         if (!vodkamode) {
                             lives = 0;
                             hit2.start();
+                            choosen.start();
                             Toast.makeText(getContext(), "Game Over", Toast.LENGTH_LONG).show();
                             Intent gameover = new Intent(getContext(), game_over.class);
                             back.stop();
