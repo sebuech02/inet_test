@@ -331,7 +331,7 @@ public class game_carlosfly extends View{
                 }
 
 
-                if (((wasserx > -500) || (Math.random() < 0.001)) && score > 60 || (((Math.random() < 0.002)) && score > 100)) {
+                if (((wasserx > -500) || (Math.random() < 0.001)) && score > 60 || (((Math.random() < 0.002)) && score > 80)) {
                     wasserx = wasserx - wasserspeed;
                     if (hitchecker(wasserx, wassery)) {
                         //score = score + 3;
@@ -502,7 +502,7 @@ public class game_carlosfly extends View{
                 }
 
 
-                if (((wasserx > -500) || (Math.random() < 0.001)) && score > 160 || (((Math.random() < 0.002)) && score > 100)) {
+                if (((wasserx > -500) || (Math.random() < 0.001)) && score > 160 || (((Math.random() < 0.002)) && score > 180)) {
                     wasserx = wasserx - wasserspeed;
                     if (hitchecker(wasserx, wassery)) {
                         //score = score + 3;
@@ -583,7 +583,7 @@ public class game_carlosfly extends View{
                 canvas.drawBitmap(bier, yellowx, yellowy, null);
                 canvas.drawBitmap(schnapps, greenx, greeny, null);
 
-                if (score > 160) {
+                if (score > 260) {
                     pilgerx = pilgerx - pilgerspeed;
                     if (hitchecker(pilgerx, pilgery)) {
                         burp.start();
@@ -643,7 +643,7 @@ public class game_carlosfly extends View{
                 }
                 canvas.drawBitmap(light, redx, redy, null);
 
-                if (score > 150) {
+                if (score > 250) {
                     redx2 = redx2 - redspeed2;
                     if (hitchecker(redx2, redy2) && !vodkamode) {
                         if (!vodkamode) {
@@ -672,7 +672,7 @@ public class game_carlosfly extends View{
                 }
 
 
-                if (((wasserx > -500) || (Math.random() < 0.001)) && score > 160 || (((Math.random() < 0.002)) && score > 100)) {
+                if (((wasserx > -500) || (Math.random() < 0.001)) && score > 280 || (((Math.random() < 0.002)) && score > 300)) {
                     wasserx = wasserx - wasserspeed;
                     if (hitchecker(wasserx, wassery)) {
                         //score = score + 3;
