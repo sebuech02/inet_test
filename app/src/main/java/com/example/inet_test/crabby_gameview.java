@@ -56,6 +56,7 @@ public class crabby_gameview extends View{
     public MediaPlayer burp, burp2;
     public MediaPlayer explosion;
     public MediaPlayer crabrave;
+    private int mincX,maxcX;
 
     public crabby_gameview(Context context) {
         super(context);
@@ -109,6 +110,8 @@ public class crabby_gameview extends View{
         crabspeed = 0;
         lives = 3;
         drunkmode = false;
+        mincX = 0;
+        maxcX = width-crab.getWidth();
 
 
         // Sounds und Musik
@@ -123,10 +126,8 @@ public class crabby_gameview extends View{
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        height = displayMetrics.heightPixels;
-        width = displayMetrics.widthPixels;
+        height = canvas.getHeight();
+        width = canvas.getWidth();
         canvas.drawBitmap(background_img,0,0,null);
         if (drunkmode){
             if (framecounter>=duration){
@@ -150,8 +151,7 @@ public class crabby_gameview extends View{
         crabspeed = crabspeed + input/30 + störung;
 
         // This needs change
-        int mincX = 0;
-        int maxcX = width-crab.getWidth();
+
 
         if (crabspeed>0){
             crabspeed =(float) (crabspeed - 0.01);
@@ -258,8 +258,8 @@ public class crabby_gameview extends View{
             gameover.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             gameover.putExtra("score", score);
             gameover.putExtra("ursache", "Tod");
-            //TODO gameover Activity öffnen, aktuell verbugt
-            //getContext().startActivity(gameover);
+            //TODO gameover Activity öffnen, aktuell sehr langsam
+            getContext().startActivity(gameover);
         }
     }
 
