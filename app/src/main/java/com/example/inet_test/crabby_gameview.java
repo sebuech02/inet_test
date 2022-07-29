@@ -33,7 +33,7 @@ public class crabby_gameview extends View{
     private Bitmap pineapple;
     private Bitmap coconut;
     private Bitmap bananas;
-    private Bitmap meteor;
+    private Bitmap meteor1, meteor2, meteor3;
     private int crabX, crabY;
     private boolean einmal = true;
     private float input;
@@ -51,9 +51,12 @@ public class crabby_gameview extends View{
 
     private int coconutx, coconuty, coconutspeed=10;
     private int pineappleX, pineappleY, pineappleSpeed=7;
+    private int meteorX, meteorY, meteorSpeed=2;
 
     public MediaPlayer burp, burp2;
+    public MediaPlayer explosion;
     public MediaPlayer crabrave;
+    private int mincX,maxcX;
 
     public crabby_gameview(Context context) {
         super(context);
@@ -68,12 +71,13 @@ public class crabby_gameview extends View{
         paint2.setColor(Color.RED);
         paint2.setStyle(Paint.Style.FILL);
 
-
         // Die Früchte und andere Objekte
         pineapple = BitmapFactory.decodeResource(getResources(), R.drawable.ananas1);
         pineapple = Bitmap.createScaledBitmap(pineapple, width/10, height/10, false);
         coconut = BitmapFactory.decodeResource(getResources(), R.drawable.kokosnuss);
         coconut = Bitmap.createScaledBitmap(coconut, width/10, height/10, false);
+        meteor1 = BitmapFactory.decodeResource(getResources(), R.drawable.meteor1);
+        meteor1 = Bitmap.createScaledBitmap(meteor1, width/5, height/5, false);
         score_paint.setColor(Color.GREEN);
         score_paint.setTextSize(70);
         score_paint.setTypeface(Typeface.DEFAULT_BOLD);
@@ -106,10 +110,13 @@ public class crabby_gameview extends View{
         crabspeed = 0;
         lives = 3;
         drunkmode = false;
+        mincX = 0;
+        maxcX = width-crab.getWidth();
 
 
         // Sounds und Musik
         burp = MediaPlayer.create(getContext(), R.raw.burp);
+        explosion = MediaPlayer.create(getContext(), R.raw.explosion);
         crabrave = MediaPlayer.create(getContext(), R.raw.crabrave_short);
         crabrave.setLooping(true);
         crabrave.start();
@@ -119,10 +126,8 @@ public class crabby_gameview extends View{
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        height = displayMetrics.heightPixels;
-        width = displayMetrics.widthPixels;
+        height = canvas.getHeight();
+        width = canvas.getWidth();
         canvas.drawBitmap(background_img,0,0,null);
         if (drunkmode){
             if (framecounter>=duration){
@@ -146,8 +151,7 @@ public class crabby_gameview extends View{
         crabspeed = crabspeed + input/30 + störung;
 
         // This needs change
-        int mincX = 0;
-        int maxcX = width-crab.getWidth();
+
 
         if (crabspeed>0){
             crabspeed =(float) (crabspeed - 0.01);
@@ -168,8 +172,8 @@ public class crabby_gameview extends View{
             crabX = 0;
         }
 
+        // Ananas
         pineappleY = pineappleY + pineappleSpeed;
-
         if (hitchecker(pineappleX, pineappleY)){
             burp.start();
             score = score + 1;
@@ -181,8 +185,8 @@ public class crabby_gameview extends View{
             pineappleX = (int) Math.floor(Math.random() * (maxcX));
         }
 
+        // Kokosnuss
         coconuty = coconuty + coconutspeed;
-
         if (hitchecker(coconutx, coconuty)){
             burp.start();
             lives = lives - 1;
@@ -194,6 +198,27 @@ public class crabby_gameview extends View{
         if (coconuty > height+2*crab.getWidth()){
             coconuty = -2*coconut.getHeight();
             coconutx = (int) Math.floor(Math.random() * (maxcX));
+        }
+
+        // Meteor
+        if (((meteorX > -500) || (Math.random() < 0.5))){
+            meteorX = meteorX + meteorSpeed/2;
+            meteorY = meteorY + meteorSpeed;
+            if (hitchecker(meteorX, meteorY)){
+                score = 0;
+                explosion.start();
+                Toast.makeText(getContext(), "Die Dinos sind jetzt wegen dir ausgestorben!", Toast.LENGTH_LONG).show();
+                meteorY = -500;
+                lives = 0;
+            }
+            if (meteorY <= -500){
+                meteorY = 2*meteor1.getHeight();
+                meteorX = (int) Math.floor(Math.random() * (maxcX));
+            }
+            if (meteorY<-crab.getWidth()){
+                meteorY = -500;
+            }
+            canvas.drawBitmap(meteor1, meteorX, meteorY, null);
         }
 
         if (gothit) {
@@ -233,8 +258,8 @@ public class crabby_gameview extends View{
             gameover.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             gameover.putExtra("score", score);
             gameover.putExtra("ursache", "Tod");
-            //TODO gameover Activity öffnen, aktuell verbugt
-            //getContext().startActivity(gameover);
+            //TODO gameover Activity öffnen, aktuell sehr langsam
+            getContext().startActivity(gameover);
         }
     }
 

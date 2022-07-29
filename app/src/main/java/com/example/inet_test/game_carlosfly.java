@@ -11,7 +11,6 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
-import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
@@ -30,8 +29,8 @@ public class game_carlosfly extends View{
     private Bitmap bier, schnapps, light, light2, vodka_e, wasser;
     public int width, height;
     private int carlosX = 10;
-    private int carlosY;
-    private int carlosspeed;
+    private float carlosY;
+    private float carlosspeed;
     private boolean vodkamode = false;
     private boolean redc = true;
     private boolean majomode = false;
@@ -60,6 +59,17 @@ public class game_carlosfly extends View{
     public MediaPlayer back;
     public MediaPlayer schrei;
     public MediaPlayer mexiko;
+    private float gravity = 1, updraft = 22;
+    private int normalcounter=0;
+    private Bitmap meteor, feuerball;
+    private MediaPlayer feuerballhit;
+    private boolean weltallmode = false, weltallinit = true;
+    private int weltallcounter=0;
+    private Bitmap weltallback;
+    private boolean mustafarmode = false, mustafarinit = true;
+    private int mustafarcounter=0;
+    private Bitmap mustafarback;
+    private MediaPlayer choosen;
 
     public game_carlosfly(Context context) {
         super(context);
@@ -67,6 +77,7 @@ public class game_carlosfly extends View{
         ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         height = displayMetrics.heightPixels;
         width = displayMetrics.widthPixels;
+        choosen = MediaPlayer.create(getContext(),R.raw.mustafar_over);
         carlos[0] = BitmapFactory.decodeResource(getResources(), R.drawable.carlrot);
         carlos[0] = Bitmap.createScaledBitmap(carlos[0], width/10, height/10, false);
         carlos[1] = BitmapFactory.decodeResource(getResources(), R.drawable.bild1);
@@ -77,12 +88,21 @@ public class game_carlosfly extends View{
             carlos2[zahler] = RotateBitmap(carlos[1], zahler);
             zahler = zahler + 1;
         }
+        Toast.makeText(getContext(),"Fast geschaft",Toast.LENGTH_SHORT).show();
         majo = BitmapFactory.decodeResource(getResources(), R.drawable.majo);
         majo = Bitmap.createScaledBitmap(majo, width/10, height/10, false);
         background_img = BitmapFactory.decodeResource(getResources(), R.drawable.sky);
         background_img = Bitmap.createScaledBitmap(background_img, width, height, false);
+        weltallback = BitmapFactory.decodeResource(getResources(), R.drawable.all_ternative);
+        weltallback = Bitmap.createScaledBitmap(weltallback, width, height, false);
+        mustafarback = BitmapFactory.decodeResource(getResources(), R.drawable.mustafar);
+        mustafarback = Bitmap.createScaledBitmap(mustafarback, width, height, false);
         bier = BitmapFactory.decodeResource(getResources(), R.drawable.bier);
         bier = Bitmap.createScaledBitmap(bier, width/10, height/10, false);
+        meteor = BitmapFactory.decodeResource(getResources(), R.drawable.meteor);
+        meteor = Bitmap.createScaledBitmap(meteor, width/10, height/10, false);
+        feuerball = BitmapFactory.decodeResource(getResources(), R.drawable.feuerball);
+        feuerball = Bitmap.createScaledBitmap(feuerball, width/10, height/10, false);
         schnapps = BitmapFactory.decodeResource(getResources(), R.drawable.schnapps);
         schnapps = Bitmap.createScaledBitmap(schnapps, width/10, height/10, false);
         light = BitmapFactory.decodeResource(getResources(), R.drawable.light);
@@ -107,6 +127,7 @@ public class game_carlosfly extends View{
         score_paint.setTextSize(70);
         score_paint.setTypeface(Typeface.DEFAULT_BOLD);
         score_paint.setAntiAlias(true);
+        Toast.makeText(getContext(),"ja jetzt!",Toast.LENGTH_SHORT).show();
         live[0] = BitmapFactory.decodeResource(getResources(), R.drawable.heart);
         live[0] = Bitmap.createScaledBitmap(live[0], width/10, height/10, false);
         live[1] = BitmapFactory.decodeResource(getResources(), R.drawable.heart_broken);
@@ -125,6 +146,7 @@ public class game_carlosfly extends View{
         hit3 = MediaPlayer.create(getContext(), R.raw.hit2);
         vode = MediaPlayer.create(getContext(), R.raw.vode);
         schrei = MediaPlayer.create(getContext(),R.raw.schrei);
+        feuerballhit = MediaPlayer.create(getContext(),R.raw.feuerball);
         mexiko = MediaPlayer.create(getContext(), R.raw.mex);
         mexiko.isLooping();
         back = MediaPlayer.create(getContext(), R.raw.back);
@@ -151,7 +173,7 @@ public class game_carlosfly extends View{
             carlosspeed = 0;
             carlosY = maxcY;
         }
-        carlosspeed = carlosspeed + 1;
+        carlosspeed = (carlosspeed + gravity);
         //Animation zu Carlos speed und ausrichtung einbauen
         if (majomode && !vodkamode){
             back.stop();
@@ -195,169 +217,518 @@ public class game_carlosfly extends View{
         //} else {
         //    canvas.drawBitmap(carlos[0], carlosX, carlosY, null);
         //}
+        if (!weltallmode && !mustafarmode) {
+            if (normalcounter>333) {
+                yellowx = yellowx - yellowspeed;
 
-        yellowx = yellowx - yellowspeed;
-
-        if (hitchecker(yellowx, yellowy)){
-            burp.start();
-            score = score + 1;
-            yellowx = -100;
-        }
-        if (yellowx < -carlos[0].getWidth()){
-            yellowx = width + 21;
-            yellowy = (int) Math.floor(Math.random() * (maxcY-mincY)) + mincY;
-        }
-        greenx = greenx - greenspeed;
-        if (hitchecker(greenx, greeny)){
-            burp2.start();
-            score = score + 3;
-            greenx = -100;
-        }
-        if (greenx < -carlos[0].getWidth()){
-            greenx = width + 21;
-            greeny = (int) Math.floor(Math.random() * (maxcY-mincY)) + mincY;
-        }
-
-        canvas.drawBitmap(bier, yellowx, yellowy, null);
-        canvas.drawBitmap(schnapps, greenx, greeny, null);
-
-        if (score > 50){
-            pilgerx = pilgerx - pilgerspeed;
-            if (hitchecker(pilgerx, pilgery)){
-                burp.start();
-                score = score + 2;
-                pilgerx = -100;
-            }
-            if (pilgerx < -carlos[0].getWidth()){
-                pilgerx = width + 21;
-                pilgery = (int) Math.floor(Math.random() * (maxcY-mincY)) + mincY;
-            }
-            canvas.drawBitmap(pilger, pilgerx ,pilgery, null);
-        }
-
-        if (((majox > -500) || (Math.random() < 0.00005)) && !majomode){
-            majox = majox - majospeed;
-            if (hitchecker(majox, majoy)){
-                score = score + 22;
-                majomode = true;
-                schrei.start();
-                Toast.makeText(getContext(), "MAJONÄSE!!!", Toast.LENGTH_SHORT).show();
-                majox = -500;
-                if (lives<3) {
-                    lives = lives + 1;
+                if (hitchecker(yellowx, yellowy)) {
+                    burp.start();
+                    score = score + 1;
+                    yellowx = -100;
                 }
-            }
-            if (majox <= -500 && !majomode){
-                majox = width + 21;
-                majoy = (int) Math.floor(Math.random() * (maxcY-mincY)) + mincY;
-            }
-            if (majox<-carlos[0].getWidth()){
-                majox = -500;
-            }
-            canvas.drawBitmap(majo, majox, majoy, null);
-        }
+                if (yellowx < -carlos[0].getWidth()) {
+                    yellowx = width + 21;
+                    yellowy = (int) Math.floor(Math.random() * (maxcY - mincY)) + mincY;
+                }
+                greenx = greenx - greenspeed;
+                if (hitchecker(greenx, greeny)) {
+                    burp2.start();
+                    score = score + 3;
+                    greenx = -100;
+                }
+                if (greenx < -carlos[0].getWidth()) {
+                    greenx = width + 21;
+                    greeny = (int) Math.floor(Math.random() * (maxcY - mincY)) + mincY;
+                }
 
-        redx = redx - redspeed;
-        if (hitchecker(redx, redy) && !vodkamode){
-            //score = score + 3;
-            hit.start();
-            lives = lives - 1;
-            if (lives == 0){
-                Toast.makeText(getContext(), "Game Over", Toast.LENGTH_LONG).show();
-                Intent gameover = new Intent(getContext(), game_over.class);
-                back.stop();
-                vode.stop();
-                mexiko.stop();
-                gameover.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                gameover.putExtra("score", score);
-                gameover.putExtra("ursache", "Cola");
-                getContext().startActivity(gameover);
-            }
-            redx = -100;
-        }
-        if (redx < -carlos[0].getWidth()){
-            redx = width + 21;
-            redy = (int) Math.floor(Math.random() * (maxcY-mincY)) + mincY;
-        }
-        canvas.drawBitmap(light, redx, redy, null);
+                canvas.drawBitmap(bier, yellowx, yellowy, null);
+                canvas.drawBitmap(schnapps, greenx, greeny, null);
 
-        if (score > 40){
-            redx2 = redx2 - redspeed2;
-            if (hitchecker(redx2, redy2) && !vodkamode){
-                if (!vodkamode) {
+                if (score > 50) {
+                    pilgerx = pilgerx - pilgerspeed;
+                    if (hitchecker(pilgerx, pilgery)) {
+                        burp.start();
+                        score = score + 2;
+                        pilgerx = -100;
+                    }
+                    if (pilgerx < -carlos[0].getWidth()) {
+                        pilgerx = width + 21;
+                        pilgery = (int) Math.floor(Math.random() * (maxcY - mincY)) + mincY;
+                    }
+                    canvas.drawBitmap(pilger, pilgerx, pilgery, null);
+                }
+
+                if (((majox > -500) || (Math.random() < 0.00005)) && !majomode) {
+                    majox = majox - majospeed;
+                    if (hitchecker(majox, majoy)) {
+                        score = score + 22;
+                        majomode = true;
+                        schrei.start();
+                        Toast.makeText(getContext(), "MAJONÄSE!!!", Toast.LENGTH_SHORT).show();
+                        majox = -500;
+                        if (lives < 3) {
+                            lives = lives + 1;
+                        }
+                    }
+                    if (majox <= -500 && !majomode) {
+                        majox = width + 21;
+                        majoy = (int) Math.floor(Math.random() * (maxcY - mincY)) + mincY;
+                    }
+                    if (majox < -carlos[0].getWidth()) {
+                        majox = -500;
+                    }
+                    canvas.drawBitmap(majo, majox, majoy, null);
+                }
+
+                redx = redx - redspeed;
+                if (hitchecker(redx, redy) && !vodkamode) {
                     //score = score + 3;
+                    hit.start();
                     lives = lives - 1;
-                    hit3.start();
                     if (lives == 0) {
                         Toast.makeText(getContext(), "Game Over", Toast.LENGTH_LONG).show();
                         Intent gameover = new Intent(getContext(), game_over.class);
                         back.stop();
-                        mexiko.stop();
                         vode.stop();
+                        mexiko.stop();
                         gameover.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         gameover.putExtra("score", score);
                         gameover.putExtra("ursache", "Cola");
                         getContext().startActivity(gameover);
                     }
+                    redx = -100;
                 }
-                redx2 = -100;
+                if (redx < -carlos[0].getWidth()) {
+                    redx = width + 21;
+                    redy = (int) Math.floor(Math.random() * (maxcY - mincY)) + mincY;
+                }
+                canvas.drawBitmap(light, redx, redy, null);
+
+                if (score > 40) {
+                    redx2 = redx2 - redspeed2;
+                    if (hitchecker(redx2, redy2) && !vodkamode) {
+                        if (!vodkamode) {
+                            //score = score + 3;
+                            lives = lives - 1;
+                            hit3.start();
+                            if (lives == 0) {
+                                Toast.makeText(getContext(), "Game Over", Toast.LENGTH_LONG).show();
+                                Intent gameover = new Intent(getContext(), game_over.class);
+                                back.stop();
+                                mexiko.stop();
+                                vode.stop();
+                                gameover.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                gameover.putExtra("score", score);
+                                gameover.putExtra("ursache", "Cola");
+                                getContext().startActivity(gameover);
+                            }
+                        }
+                        redx2 = -100;
+                    }
+                    if (redx2 < -carlos[0].getWidth()) {
+                        redx2 = width + 21;
+                        redy2 = (int) Math.floor(Math.random() * (maxcY - mincY)) + mincY;
+                    }
+                    canvas.drawBitmap(light2, redx2, redy2, null);
+                }
+
+
+                if (((wasserx > -500) || (Math.random() < 0.001)) && score > 60 || (((Math.random() < 0.002)) && score > 80)) {
+                    wasserx = wasserx - wasserspeed;
+                    if (hitchecker(wasserx, wassery)) {
+                        //score = score + 3;
+                        if (!vodkamode) {
+                            lives = 0;
+                            hit2.start();
+                            Toast.makeText(getContext(), "Game Over", Toast.LENGTH_LONG).show();
+                            Intent gameover = new Intent(getContext(), game_over.class);
+                            back.stop();
+                            mexiko.stop();
+                            vode.stop();
+                            gameover.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            gameover.putExtra("score", score);
+                            gameover.putExtra("ursache", "Wasser");
+                            getContext().startActivity(gameover);
+                        }
+                        wasserx = -500;
+                    }
+                    if (wasserx <= -500) {
+                        wasserx = width + 21;
+                        wassery = (int) Math.floor(Math.random() * (maxcY - mincY)) + mincY;
+                    }
+                    if (wasserx < -carlos[0].getWidth()) {
+                        wasserx = -500;
+                    }
+                    canvas.drawBitmap(wasser, wasserx, wassery, null);
+                }
+
+                if (((vodkax > -500) || (Math.random() < 0.0003)) && !vodkamode) {
+                    vodkax = vodkax - vodkaspeed;
+                    if (hitchecker(vodkax, vodkay)) {
+                        //score = score + 3;
+                        back.pause();
+                        mexiko.pause();
+                        vode.start();
+                        vodkamode = true;
+                        Toast.makeText(getContext(), "Vodka E!!!", Toast.LENGTH_SHORT).show();
+                        vodkax = -500;
+                    }
+                    if (vodkax <= -500) {
+                        vodkax = width + 21;
+                        vodkay = (int) Math.floor(Math.random() * (maxcY - mincY)) + mincY;
+                    }
+                    if (vodkax < -carlos[0].getWidth()) {
+                        vodkax = -500;
+                    }
+                    canvas.drawBitmap(vodka_e, vodkax, vodkay, null);
+                }
+            } else {
+                normalcounter = normalcounter +1;
             }
-            if (redx2 < -carlos[0].getWidth()){
-                redx2 = width + 21;
-                redy2 = (int) Math.floor(Math.random() * (maxcY-mincY)) + mincY;
-            }
-            canvas.drawBitmap(light2, redx2 ,redy2, null);
         }
 
 
-        if (((wasserx > -500) || (Math.random() < 0.001)) && score > 60 || (((Math.random() < 0.002)) && score > 100)){
-            wasserx = wasserx - wasserspeed;
-            if (hitchecker(wasserx, wassery)){
-                //score = score + 3;
-                if (!vodkamode){
-                    lives = 0;
-                    hit2.start();
-                    Toast.makeText(getContext(), "Game Over", Toast.LENGTH_LONG).show();
-                    Intent gameover = new Intent(getContext(), game_over.class);
-                    back.stop();
-                    mexiko.stop();
-                    vode.stop();
-                    gameover.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    gameover.putExtra("score", score);
-                    gameover.putExtra("ursache", "Wasser");
-                    getContext().startActivity(gameover);
+        if (weltallmode){
+            if (weltallcounter>666){
+                yellowx = yellowx - yellowspeed;
+
+                if (hitchecker(yellowx, yellowy)) {
+                    burp.start();
+                    score = score + 1;
+                    yellowx = -100;
                 }
-                wasserx = -500;
+                if (yellowx < -carlos[0].getWidth()) {
+                    yellowx = width + 21;
+                    yellowy = (int) Math.floor(Math.random() * (maxcY - mincY)) + mincY;
+                }
+                greenx = greenx - greenspeed;
+                if (hitchecker(greenx, greeny)) {
+                    burp2.start();
+                    score = score + 3;
+                    greenx = -100;
+                }
+                if (greenx < -carlos[0].getWidth()) {
+                    greenx = width + 21;
+                    greeny = (int) Math.floor(Math.random() * (maxcY - mincY)) + mincY;
+                }
+
+                canvas.drawBitmap(bier, yellowx, yellowy, null);
+                canvas.drawBitmap(schnapps, greenx, greeny, null);
+
+                if (score > 160) {
+                    pilgerx = pilgerx - pilgerspeed;
+                    if (hitchecker(pilgerx, pilgery)) {
+                        burp.start();
+                        score = score + 2;
+                        pilgerx = -100;
+                    }
+                    if (pilgerx < -carlos[0].getWidth()) {
+                        pilgerx = width + 21;
+                        pilgery = (int) Math.floor(Math.random() * (maxcY - mincY)) + mincY;
+                    }
+                    canvas.drawBitmap(pilger, pilgerx, pilgery, null);
+                }
+
+                if (((majox > -500) || (Math.random() < 0.00005)) && !majomode) {
+                    majox = majox - majospeed;
+                    if (hitchecker(majox, majoy)) {
+                        score = score + 22;
+                        majomode = true;
+                        schrei.start();
+                        Toast.makeText(getContext(), "MAJONÄSE!!!", Toast.LENGTH_SHORT).show();
+                        majox = -500;
+                        if (lives < 3) {
+                            lives = lives + 1;
+                        }
+                    }
+                    if (majox <= -500 && !majomode) {
+                        majox = width + 21;
+                        majoy = (int) Math.floor(Math.random() * (maxcY - mincY)) + mincY;
+                    }
+                    if (majox < -carlos[0].getWidth()) {
+                        majox = -500;
+                    }
+                    canvas.drawBitmap(majo, majox, majoy, null);
+                }
+
+                redx = redx - redspeed;
+                if (hitchecker(redx, redy) && !vodkamode) {
+                    //score = score + 3;
+                    hit.start();
+                    lives = lives - 1;
+                    if (lives == 0) {
+                        Toast.makeText(getContext(), "Game Over", Toast.LENGTH_LONG).show();
+                        Intent gameover = new Intent(getContext(), game_over.class);
+                        back.stop();
+                        vode.stop();
+                        mexiko.stop();
+                        gameover.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        gameover.putExtra("score", score);
+                        gameover.putExtra("ursache", "Cola");
+                        getContext().startActivity(gameover);
+                    }
+                    redx = -100;
+                }
+                if (redx < -carlos[0].getWidth()) {
+                    redx = width + 21;
+                    redy = (int) Math.floor(Math.random() * (maxcY - mincY)) + mincY;
+                }
+                canvas.drawBitmap(light, redx, redy, null);
+
+                if (score > 150) {
+                    redx2 = redx2 - redspeed2;
+                    if (hitchecker(redx2, redy2) && !vodkamode) {
+                        if (!vodkamode) {
+                            //score = score + 3;
+                            lives = lives - 1;
+                            hit3.start();
+                            if (lives == 0) {
+                                Toast.makeText(getContext(), "Game Over", Toast.LENGTH_LONG).show();
+                                Intent gameover = new Intent(getContext(), game_over.class);
+                                back.stop();
+                                mexiko.stop();
+                                vode.stop();
+                                gameover.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                gameover.putExtra("score", score);
+                                gameover.putExtra("ursache", "Cola");
+                                getContext().startActivity(gameover);
+                            }
+                        }
+                        redx2 = -100;
+                    }
+                    if (redx2 < -carlos[0].getWidth()) {
+                        redx2 = width + 21;
+                        redy2 = (int) Math.floor(Math.random() * (maxcY - mincY)) + mincY;
+                    }
+                    canvas.drawBitmap(light2, redx2, redy2, null);
+                }
+
+
+                if (((wasserx > -500) || (Math.random() < 0.001)) && score > 160 || (((Math.random() < 0.002)) && score > 180)) {
+                    wasserx = wasserx - wasserspeed;
+                    if (hitchecker(wasserx, wassery)) {
+                        //score = score + 3;
+                        if (!vodkamode) {
+                            lives = 0;
+                            hit2.start();
+                            Toast.makeText(getContext(), "Game Over", Toast.LENGTH_LONG).show();
+                            Intent gameover = new Intent(getContext(), game_over.class);
+                            back.stop();
+                            mexiko.stop();
+                            vode.stop();
+                            gameover.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            gameover.putExtra("score", score);
+                            gameover.putExtra("ursache", "Wasser");
+                            getContext().startActivity(gameover);
+                        }
+                        wasserx = -500;
+                    }
+                    if (wasserx <= -500) {
+                        wasserx = width + 21;
+                        wassery = (int) Math.floor(Math.random() * (maxcY - mincY)) + mincY;
+                    }
+                    if (wasserx < -carlos[0].getWidth()) {
+                        wasserx = -500;
+                    }
+                    canvas.drawBitmap(wasser, wasserx, wassery, null);
+                }
+
+                if (((vodkax > -500) || (Math.random() < 0.0003)) && !vodkamode) {
+                    vodkax = vodkax - vodkaspeed;
+                    if (hitchecker(vodkax, vodkay)) {
+                        //score = score + 3;
+                        back.pause();
+                        mexiko.pause();
+                        vode.start();
+                        vodkamode = true;
+                        Toast.makeText(getContext(), "Vodka E!!!", Toast.LENGTH_SHORT).show();
+                        vodkax = -500;
+                    }
+                    if (vodkax <= -500) {
+                        vodkax = width + 21;
+                        vodkay = (int) Math.floor(Math.random() * (maxcY - mincY)) + mincY;
+                    }
+                    if (vodkax < -carlos[0].getWidth()) {
+                        vodkax = -500;
+                    }
+                    canvas.drawBitmap(vodka_e, vodkax, vodkay, null);
+                }
+            } else {
+                weltallcounter = weltallcounter + 1;
             }
-            if (wasserx <= -500){
-                wasserx = width + 21;
-                wassery = (int) Math.floor(Math.random() * (maxcY-mincY)) + mincY;
-            }
-            if (wasserx<-carlos[0].getWidth()){
-                wasserx = -500;
-            }
-            canvas.drawBitmap(wasser, wasserx, wassery, null);
         }
 
-        if (((vodkax > -500) || (Math.random() < 0.0003)) && !vodkamode){
-            vodkax = vodkax - vodkaspeed;
-            if (hitchecker(vodkax, vodkay)){
-                //score = score + 3;
-                back.pause();
-                mexiko.pause();
-                vode.start();
-                vodkamode = true;
-                Toast.makeText(getContext(), "Vodka E!!!", Toast.LENGTH_SHORT).show();
-                vodkax = -500;
+        if (mustafarmode){
+            if (mustafarcounter>666){
+                yellowx = yellowx - yellowspeed;
+
+                if (hitchecker(yellowx, yellowy)) {
+                    burp.start();
+                    score = score + 1;
+                    yellowx = -100;
+                }
+                if (yellowx < -carlos[0].getWidth()) {
+                    yellowx = width + 21;
+                    yellowy = (int) Math.floor(Math.random() * (maxcY - mincY)) + mincY;
+                }
+                greenx = greenx - greenspeed;
+                if (hitchecker(greenx, greeny)) {
+                    burp2.start();
+                    score = score + 3;
+                    greenx = -100;
+                }
+                if (greenx < -carlos[0].getWidth()) {
+                    greenx = width + 21;
+                    greeny = (int) Math.floor(Math.random() * (maxcY - mincY)) + mincY;
+                }
+
+                canvas.drawBitmap(bier, yellowx, yellowy, null);
+                canvas.drawBitmap(schnapps, greenx, greeny, null);
+
+                if (score > 260) {
+                    pilgerx = pilgerx - pilgerspeed;
+                    if (hitchecker(pilgerx, pilgery)) {
+                        burp.start();
+                        score = score + 2;
+                        pilgerx = -100;
+                    }
+                    if (pilgerx < -carlos[0].getWidth()) {
+                        pilgerx = width + 21;
+                        pilgery = (int) Math.floor(Math.random() * (maxcY - mincY)) + mincY;
+                    }
+                    canvas.drawBitmap(pilger, pilgerx, pilgery, null);
+                }
+
+                if (((majox > -500) || (Math.random() < 0.00005)) && !majomode) {
+                    majox = majox - majospeed;
+                    if (hitchecker(majox, majoy)) {
+                        score = score + 22;
+                        majomode = true;
+                        schrei.start();
+                        Toast.makeText(getContext(), "MAJONÄSE!!!", Toast.LENGTH_SHORT).show();
+                        majox = -500;
+                        if (lives < 3) {
+                            lives = lives + 1;
+                        }
+                    }
+                    if (majox <= -500 && !majomode) {
+                        majox = width + 21;
+                        majoy = (int) Math.floor(Math.random() * (maxcY - mincY)) + mincY;
+                    }
+                    if (majox < -carlos[0].getWidth()) {
+                        majox = -500;
+                    }
+                    canvas.drawBitmap(majo, majox, majoy, null);
+                }
+
+                redx = redx - redspeed;
+                if (hitchecker(redx, redy) && !vodkamode) {
+                    //score = score + 3;
+                    hit.start();
+                    lives = lives - 1;
+                    if (lives == 0) {
+                        Toast.makeText(getContext(), "Game Over", Toast.LENGTH_LONG).show();
+                        choosen.start();
+                        Intent gameover = new Intent(getContext(), game_over.class);
+                        back.stop();
+                        vode.stop();
+                        mexiko.stop();
+                        gameover.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        gameover.putExtra("score", score);
+                        gameover.putExtra("ursache", "Cola");
+                        getContext().startActivity(gameover);
+                    }
+                    redx = -100;
+                }
+                if (redx < -carlos[0].getWidth()) {
+                    redx = width + 21;
+                    redy = (int) Math.floor(Math.random() * (maxcY - mincY)) + mincY;
+                }
+                canvas.drawBitmap(light, redx, redy, null);
+
+                if (score > 250) {
+                    redx2 = redx2 - redspeed2;
+                    if (hitchecker(redx2, redy2) && !vodkamode) {
+                        if (!vodkamode) {
+                            //score = score + 3;
+                            lives = lives - 1;
+                            hit3.start();
+                            if (lives == 0) {
+                                Toast.makeText(getContext(), "Game Over", Toast.LENGTH_LONG).show();
+                                choosen.start();
+                                Intent gameover = new Intent(getContext(), game_over.class);
+                                back.stop();
+                                mexiko.stop();
+                                vode.stop();
+                                gameover.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                gameover.putExtra("score", score);
+                                gameover.putExtra("ursache", "Cola");
+                                getContext().startActivity(gameover);
+                            }
+                        }
+                        redx2 = -100;
+                    }
+                    if (redx2 < -carlos[0].getWidth()) {
+                        redx2 = width + 21;
+                        redy2 = (int) Math.floor(Math.random() * (maxcY - mincY)) + mincY;
+                    }
+                    canvas.drawBitmap(light2, redx2, redy2, null);
+                }
+
+
+                if (((wasserx > -500) || (Math.random() < 0.001)) && score > 280 || (((Math.random() < 0.002)) && score > 300)) {
+                    wasserx = wasserx - wasserspeed;
+                    if (hitchecker(wasserx, wassery)) {
+                        //score = score + 3;
+                        if (!vodkamode) {
+                            lives = 0;
+                            hit2.start();
+                            choosen.start();
+                            Toast.makeText(getContext(), "Game Over", Toast.LENGTH_LONG).show();
+                            Intent gameover = new Intent(getContext(), game_over.class);
+                            back.stop();
+                            mexiko.stop();
+                            vode.stop();
+                            gameover.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            gameover.putExtra("score", score);
+                            gameover.putExtra("ursache", "Wasser");
+                            getContext().startActivity(gameover);
+                        }
+                        wasserx = -500;
+                    }
+                    if (wasserx <= -500) {
+                        wasserx = width + 21;
+                        wassery = (int) Math.floor(Math.random() * (maxcY - mincY)) + mincY;
+                    }
+                    if (wasserx < -carlos[0].getWidth()) {
+                        wasserx = -500;
+                    }
+                    canvas.drawBitmap(wasser, wasserx, wassery, null);
+                }
+
+                if (((vodkax > -500) || (Math.random() < 0.0003)) && !vodkamode) {
+                    vodkax = vodkax - vodkaspeed;
+                    if (hitchecker(vodkax, vodkay)) {
+                        //score = score + 3;
+                        back.pause();
+                        mexiko.pause();
+                        vode.start();
+                        vodkamode = true;
+                        Toast.makeText(getContext(), "Vodka E!!!", Toast.LENGTH_SHORT).show();
+                        vodkax = -500;
+                    }
+                    if (vodkax <= -500) {
+                        vodkax = width + 21;
+                        vodkay = (int) Math.floor(Math.random() * (maxcY - mincY)) + mincY;
+                    }
+                    if (vodkax < -carlos[0].getWidth()) {
+                        vodkax = -500;
+                    }
+                    canvas.drawBitmap(vodka_e, vodkax, vodkay, null);
+                }
+            } else {
+                mustafarcounter = mustafarcounter + 1;
             }
-            if (vodkax <= -500){
-                vodkax = width + 21;
-                vodkay = (int) Math.floor(Math.random() * (maxcY-mincY)) + mincY;
-            }
-            if (vodkax<-carlos[0].getWidth()){
-                vodkax = -500;
-            }
-            canvas.drawBitmap(vodka_e, vodkax, vodkay, null);
         }
 
         canvas.drawText("Score: "+score, 20,60,score_paint);
@@ -371,8 +742,20 @@ public class game_carlosfly extends View{
                 canvas.drawBitmap(live[1],x,y,null);
             }
         }
-
-
+        if (score>99){
+            if (weltallinit){
+                initweltall();
+                weltallinit = false;
+                weltallmode = true;
+            }
+        }
+        if (score>199){
+            if (mustafarinit){
+                initmustafar();
+                mustafarinit = false;
+                mustafarmode = true;
+            }
+        }
     }
 
     public boolean hitchecker(int x,int y){
@@ -386,9 +769,53 @@ public class game_carlosfly extends View{
     public boolean onTouchEvent(MotionEvent event){
         if (event.getAction() == MotionEvent.ACTION_DOWN){
             touch = true;
-            carlosspeed = -22;
+            carlosspeed = -updraft;
         }
         return true;
+    }
+
+    public void initweltall(){
+        gravity =(float) 0.15;
+        updraft = 12;
+        background_img = weltallback;
+        yellowx = -100;
+        greenx =-100;
+        redx=-100;
+        redx2=-500;
+        pilgerx=-500;
+        wasserx=-500;
+        light = meteor;
+        light2 = meteor;
+        yellowspeed=yellowspeed-2;
+        greenspeed=greenspeed-2;
+        redspeed=redspeed-3;
+        redspeed2=redspeed2-2;
+        pilgerspeed=pilgerspeed-2;
+        wasserspeed=wasserspeed-3;
+    }
+
+    public void initmustafar(){
+        mustafarcounter = 0;
+        weltallmode = false;
+        gravity =(float) 3.5;
+        updraft = 33;
+        background_img = mustafarback;
+        yellowx = -100;
+        greenx =-100;
+        redx=-100;
+        redx2=-500;
+        pilgerx=-500;
+        wasserx=-500;
+        light = feuerball;
+        light2 = feuerball;
+        yellowspeed=yellowspeed+4;
+        greenspeed=greenspeed+4;
+        redspeed=redspeed+6;
+        redspeed2=redspeed2+6;
+        pilgerspeed=pilgerspeed+4;
+        wasserspeed=wasserspeed+6;
+        burp = feuerballhit;
+        burp2 = feuerballhit;
     }
 
     public static Bitmap RotateBitmap(Bitmap source, float angle)
