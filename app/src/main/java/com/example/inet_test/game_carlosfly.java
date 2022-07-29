@@ -226,7 +226,7 @@ public class game_carlosfly extends View{
                     score = score + 1;
                     yellowx = -100;
                 }
-                if (yellowx < -carlos[0].getWidth()) {
+                if (yellowx < -1.5*carlos[0].getWidth()) {
                     yellowx = width + 21;
                     yellowy = (int) Math.floor(Math.random() * (maxcY - mincY)) + mincY;
                 }
