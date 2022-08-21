@@ -1,5 +1,6 @@
 package com.example.inet_test;
 
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -66,25 +67,31 @@ public class crabby_gameview extends View{
         width = displayMetrics.widthPixels+200;
 
         // Hintergrundbild
-        background_img = BitmapFactory.decodeResource(getResources(), R.drawable.beach);
+        background_img = BitmapFactory.decodeResource(getResources(), R.drawable.placeholder);
+        //background_img = BitmapFactory.decodeResource(getResources(), R.drawable.beach);
         background_img = Bitmap.createScaledBitmap(background_img, width, height, false);
         paint2.setColor(Color.RED);
         paint2.setStyle(Paint.Style.FILL);
 
         // Die Früchte und andere Objekte
-        pineapple = BitmapFactory.decodeResource(getResources(), R.drawable.ananas1);
+        pineapple = BitmapFactory.decodeResource(getResources(), R.drawable.placeholder);
+        //pineapple = BitmapFactory.decodeResource(getResources(), R.drawable.ananas1);
         pineapple = Bitmap.createScaledBitmap(pineapple, width/10, height/10, false);
-        coconut = BitmapFactory.decodeResource(getResources(), R.drawable.kokosnuss);
+        coconut = BitmapFactory.decodeResource(getResources(), R.drawable.placeholder);
+        //coconut = BitmapFactory.decodeResource(getResources(), R.drawable.kokosnuss);
         coconut = Bitmap.createScaledBitmap(coconut, width/10, height/10, false);
-        meteor1 = BitmapFactory.decodeResource(getResources(), R.drawable.meteor1);
+        meteor1 = BitmapFactory.decodeResource(getResources(), R.drawable.placeholder);
+        //meteor1 = BitmapFactory.decodeResource(getResources(), R.drawable.meteor1);
         meteor1 = Bitmap.createScaledBitmap(meteor1, width/5, height/5, false);
         score_paint.setColor(Color.GREEN);
         score_paint.setTextSize(70);
         score_paint.setTypeface(Typeface.DEFAULT_BOLD);
         score_paint.setAntiAlias(true);
-        live[0] = BitmapFactory.decodeResource(getResources(), R.drawable.heart);
+        live[0] = BitmapFactory.decodeResource(getResources(), R.drawable.placeholder);
+        //live[0] = BitmapFactory.decodeResource(getResources(), R.drawable.heart);
         live[0] = Bitmap.createScaledBitmap(live[0], width/10, height/10, false);
-        live[1] = BitmapFactory.decodeResource(getResources(), R.drawable.heart_broken);
+        live[1] = BitmapFactory.decodeResource(getResources(), R.drawable.placeholder);
+        //live[1] = BitmapFactory.decodeResource(getResources(), R.drawable.heart_broken);
         live[1] = Bitmap.createScaledBitmap(live[1], width/10, height/10, false);
 
         // Bewegungssteuerung
@@ -103,7 +110,8 @@ public class crabby_gameview extends View{
         }, sensor, SensorManager.SENSOR_DELAY_FASTEST);
 
         //Hier wird das game Initialisiert, Assets laden und anzeigen.
-        crab = BitmapFactory.decodeResource(getResources(), R.drawable.niklas_slav2);
+        crab = BitmapFactory.decodeResource(getResources(), R.drawable.placeholder);
+        //crab = BitmapFactory.decodeResource(getResources(), R.drawable.niklas_slav2);
         crab = Bitmap.createScaledBitmap(crab, width/10, height/10, false);
         crabY =(int) (height-1.3*crab.getHeight());
         crabX = (width-crab.getWidth())/2;
@@ -115,9 +123,12 @@ public class crabby_gameview extends View{
 
 
         // Sounds und Musik
-        burp = MediaPlayer.create(getContext(), R.raw.burp);
-        explosion = MediaPlayer.create(getContext(), R.raw.explosion);
-        crabrave = MediaPlayer.create(getContext(), R.raw.crabrave_short);
+        burp = MediaPlayer.create(getContext(), R.raw.hit2);
+        explosion = MediaPlayer.create(getContext(), R.raw.hit2);
+        crabrave = MediaPlayer.create(getContext(), R.raw.hit2);
+        //burp = MediaPlayer.create(getContext(), R.raw.burp);
+        //explosion = MediaPlayer.create(getContext(), R.raw.explosion);
+        //crabrave = MediaPlayer.create(getContext(), R.raw.crabrave_short);
         crabrave.setLooping(true);
         crabrave.start();
 
