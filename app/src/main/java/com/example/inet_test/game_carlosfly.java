@@ -163,6 +163,7 @@ public class game_carlosfly extends View{
         height = canvas.getHeight();
         canvas.drawBitmap(background_img,0,0,null);
 
+// Mediaplayer fix, falls er nicht läuft wird er neu angestoßen
         if (vodkamode){
             if (!vode.isPlaying()){
                 vode.setLooping(true);
@@ -313,7 +314,15 @@ public class game_carlosfly extends View{
                         mexiko.stop();
                         gameover.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         gameover.putExtra("score", score);
-                        gameover.putExtra("ursache", "Cola");
+                        if (score>99){
+                            if (score>199){
+                                gameover.putExtra("ursache", "Feuerball");
+                            } else {
+                                gameover.putExtra("ursache", "Meteor");
+                            }
+                        } else{
+                            gameover.putExtra("ursache", "Cola");
+                        }
                         getContext().startActivity(gameover);
                     }
                     redx = -100;
@@ -339,7 +348,16 @@ public class game_carlosfly extends View{
                                 vode.stop();
                                 gameover.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 gameover.putExtra("score", score);
-                                gameover.putExtra("ursache", "Cola");
+                                if (score>99){
+                                    if (score>199){
+                                        gameover.putExtra("ursache", "Feuerball");
+                                    } else {
+                                        gameover.putExtra("ursache", "Meteor");
+                                    }
+                                } else{
+                                    gameover.putExtra("ursache", "Cola");
+                                }
+                                //gameover.putExtra("ursache", "Cola");
                                 getContext().startActivity(gameover);
                             }
                         }
@@ -484,7 +502,16 @@ public class game_carlosfly extends View{
                         mexiko.stop();
                         gameover.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         gameover.putExtra("score", score);
-                        gameover.putExtra("ursache", "Cola");
+                        if (score>99){
+                            if (score>199){
+                                gameover.putExtra("ursache", "Feuerball");
+                            } else {
+                                gameover.putExtra("ursache", "Meteor");
+                            }
+                        } else{
+                            gameover.putExtra("ursache", "Cola");
+                        }
+                        //gameover.putExtra("ursache", "Cola");
                         getContext().startActivity(gameover);
                     }
                     redx = -100;
@@ -510,7 +537,16 @@ public class game_carlosfly extends View{
                                 vode.stop();
                                 gameover.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 gameover.putExtra("score", score);
-                                gameover.putExtra("ursache", "Cola");
+                                if (score>99){
+                                    if (score>199){
+                                        gameover.putExtra("ursache", "Feuerball");
+                                    } else {
+                                        gameover.putExtra("ursache", "Meteor");
+                                    }
+                                } else{
+                                    gameover.putExtra("ursache", "Cola");
+                                }
+                                //gameover.putExtra("ursache", "Cola");
                                 getContext().startActivity(gameover);
                             }
                         }
@@ -655,7 +691,16 @@ public class game_carlosfly extends View{
                         mexiko.stop();
                         gameover.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         gameover.putExtra("score", score);
-                        gameover.putExtra("ursache", "Cola");
+                        if (score>99){
+                            if (score>199){
+                                gameover.putExtra("ursache", "Feuerball");
+                            } else {
+                                gameover.putExtra("ursache", "Meteor");
+                            }
+                        } else{
+                            gameover.putExtra("ursache", "Cola");
+                        }
+                        //gameover.putExtra("ursache", "Cola");
                         getContext().startActivity(gameover);
                     }
                     redx = -100;
@@ -682,7 +727,16 @@ public class game_carlosfly extends View{
                                 vode.stop();
                                 gameover.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 gameover.putExtra("score", score);
-                                gameover.putExtra("ursache", "Cola");
+                                if (score>99){
+                                    if (score>199){
+                                        gameover.putExtra("ursache", "Feuerball");
+                                    } else {
+                                        gameover.putExtra("ursache", "Meteor");
+                                    }
+                                } else{
+                                    gameover.putExtra("ursache", "Cola");
+                                }
+                                //gameover.putExtra("ursache", "Cola");
                                 getContext().startActivity(gameover);
                             }
                         }
