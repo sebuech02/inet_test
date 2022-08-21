@@ -145,12 +145,13 @@ public class game_carlosfly extends View{
         hit2 = MediaPlayer.create(getContext(), R.raw.hit3);
         hit3 = MediaPlayer.create(getContext(), R.raw.hit2);
         vode = MediaPlayer.create(getContext(), R.raw.vode);
+        vode.setLooping(true);
         schrei = MediaPlayer.create(getContext(),R.raw.schrei);
         feuerballhit = MediaPlayer.create(getContext(),R.raw.feuerball);
         mexiko = MediaPlayer.create(getContext(), R.raw.mex);
-        mexiko.isLooping();
+        mexiko.setLooping(true);
         back = MediaPlayer.create(getContext(), R.raw.back);
-        back.isLooping();
+        back.setLooping(true);
         back.start();
 
     }
@@ -161,6 +162,25 @@ public class game_carlosfly extends View{
         width = canvas.getWidth();
         height = canvas.getHeight();
         canvas.drawBitmap(background_img,0,0,null);
+
+        if (vodkamode){
+            if (!vode.isPlaying()){
+                vode.setLooping(true);
+                vode.start();
+            }
+        } else{
+            if (majomode){
+                if (!mexiko.isPlaying()){
+                    mexiko.setLooping(true);
+                    mexiko.start();
+                }
+            } else{
+                if (!back.isPlaying()){
+                    back.setLooping(true);
+                    back.start();
+                }
+            }
+        }
 
 
         int mincY = carlos[0].getHeight();
