@@ -26,7 +26,7 @@ public class game_carlosfly extends View{
     private Bitmap live[] = new Bitmap[2];
     private Bitmap pilger;
     private Bitmap majo;
-    private Bitmap bier, schnapps, light, light2, vodka_e, wasser;
+    private Bitmap bier, schnapps, light, light2, vodka_e, wasser, tennis, lsaber;
     public int width, height;
     private int carlosX = 10;
     private float carlosY;
@@ -59,6 +59,8 @@ public class game_carlosfly extends View{
     public MediaPlayer back;
     public MediaPlayer schrei;
     public MediaPlayer mexiko;
+    public MediaPlayer heroes;
+    public MediaPlayer ping_pong;
     private float gravity = 1, updraft = 22;
     private int normalcounter=0;
     private Bitmap meteor, feuerball;
@@ -99,10 +101,14 @@ public class game_carlosfly extends View{
         mustafarback = Bitmap.createScaledBitmap(mustafarback, width, height, false);
         bier = BitmapFactory.decodeResource(getResources(), R.drawable.bier);
         bier = Bitmap.createScaledBitmap(bier, width/10, height/10, false);
+        tennis = BitmapFactory.decodeResource(getResources(), R.drawable.tt);
+        tennis = Bitmap.createScaledBitmap(tennis, width/10, height/10, false);
         meteor = BitmapFactory.decodeResource(getResources(), R.drawable.meteor);
         meteor = Bitmap.createScaledBitmap(meteor, width/10, height/10, false);
         feuerball = BitmapFactory.decodeResource(getResources(), R.drawable.feuerball);
         feuerball = Bitmap.createScaledBitmap(feuerball, width/10, height/10, false);
+        lsaber = BitmapFactory.decodeResource(getResources(), R.drawable.l_saber);
+        lsaber = Bitmap.createScaledBitmap(lsaber, width/10, height/10, false);
         schnapps = BitmapFactory.decodeResource(getResources(), R.drawable.schnapps);
         schnapps = Bitmap.createScaledBitmap(schnapps, width/10, height/10, false);
         light = BitmapFactory.decodeResource(getResources(), R.drawable.light);
@@ -145,6 +151,10 @@ public class game_carlosfly extends View{
         hit2 = MediaPlayer.create(getContext(), R.raw.hit3);
         hit3 = MediaPlayer.create(getContext(), R.raw.hit2);
         vode = MediaPlayer.create(getContext(), R.raw.vode);
+        ping_pong = MediaPlayer.create(getContext(),R.raw.c_pong);
+        heroes = MediaPlayer.create(getContext(),R.raw.mus_music);
+        heroes.setLooping(true);
+        ping_pong.setLooping(true);
         vode.setLooping(true);
         schrei = MediaPlayer.create(getContext(),R.raw.schrei);
         feuerballhit = MediaPlayer.create(getContext(),R.raw.feuerball);
@@ -153,7 +163,6 @@ public class game_carlosfly extends View{
         back = MediaPlayer.create(getContext(), R.raw.back);
         back.setLooping(true);
         back.start();
-
     }
 
     @Override
@@ -852,6 +861,12 @@ public class game_carlosfly extends View{
         gravity =(float) 0.15;
         updraft = 12;
         background_img = weltallback;
+        vode.release();
+        vode = ping_pong;
+        if (vodkamode) {
+            vode.start();
+        }
+        vodka_e = tennis;
         yellowx = -100;
         greenx =-100;
         redx=-100;
@@ -874,6 +889,9 @@ public class game_carlosfly extends View{
         gravity =(float) 3.5;
         updraft = 33;
         background_img = mustafarback;
+        back.release();
+        back = heroes;
+        back.start();
         yellowx = -100;
         greenx =-100;
         redx=-100;
@@ -888,8 +906,9 @@ public class game_carlosfly extends View{
         redspeed2=redspeed2+6;
         pilgerspeed=pilgerspeed+4;
         wasserspeed=wasserspeed+6;
-        burp = feuerballhit;
-        burp2 = feuerballhit;
+        wasser = lsaber;
+        hit = feuerballhit;
+        hit2 = feuerballhit;
     }
 
     public static Bitmap RotateBitmap(Bitmap source, float angle)
