@@ -25,8 +25,10 @@ public class crabby_splash extends MainActivity implements View.OnClickListener 
         build.append(System.lineSeparator());
         build.append("In diesem Spiel muss Niecklaß möglichst viele leckere Südfrüchte fressen, dafür steht ihm eine große Auswahl zur Verfügung. Aufpassen muss er jedoch auf die ungenießbaren Früchte. Isst er zuviel davon, so muss Dennemark leider ins Krankenhaus. Ab und zu gibt es noch die Chance auf **Placeholder**, dann dreht Niecklaß komplett durch und die bösen Früchte können ihm nichtmehr wehtun."+System.lineSeparator());
         build.append("Viel Erfolg Niecklaß möglichst satt zu machen!");
+        build.append(System.lineSeparator());
+        build.append("Dieses Spiel ist gespert, bis die dev-Version fertig ist.");
         beschreibung.setText(build.toString());
-        start_game.setOnClickListener(this);
+        //start_game.setOnClickListener(this);
     }
 
     @Override

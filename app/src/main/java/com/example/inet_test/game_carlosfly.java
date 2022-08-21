@@ -173,6 +173,14 @@ public class game_carlosfly extends View{
         canvas.drawBitmap(background_img,0,0,null);
 
 // Mediaplayer fix, falls er nicht läuft wird er neu angestoßen
+        if (back==null){
+            if (score>199){
+                back=MediaPlayer.create(getContext(), R.raw.mus_music);
+            }else{
+                back=MediaPlayer.create(getContext(), R.raw.back);
+            }
+        }
+
         if (vodkamode){
             if (!vode.isPlaying()){
                 vode.setLooping(true);
@@ -889,6 +897,7 @@ public class game_carlosfly extends View{
         gravity =(float) 3.5;
         updraft = 33;
         background_img = mustafarback;
+        back.stop();
         back.release();
         back = heroes;
         back.start();
@@ -904,8 +913,8 @@ public class game_carlosfly extends View{
         greenspeed=greenspeed+4;
         redspeed=redspeed+6;
         redspeed2=redspeed2+6;
-        pilgerspeed=pilgerspeed+4;
-        wasserspeed=wasserspeed+6;
+        pilgerspeed=pilgerspeed+5;
+        wasserspeed=wasserspeed+8;
         wasser = lsaber;
         hit = feuerballhit;
         hit2 = feuerballhit;
