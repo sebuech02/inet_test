@@ -26,12 +26,14 @@ public class game_over extends MainActivity implements View.OnClickListener {
     private EditText name_score;
     private ArrayList<strintstr> besten = new ArrayList<strintstr>();
     private int i;
+    private String ursache;
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_over);
         scoreboard = (TextView) findViewById(R.id.scoreboard);
+        ursache = getIntent().getExtras().getString("ursache");
         newgame = (Button) findViewById(R.id.new_game);
         menu = (Button) findViewById(R.id.menu);
         scores = (TextView) findViewById(R.id.scores);
@@ -91,9 +93,9 @@ public class game_over extends MainActivity implements View.OnClickListener {
         build.append("<score>"+System.lineSeparator() +
                 "        <name>"+name_score.getText()+"</name>"+System.lineSeparator() +
                 "        <punkte>"+getIntent().getExtras().getInt("score")+"</punkte>"+System.lineSeparator() +
-                "        <ursache>"+getIntent().getExtras().getString("ursache")+"</ursache>"+System.lineSeparator() +
+                "        <ursache>"+ursache+"</ursache>"+System.lineSeparator() +
                 "    </score>");
-        String message = build.toString();
+        String message =(String) build.toString();
         String mail = "sebastian.buechler@tutanota.de";
         javamailapi  mailapi = new javamailapi(this, mail, "Neuer Score", message);
         mailapi.execute();

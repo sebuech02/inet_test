@@ -57,6 +57,12 @@
         <activity android:name=".crabby_over"
             android:theme="@style/Theme.Inet_test2"
             android:screenOrientation="landscape" />
+        <activity android:name=".mario_splash"
+            android:theme="@style/Theme.Inet_test2"
+            android:screenOrientation="landscape" />
+        <activity android:name=".mario_main1"
+            android:theme="@style/Theme.Inet_test2"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>
