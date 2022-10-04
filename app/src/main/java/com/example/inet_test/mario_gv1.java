@@ -45,7 +45,12 @@ public class mario_gv1 extends View {
     private int tolleranz, tolleranz_block_stehen, tolleranz_block_fallen;
     private Bitmap mario, mario2, block;
     private int blockcheck;
-    private boolean once;
+    private boolean once, once2, once3, once4;
+    private boolean hohepasst = false;
+    private float oldspeed, newspeed;
+    private int current_frame=88;
+    private float old_camerax, new_camerax;
+    private boolean init_cameratransition=false;
 
 
     private boolean drunkmode;
@@ -84,6 +89,8 @@ public class mario_gv1 extends View {
         blocksy[222]=height-5*blocksize;
         blocksx[5]=-4* blocksize;
         blocksy[5]=height-10*blocksize;
+        blocksx[22]=-22* blocksize;
+        blocksy[22]=height-3*blocksize;
 
         mario = BitmapFactory.decodeResource(getResources(), R.drawable.mario);
         mario = Bitmap.createScaledBitmap(mario, width/25, width/25, false);
@@ -106,6 +113,7 @@ public class mario_gv1 extends View {
         live[1] = BitmapFactory.decodeResource(getResources(), R.drawable.heart_broken);
         //live[1] = BitmapFactory.decodeResource(getResources(), R.drawable.heart_broken);
         live[1] = Bitmap.createScaledBitmap(live[1], width/10, height/10, false);
+        tolleranz=blocksize/5;
         tolleranz_block_stehen=mario.getWidth()/2;
         tolleranz_block_fallen=mario.getWidth()/4;
         // Bewegungssteuerung
@@ -136,18 +144,49 @@ public class mario_gv1 extends View {
         width = canvas.getWidth();
         canvas.drawBitmap(background_img,0,0,null);
         once=false;
+        once2=false;
+        once3=false;
+        once4=false;
         mario_move();
         mario_floorcheck();
         mario_hitcheck();
         mario_events();
+        if (!init_cameratransition) {
+            oldspeed = newspeed;
+            newspeed = speedx;
+        }
+
+        if ((Math.abs(newspeed-oldspeed)>speedxmax/2)&&(!init_cameratransition)) {
+            init_cameratransition = true;
+            current_frame = 1;
+        }
+        //Camera fixen
+        /*if (init_cameratransition)
+        {
+            if (current_frame<16){
+                camerax=mariox+(((((16+current_frame)/(15))*(oldspeed))/speedxmax)*width/5);
+                canvas.drawBitmap(mario2,blocksize,blocksize,null);
+                current_frame++;
+            }
+            if (current_frame<49&&current_frame>15){
+                camerax=mariox+(((((-current_frame+16)/(16))*(newspeed))/speedxmax)*width/5);
+                canvas.drawBitmap(mario2,2*blocksize,2*blocksize,null);
+                current_frame++;
+            }
+            if (current_frame>=33) {
+                init_cameratransition = false;
+            }
+            } else {
+            camerax = mariox+((speedx/speedxmax)*width/5);
+        }*/
 
 
-        camerax = mariox+((speedx/speedxmax)*width/5);
-
-        canvas.drawText("Score: "+score+doppelsprung+' '+speedy
-                , 20,60,score_paint);
+        //Alter Camera Wiggle, schrecklich bei zusammenstößen
+        //camerax = mariox+((speedx/speedxmax)*width/5);
+        camerax = mariox-width/7;
+        canvas.drawText("Score: "+score+' '+wall_links+' '+hohepasst+' '+mariox+' '+marioy, 20,60,score_paint);
         canvas.drawBitmap(mario, (camerax-mariox)+width/2, marioy, null);
-        canvas.drawBitmap(mario2, (camerax-0)+width/2, height/2, null);
+        //canvas.drawBitmap(mario2, (camerax-0)+width/2, height/2, null);
         int j=0;
         while (j<blocksx.length){
             canvas.drawBitmap(block, (camerax-blocksx[j])+width/2, blocksy[j], null);
@@ -198,14 +237,14 @@ public class mario_gv1 extends View {
         }
 
         if (speedx>=0){
-            if (!wall_rechts){
+            if (!wall_links){
                 mariox=mariox+speedx;
             } else {
                 speedx=0;
             }
         }
         if (speedx<0) {
-            if (!wall_links) {
+            if (!wall_rechts) {
                 mariox = mariox + speedx;
             } else {
                 speedx=0;
@@ -239,7 +278,7 @@ public class mario_gv1 extends View {
         int temp = 0;
         while (temp<blocksx.length){
             //steht er auf dem Block oder ist genau drunter?
-            if ((!once)&&(blocksx[temp]-tolleranz_block_stehen+mario.getWidth()/2 <= mariox+mario.getWidth()/2) && mariox+mario.getWidth()/2<=blocksx[temp]+blocksize+mario.getWidth()/2+tolleranz){
+            if ((blocksx[temp]-tolleranz_block_stehen+mario.getWidth()/2 <= mariox+mario.getWidth()/2) && mariox+mario.getWidth()/2<=blocksx[temp]+blocksize+mario.getWidth()/2+tolleranz){
                 if ((blocksy[temp]+blocksize/2>=marioy+mario.getHeight()) && (marioy+mario.getHeight()>=blocksy[temp]-blocksize/10)){
                     mario_onthefloor = true;
                     once=true;
@@ -250,14 +289,62 @@ public class mario_gv1 extends View {
                     if (marioy+mario.getHeight()>blocksy[temp]){
                         marioy = blocksy[temp] - mario.getHeight();
                     }
-                    return;
                 }
             }
+
+            if ((blocksx[temp]-tolleranz_block_fallen+mario.getWidth()/2 <= mariox+mario.getWidth()/2) && mariox+mario.getWidth()/2<=blocksx[temp]+blocksize+mario.getWidth()/2+tolleranz_block_fallen){
+                if ((blocksy[temp]+blocksize+blocksize/4>=marioy) && (marioy>=blocksy[temp]+blocksize)){
+                    wall_oben = true;
+                    once2=true;
+                    if (speedy<0) {
+                        speedy = 0;
+                    }
+                    if (marioy<=blocksy[temp]+blocksize){
+                        marioy = blocksy[temp] + blocksize;
+                    }
+                }
+            }
+
+            if ((blocksy[temp]<=marioy+mario.getHeight()-tolleranz)&&(blocksy[temp]>=marioy-blocksize+tolleranz)){
+                hohepasst=true;
+                if ((mariox-mario.getWidth()>=blocksx[temp]-blocksize/4)&&(mariox-mario.getWidth()<=blocksx[temp])){
+                    wall_rechts = true;
+                    once3=true;
+                    if (speedx<0) {
+                        speedx = 0;
+                    }
+                    if (mariox-mario.getWidth()<blocksx[temp]){
+                        mariox = blocksx[temp] + mario.getWidth();
+                    }
+                }
+            }
+            if ((blocksy[temp]<=marioy+mario.getHeight()-tolleranz)&&(blocksy[temp]>=marioy-blocksize+tolleranz)){
+                hohepasst=true;
+                if ((mariox<=blocksx[temp]-blocksize+blocksize/4)&&(mariox>=blocksx[temp]-blocksize)){
+                    wall_links = true;
+                    once4=true;
+                    if (speedx>0) {
+                        speedx = 0;
+                    }
+                    if (mariox>blocksx[temp]-blocksize){
+                        mariox = blocksx[temp] - blocksize;
+                    }
+                }
+            }
+
             temp++;
         }
         if (!once) {
-            once=false;
-            mario_onthefloor = false;
+            mario_onthefloor=false;
+        }
+        if (!once2){
+            wall_oben=false;
+        }
+        if (!once3){
+            wall_rechts=false;
+        }
+        if (!once4){
+            wall_links=false;
         }
     }
 
