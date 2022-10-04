@@ -26,11 +26,11 @@ import android.widget.Toast;
 import androidx.core.content.ContextCompat;
 
 public class mario_gv1 extends View {
-    private boolean doppelsprung=true, mario_onthefloor=false;
+    private boolean doppelsprung, mario_onthefloor, wall_rechts=false, wall_links=false, wall_oben=false;
     private Bitmap background_img;
     private int width, height;
     private float inputx, inputy;
-    private float speedx=0, speedy=0, speedxmax=17;
+    private float speedx=0, speedy=0, speedxmax=17, speedymax;
     private float sprungkraft=17, schweerkraft=(float)0.5;
     private boolean touch;
     private SensorManager sensorManager;
@@ -39,7 +39,14 @@ public class mario_gv1 extends View {
     private int framecounter=0;
     private float mariox=0, marioy=0;
     private float camerax;
-    private Bitmap mario, mario2;
+    private int blocksize;
+    private int[] blocksx = new int[256];
+    private int[] blocksy = new int[256];
+    private int tolleranz, tolleranz_block_stehen, tolleranz_block_fallen;
+    private Bitmap mario, mario2, block;
+    private int blockcheck;
+    private boolean once;
+
 
     private boolean drunkmode;
     private boolean taumeln_rechts;
@@ -65,10 +72,25 @@ public class mario_gv1 extends View {
         ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         height = displayMetrics.heightPixels+66;
         width = displayMetrics.widthPixels+200;
+        blocksize = width/33;
+        mariox=0;
+        int i = 0;
+        while (i<222){
+            blocksx[i]=-i*blocksize;
+            blocksy[i]=height-2*blocksize;
+            i++;
+        }
+        blocksx[222]=blocksize;
+        blocksy[222]=height-5*blocksize;
+        blocksx[5]=-4* blocksize;
+        blocksy[5]=height-10*blocksize;
+
         mario = BitmapFactory.decodeResource(getResources(), R.drawable.mario);
         mario = Bitmap.createScaledBitmap(mario, width/25, width/25, false);
         mario2 = BitmapFactory.decodeResource(getResources(), R.drawable.mario);
         mario2 = Bitmap.createScaledBitmap(mario2, width/25, width/25, false);
+        block = BitmapFactory.decodeResource(getResources(), R.drawable.block);
+        block = Bitmap.createScaledBitmap(block, blocksize, blocksize, false);
 
         background_img = BitmapFactory.decodeResource(getResources(), R.drawable.mario);
         background_img = Bitmap.createScaledBitmap(background_img, width, height, false);
@@ -84,7 +106,8 @@ public class mario_gv1 extends View {
         live[1] = BitmapFactory.decodeResource(getResources(), R.drawable.heart_broken);
         //live[1] = BitmapFactory.decodeResource(getResources(), R.drawable.heart_broken);
         live[1] = Bitmap.createScaledBitmap(live[1], width/10, height/10, false);
-
+        tolleranz_block_stehen=mario.getWidth()/2;
+        tolleranz_block_fallen=mario.getWidth()/4;
         // Bewegungssteuerung
         sensorManager = (SensorManager) getContext().getSystemService(Context.SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -112,6 +135,7 @@ public class mario_gv1 extends View {
         height = canvas.getHeight();
         width = canvas.getWidth();
         canvas.drawBitmap(background_img,0,0,null);
+        once=false;
         mario_move();
         mario_floorcheck();
         mario_hitcheck();
@@ -120,8 +144,16 @@ public class mario_gv1 extends View {
 
         camerax = mariox+((speedx/speedxmax)*width/5);
 
+        canvas.drawText("Score: "+score+doppelsprung+' '+speedy
+                , 20,60,score_paint);
         canvas.drawBitmap(mario, (camerax-mariox)+width/2, marioy, null);
         canvas.drawBitmap(mario2, (camerax-0)+width/2, height/2, null);
+        int j=0;
+        while (j<blocksx.length){
+            canvas.drawBitmap(block, (camerax-blocksx[j])+width/2, blocksy[j], null);
+            j++;
+        }
+
         framecounter ++;
 
 
@@ -139,34 +171,60 @@ public class mario_gv1 extends View {
     }
 
     public void mario_move(){
+
         if (speedx - inputx / 10<=speedxmax && speedx - inputx / 10>=-speedxmax) {
             speedx = speedx - inputx / 10;
         }
-        if (!mario_onthefloor){
-            speedy = speedy + schweerkraft;
-            marioy=marioy+speedy;
-        } else {
-            if (speedy<0){
+        speedy = speedy + schweerkraft;
+        //if (speedy>speedymax){
+          //  speedy = speedymax;
+        //}
+
+
+        if (speedy>=0){
+            if (!mario_onthefloor){
                 marioy=marioy+speedy;
-            }else {
-                speedy = 0;
+            } else {
+                doppelsprung=false;
+                speedy=0;
             }
         }
-        if (!wallchecker(speedx)){
-            mariox=mariox+speedx;
+        if (speedy<0) {
+            if (!wall_oben) {
+                marioy = marioy + speedy;
+            } else {
+                speedy=0;
+            }
+        }
+
+        if (speedx>=0){
+            if (!wall_rechts){
+                mariox=mariox+speedx;
+            } else {
+                speedx=0;
+            }
+        }
+        if (speedx<0) {
+            if (!wall_links) {
+                mariox = mariox + speedx;
+            } else {
+                speedx=0;
+            }
         }
 
     }
 
     public void mario_floorcheck(){
-        if (marioy+1.2*mario.getHeight()>=height){
-            mario_onthefloor=true;
-            doppelsprung=false;
-        }
-        else {
-            mario_onthefloor=false;
-        }
+        mario_blockcheck();
 
+
+        if (marioy-2*mario.getHeight()>height){
+            lives--;
+            mariox=0;
+            marioy=0;
+            speedx=0;
+            speedy=0;
+        }
     }
 
     public void mario_hitcheck(){
@@ -175,6 +233,32 @@ public class mario_gv1 extends View {
 
     public void mario_events(){
 
+    }
+
+    public void mario_blockcheck(){
+        int temp = 0;
+        while (temp<blocksx.length){
+            //steht er auf dem Block oder ist genau drunter?
+            if ((!once)&&(blocksx[temp]-tolleranz_block_stehen+mario.getWidth()/2 <= mariox+mario.getWidth()/2) && mariox+mario.getWidth()/2<=blocksx[temp]+blocksize+mario.getWidth()/2+tolleranz){
+                if ((blocksy[temp]+blocksize/2>=marioy+mario.getHeight()) && (marioy+mario.getHeight()>=blocksy[temp]-blocksize/10)){
+                    mario_onthefloor = true;
+                    once=true;
+                    doppelsprung=false;
+                    if (speedy>0) {
+                        speedy = 0;
+                    }
+                    if (marioy+mario.getHeight()>blocksy[temp]){
+                        marioy = blocksy[temp] - mario.getHeight();
+                    }
+                    return;
+                }
+            }
+            temp++;
+        }
+        if (!once) {
+            once=false;
+            mario_onthefloor = false;
+        }
     }
 
 
@@ -194,14 +278,17 @@ public class mario_gv1 extends View {
     public boolean onTouchEvent(MotionEvent event){
         if (event.getAction() == MotionEvent.ACTION_DOWN){
             touch = true;
+            once = true;
             if (mario_onthefloor) {
                 speedy = -sprungkraft;
+                doppelsprung=false;
             } else {
-                if (!doppelsprung){
+                if (!doppelsprung && speedy>-4*sprungkraft/5&& speedy!=0){
                     speedy = -sprungkraft;
                     doppelsprung= true;
                 }
             }
+
         }
         return true;
     }
