@@ -18,6 +18,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
@@ -25,12 +26,14 @@ import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 
+import java.util.ArrayList;
+
 public class mario_gv1 extends View {
     private boolean doppelsprung, mario_onthefloor, wall_rechts=false, wall_links=false, wall_oben=false;
     private Bitmap background_img;
     private int width, height;
     private float inputx, inputy;
-    private float speedx=0, speedy=0, speedxmax=17, speedymax;
+    private float speedx=0, speedy=0, speedxmax=12, speedymax;
     private float sprungkraft=17, schweerkraft=(float)0.5;
     private boolean touch;
     private SensorManager sensorManager;
@@ -40,8 +43,8 @@ public class mario_gv1 extends View {
     private float mariox=0, marioy=0;
     private float camerax;
     private int blocksize;
-    private int[] blocksx = new int[256];
-    private int[] blocksy = new int[256];
+    private int[] blocksx;
+    private int[] blocksy;
     private int tolleranz, tolleranz_block_stehen, tolleranz_block_fallen;
     private Bitmap mario, mario2, block;
     private int blockcheck;
@@ -79,6 +82,7 @@ public class mario_gv1 extends View {
         width = displayMetrics.widthPixels+200;
         blocksize = width/33;
         mariox=0;
+        /*
         int i = 0;
         while (i<222){
             blocksx[i]=-i*blocksize;
@@ -91,6 +95,9 @@ public class mario_gv1 extends View {
         blocksy[5]=height-10*blocksize;
         blocksx[22]=-22* blocksize;
         blocksy[22]=height-3*blocksize;
+
+         */
+        init_level_blocks();
 
         mario = BitmapFactory.decodeResource(getResources(), R.drawable.mario);
         mario = Bitmap.createScaledBitmap(mario, width/25, width/25, false);
@@ -378,6 +385,103 @@ public class mario_gv1 extends View {
 
         }
         return true;
+    }
+
+    private void init_level_blocks(){
+        ArrayList xwerte = new ArrayList<Integer>();
+        ArrayList ywerte = new ArrayList<Integer>();
+        for (int i=0; i*blocksize<height; i++){
+            xwerte.add(3*blocksize);
+            ywerte.add(height-(2+i)*blocksize);
+        }
+        for (int i=2; i>-5; i--){
+            xwerte.add(i*blocksize);
+            ywerte.add(height-2*blocksize);
+        }
+        xwerte.add(-6*blocksize);
+        ywerte.add(height-2*blocksize);
+        xwerte.add(-8*blocksize);
+        ywerte.add(height-2*blocksize);
+        for (int i=-10; i>-22; i--){
+            xwerte.add(i*blocksize);
+            ywerte.add(height-2*blocksize);
+        }
+        xwerte.add(-12*blocksize);
+        ywerte.add(height-3*blocksize);
+        xwerte.add(-13*blocksize);
+        ywerte.add(height-3*blocksize);
+        xwerte.add(-13*blocksize);
+        ywerte.add(height-4*blocksize);
+        xwerte.add(-14*blocksize);
+        ywerte.add(height-4*blocksize);
+        xwerte.add(-14*blocksize);
+        ywerte.add(height-5*blocksize);
+        xwerte.add(-15*blocksize);
+        ywerte.add(height-5*blocksize);
+        xwerte.add(-15*blocksize);
+        ywerte.add(height-6*blocksize);
+        xwerte.add(-16*blocksize);
+        ywerte.add(height-6*blocksize);
+        xwerte.add(-16*blocksize);
+        ywerte.add(height-7*blocksize);
+        xwerte.add(-17*blocksize);
+        ywerte.add(height-7*blocksize);
+        xwerte.add(-17*blocksize);
+        ywerte.add(height-8*blocksize);
+        xwerte.add(-18*blocksize);
+        ywerte.add(height-8*blocksize);
+        xwerte.add(-18*blocksize);
+        ywerte.add(height-9*blocksize);
+
+        xwerte.add(-23*blocksize);
+        ywerte.add(height-6*blocksize);
+        xwerte.add(-25*blocksize);
+        ywerte.add(height-2*blocksize);
+        xwerte.add(-29*blocksize);
+        ywerte.add(height-2*blocksize);
+
+        xwerte.add(-32*blocksize);
+        ywerte.add(height-4*blocksize);
+        xwerte.add(-33*blocksize);
+        ywerte.add(height-4*blocksize);
+        xwerte.add(-34*blocksize);
+        ywerte.add(height-4*blocksize);
+        xwerte.add(-35*blocksize);
+        ywerte.add(height-4*blocksize);
+
+        xwerte.add(-44*blocksize);
+        ywerte.add(height-2*blocksize);
+
+        xwerte.add(-50*blocksize);
+        ywerte.add(height-2*blocksize);
+        xwerte.add(-51*blocksize);
+        ywerte.add(height-2*blocksize);
+        xwerte.add(-52*blocksize);
+        ywerte.add(height-2*blocksize);
+        xwerte.add(-53*blocksize);
+        ywerte.add(height-2*blocksize);
+        xwerte.add(-54*blocksize);
+        ywerte.add(height-2*blocksize);
+        xwerte.add(-55*blocksize);
+        ywerte.add(height-2*blocksize);
+
+        for (int i=0; i*blocksize<height; i++){
+            xwerte.add(-56*blocksize);
+            ywerte.add(height-(2+i)*blocksize);
+        }
+        int[] bocksx = new int[xwerte.size()];
+        int[] bocksy = new int[xwerte.size()];
+        blocksx= convertIntegers(xwerte);
+        blocksy=convertIntegers(ywerte);
+    }
+    public static int[] convertIntegers(ArrayList<Integer> integers)
+    {
+        int[] ret = new int[integers.size()];
+        for (int i=0; i < ret.length; i++)
+        {
+            ret[i] = integers.get(i).intValue();
+        }
+        return ret;
     }
 
 }
