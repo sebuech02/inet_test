@@ -285,7 +285,7 @@ public class mario_gv1 extends View {
         int temp = 0;
         while (temp<blocksx.length){
             //steht er auf dem Block oder ist genau drunter?
-            if ((blocksx[temp]-tolleranz_block_stehen+mario.getWidth()/2 <= mariox+mario.getWidth()/2) && mariox+mario.getWidth()/2<=blocksx[temp]+blocksize+mario.getWidth()/2+tolleranz){
+            if ((blocksx[temp]-tolleranz_block_stehen+mario.getWidth()/2 <= mariox+mario.getWidth()/2) && mariox+mario.getWidth()/2<=blocksx[temp]+blocksize/2+mario.getWidth()/2+tolleranz_block_stehen){
                 if ((blocksy[temp]+blocksize/2>=marioy+mario.getHeight()) && (marioy+mario.getHeight()>=blocksy[temp]-blocksize/10)){
                     mario_onthefloor = true;
                     once=true;
@@ -299,7 +299,7 @@ public class mario_gv1 extends View {
                 }
             }
 
-            if ((blocksx[temp]-tolleranz_block_fallen+mario.getWidth()/2 <= mariox+mario.getWidth()/2) && mariox+mario.getWidth()/2<=blocksx[temp]+blocksize+mario.getWidth()/2+tolleranz_block_fallen){
+            if ((blocksx[temp]-tolleranz_block_fallen+mario.getWidth()/2 <= mariox+mario.getWidth()) && mariox+mario.getWidth()/2<=blocksx[temp]+blocksize+mario.getWidth()/2+tolleranz_block_fallen){
                 if ((blocksy[temp]+blocksize+blocksize/4>=marioy) && (marioy>=blocksy[temp]+blocksize)){
                     wall_oben = true;
                     once2=true;
