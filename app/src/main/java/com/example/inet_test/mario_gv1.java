@@ -45,9 +45,11 @@ public class mario_gv1 extends View {
     private int blocksize;
     private int[] blocksx;
     private int[] blocksy;
+    private int spikesize;
+    private int[] spikesx;
+    private int[] spikesy;
     private int tolleranz, tolleranz_block_stehen, tolleranz_block_fallen;
-    private Bitmap mario, mario2, block;
-    private int blockcheck;
+    private Bitmap mario, mario2, block, spike;
     private boolean once, once2, once3, once4;
     private boolean hohepasst = false;
     private float oldspeed, newspeed;
@@ -81,6 +83,7 @@ public class mario_gv1 extends View {
         height = displayMetrics.heightPixels+66;
         width = displayMetrics.widthPixels+200;
         blocksize = width/33;
+        spikesize = blocksize;
         mariox=0;
         /*
         int i = 0;
@@ -98,15 +101,18 @@ public class mario_gv1 extends View {
 
          */
         init_level_blocks();
+        init_level_spikes();
 
         mario = BitmapFactory.decodeResource(getResources(), R.drawable.mario);
         mario = Bitmap.createScaledBitmap(mario, width/25, width/25, false);
-        mario2 = BitmapFactory.decodeResource(getResources(), R.drawable.mario);
+        mario2 = BitmapFactory.decodeResource(getResources(), R.drawable.mario_rechts);
         mario2 = Bitmap.createScaledBitmap(mario2, width/25, width/25, false);
         block = BitmapFactory.decodeResource(getResources(), R.drawable.block);
         block = Bitmap.createScaledBitmap(block, blocksize, blocksize, false);
+        spike = BitmapFactory.decodeResource(getResources(), R.drawable.spike);
+        spike = Bitmap.createScaledBitmap(spike, spikesize, spikesize, false);
 
-        background_img = BitmapFactory.decodeResource(getResources(), R.drawable.mario);
+        background_img = BitmapFactory.decodeResource(getResources(), R.drawable.mario_back);
         background_img = Bitmap.createScaledBitmap(background_img, width, height, false);
         paint2.setColor(Color.RED);
         paint2.setStyle(Paint.Style.FILL);
@@ -167,36 +173,26 @@ public class mario_gv1 extends View {
             init_cameratransition = true;
             current_frame = 1;
         }
-        //Camera fixen
-        /*if (init_cameratransition)
-        {
-            if (current_frame<16){
-                camerax=mariox+(((((16+current_frame)/(15))*(oldspeed))/speedxmax)*width/5);
-                canvas.drawBitmap(mario2,blocksize,blocksize,null);
-                current_frame++;
-            }
-            if (current_frame<49&&current_frame>15){
-                camerax=mariox+(((((-current_frame+16)/(16))*(newspeed))/speedxmax)*width/5);
-                canvas.drawBitmap(mario2,2*blocksize,2*blocksize,null);
-                current_frame++;
-            }
-            if (current_frame>=33) {
-                init_cameratransition = false;
-            }
-            } else {
-            camerax = mariox+((speedx/speedxmax)*width/5);
-        }*/
 
 
-        //Alter Camera Wiggle, schrecklich bei zusammenstößen
-        //camerax = mariox+((speedx/speedxmax)*width/5);
+
         camerax = mariox-width/7;
-        canvas.drawText("Score: "+score+' '+wall_links+' '+hohepasst+' '+mariox+' '+marioy, 20,60,score_paint);
-        canvas.drawBitmap(mario, (camerax-mariox)+width/2, marioy, null);
-        //canvas.drawBitmap(mario2, (camerax-0)+width/2, height/2, null);
+
+        canvas.drawText("Score: " + score + ' ' + mariox + ' ' + marioy+' ' + speedx, 20, 60, score_paint);
+        if (speedx>0 || wall_links) {
+            canvas.drawBitmap(mario, (camerax - mariox) + width / 2, marioy, null);
+        } else {
+            canvas.drawBitmap(mario2, (camerax - mariox) + width / 2, marioy, null);
+        }
+
         int j=0;
         while (j<blocksx.length){
             canvas.drawBitmap(block, (camerax-blocksx[j])+width/2, blocksy[j], null);
+            j++;
+        }
+        j=0;
+        while (j<spikesx.length){
+            canvas.drawBitmap(spike, (camerax-spikesx[j])+width/2, spikesy[j], null);
             j++;
         }
 
@@ -274,11 +270,29 @@ public class mario_gv1 extends View {
     }
 
     public void mario_hitcheck(){
+        int temp = 0;
+        while (temp<spikesx.length){
+            if (spikesx[temp] >= mariox-mario.getWidth() && spikesx[temp] <= mariox+spikesize){
+                if (spikesy[temp] >= marioy-spikesize && spikesy[temp]<= marioy+mario.getHeight()){
+                    hit_spike();
+                    return;
+                }
+            }
+            temp++;
+        }
 
     }
 
     public void mario_events(){
 
+    }
+
+    public void hit_spike(){
+        lives--;
+        mariox=0;
+        marioy=0;
+        speedx=0;
+        speedy=0;
     }
 
     public void mario_blockcheck(){
@@ -469,8 +483,8 @@ public class mario_gv1 extends View {
             xwerte.add(-56*blocksize);
             ywerte.add(height-(2+i)*blocksize);
         }
-        int[] bocksx = new int[xwerte.size()];
-        int[] bocksy = new int[xwerte.size()];
+        //int[] bocksx = new int[xwerte.size()];
+        //int[] bocksy = new int[xwerte.size()];
         blocksx= convertIntegers(xwerte);
         blocksy=convertIntegers(ywerte);
     }
@@ -481,6 +495,19 @@ public class mario_gv1 extends View {
             ret[i] = integers.get(i).intValue();
         }
         return ret;
+    }
+
+    private void init_level_spikes(){
+        ArrayList xwerte = new ArrayList<Integer>();
+        ArrayList ywerte = new ArrayList<Integer>();
+
+        xwerte.add(-5*blocksize);
+        ywerte.add(height-10*blocksize);
+        xwerte.add(-0*blocksize);
+        ywerte.add(height-3*blocksize);
+
+        spikesx=convertIntegers(xwerte);
+        spikesy=convertIntegers(ywerte);
     }
 
 }
