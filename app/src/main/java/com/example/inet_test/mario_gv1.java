@@ -474,8 +474,7 @@ public class mario_gv1 extends View {
         blocksx= convertIntegers(xwerte);
         blocksy=convertIntegers(ywerte);
     }
-    public static int[] convertIntegers(ArrayList<Integer> integers)
-    {
+    public static int[] convertIntegers(ArrayList<Integer> integers) {
         int[] ret = new int[integers.size()];
         for (int i=0; i < ret.length; i++)
         {
