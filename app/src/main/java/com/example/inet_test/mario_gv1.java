@@ -59,16 +59,9 @@ public class mario_gv1 extends View {
     private int tolleranz, tolleranz_block_stehen, tolleranz_block_fallen;
     private Bitmap mario, mario2, block, spike, gomba, gomba2;
     private boolean once, once2, once3, once4;
-    private boolean hohepasst = false;
     private float oldspeed, newspeed;
-    private int current_frame=88;
-    private float old_camerax, new_camerax;
     private boolean init_cameratransition=false;
 
-
-    private boolean drunkmode;
-    private boolean taumeln_rechts;
-    private int duration = 66;
     private Paint score_paint = new Paint();
     private Bitmap live[] = new Bitmap[2];
     private int score, counter=0;
@@ -83,6 +76,7 @@ public class mario_gv1 extends View {
     public MediaPlayer explosion;
     public MediaPlayer crabrave;
     private int mincX,maxcX;
+    private int current_frame=1;
 
     public mario_gv1(Context context) {
         super(context);
@@ -93,7 +87,7 @@ public class mario_gv1 extends View {
         blocksize = width/33;
         spikesize = blocksize;
         gomba_width = blocksize;
-        gomba_height_jump=blocksize/10;
+        gomba_height_jump=blocksize/5;
         gomba_height_hit=blocksize-gomba_height_jump;
         mariox=0;
 
@@ -302,7 +296,6 @@ public class mario_gv1 extends View {
         if (gombasd[i] == -1) {
             while (temp<blocksx.length) {
                 if ((blocksy[temp] <= gombasy[i] + gomba.getHeight() - tolleranz) && (blocksy[temp] >= gombasy[i] - blocksize + tolleranz)) {
-                    hohepasst = true;
                     if ((gombasx[i] - gomba.getWidth() >= blocksx[temp] - blocksize / 4) && (gombasx[i] - gomba.getWidth() <= blocksx[temp])) {
                         return true;
                     }
@@ -313,7 +306,6 @@ public class mario_gv1 extends View {
         } else {
             while (temp<blocksx.length) {
                 if ((blocksy[temp] <= gombasy[i] + gomba.getHeight() - tolleranz) && (blocksy[temp] >= gombasy[i] - blocksize + tolleranz)) {
-                    hohepasst = true;
                     if ((gombasx[i] <= blocksx[temp] - blocksize + blocksize / 4) && (gombasx[i] >= blocksx[temp] - blocksize)) {
                         return true;
                     }
@@ -350,12 +342,12 @@ public class mario_gv1 extends View {
         temp = 0;
         while (temp<gombasx.length){
             if (gombasx[temp] >= mariox-mario.getWidth() && gombasx[temp] <= mariox+gomba_width){
-                if (gombasy[temp] >= marioy+mario.getHeight()-gomba_height_jump && gombasy[temp]<= marioy+mario.getHeight()){
-                    kill_gomba(temp);
+                if (gombasy[temp]+gomba_height_hit >= marioy+gomba_height_jump && gombasy[temp]+gomba_height_hit<= marioy+mario.getHeight()){
+                    hit_spike();
                     return;
                 }
-                if (gombasy[temp] >= marioy-gomba_height_hit+gomba_height_jump && gombasy[temp]<= marioy+mario.getHeight()+gomba_height_jump){
-                    hit_spike();
+                if (gombasy[temp] >= marioy-gomba_height_jump && gombasy[temp]<= marioy+mario.getHeight()){
+                    kill_gomba(temp);
                     return;
                 }
             }
@@ -380,7 +372,7 @@ public class mario_gv1 extends View {
         speedy=-sprungkraft/3;
         doppelsprung=false;
         gombasy[temp]=2* height;
-        score = score + 10;
+        score = score + 100;
     }
 
     public void mario_blockcheck(){
@@ -415,7 +407,6 @@ public class mario_gv1 extends View {
             }
 
             if ((blocksy[temp]<=marioy+mario.getHeight()-tolleranz)&&(blocksy[temp]>=marioy-blocksize+tolleranz)){
-                hohepasst=true;
                 if ((mariox-mario.getWidth()>=blocksx[temp]-blocksize/4)&&(mariox-mario.getWidth()<=blocksx[temp])){
                     wall_rechts = true;
                     once3=true;
@@ -428,7 +419,6 @@ public class mario_gv1 extends View {
                 }
             }
             if ((blocksy[temp]<=marioy+mario.getHeight()-tolleranz)&&(blocksy[temp]>=marioy-blocksize+tolleranz)){
-                hohepasst=true;
                 if ((mariox<=blocksx[temp]-blocksize+blocksize/4)&&(mariox>=blocksx[temp]-blocksize)){
                     wall_links = true;
                     once4=true;
@@ -619,12 +609,13 @@ public class mario_gv1 extends View {
         ArrayList xwerte = new ArrayList<Integer>();
         ArrayList ywerte = new ArrayList<Integer>();
         ArrayList directions = new ArrayList<Integer>();
-        ArrayList ygesch = new ArrayList<Float>();
 
         xwerte.add(-60*blocksize);
         ywerte.add(height-5*blocksize);
         directions.add(1);
-        ygesch.add(0);
+        xwerte.add(-2*blocksize);
+        ywerte.add(height-3*blocksize);
+        directions.add(-1);
 
         gombasx=convertIntegers(xwerte);
         gombasy=convertIntegers(ywerte);
