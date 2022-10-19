@@ -46,6 +46,7 @@ public class mario_gv1 extends View {
     private int[] blocksx;
     private int[] blocksy;
     private int spikesize;
+
     private int[] gombasx;
     private int[] gombasy;
     private int[] gombasd;
@@ -54,10 +55,21 @@ public class mario_gv1 extends View {
     private int gomba_width;
     private  int gombaspeedx=3;
     private float[] gombaspeedy;
+
+    private int[] vogelx;
+    private int[] vogely;
+    private int vogel_height_hit;
+    private int vogel_height_jump;
+    private int vogel_width;
+    private  int vogelspeedx=3;
+    private int vogelspeedy=2;
+    private boolean vogel_rechts=true;
+    private int vogel_durchlauf=0;
+
     private int[] spikesx;
     private int[] spikesy;
     private int tolleranz, tolleranz_block_stehen, tolleranz_block_fallen;
-    private Bitmap mario, mario2, block, spike, gomba, gomba2;
+    private Bitmap mario, mario2, block, spike, gomba, gomba2, vogel1, vogel2;
     private boolean once, once2, once3, once4;
     private float oldspeed, newspeed;
     private boolean init_cameratransition=false;
@@ -89,11 +101,15 @@ public class mario_gv1 extends View {
         gomba_width = blocksize;
         gomba_height_jump=blocksize/5;
         gomba_height_hit=blocksize-gomba_height_jump;
+        vogel_width = blocksize;
+        vogel_height_jump=gomba_height_jump;
+        vogel_height_hit=gomba_height_hit;
         mariox=0;
 
         init_level_blocks();
         init_level_spikes();
         init_level_gombas();
+        init_level_vogel();
 
         mario = BitmapFactory.decodeResource(getResources(), R.drawable.mario);
         mario = Bitmap.createScaledBitmap(mario, width/25, width/25, false);
@@ -107,6 +123,10 @@ public class mario_gv1 extends View {
         gomba = Bitmap.createScaledBitmap(gomba, gomba_width, gomba_height_hit+gomba_height_jump, false);
         gomba2 = BitmapFactory.decodeResource(getResources(), R.drawable.bild2);
         gomba2 = Bitmap.createScaledBitmap(gomba2, gomba_width, gomba_height_hit+gomba_height_jump, false);
+        vogel1 = BitmapFactory.decodeResource(getResources(), R.drawable.bild1);
+        vogel1 = Bitmap.createScaledBitmap(vogel1, vogel_width, vogel_height_jump+vogel_height_hit, false);
+        vogel2 = BitmapFactory.decodeResource(getResources(), R.drawable.bild2);
+        vogel2 = Bitmap.createScaledBitmap(vogel2, vogel_width, vogel_height_jump+vogel_height_hit, false);
 
         background_img = BitmapFactory.decodeResource(getResources(), R.drawable.mario_back);
         background_img = Bitmap.createScaledBitmap(background_img, width, height, false);
@@ -117,10 +137,8 @@ public class mario_gv1 extends View {
         score_paint.setTypeface(Typeface.DEFAULT_BOLD);
         score_paint.setAntiAlias(true);
         live[0] = BitmapFactory.decodeResource(getResources(), R.drawable.heart);
-        //live[0] = BitmapFactory.decodeResource(getResources(), R.drawable.heart);
         live[0] = Bitmap.createScaledBitmap(live[0], width/10, height/10, false);
         live[1] = BitmapFactory.decodeResource(getResources(), R.drawable.heart_broken);
-        //live[1] = BitmapFactory.decodeResource(getResources(), R.drawable.heart_broken);
         live[1] = Bitmap.createScaledBitmap(live[1], width/10, height/10, false);
         tolleranz=blocksize/5;
         tolleranz_block_stehen=mario.getWidth()/2;
@@ -158,9 +176,11 @@ public class mario_gv1 extends View {
         once4=false;
         mario_move();
         gomba_move();
+        vogel_move();
         mario_floorcheck();
         mario_hitcheck();
         mario_events();
+        /*
         if (!init_cameratransition) {
             oldspeed = newspeed;
             newspeed = speedx;
@@ -170,7 +190,7 @@ public class mario_gv1 extends View {
             init_cameratransition = true;
             current_frame = 1;
         }
-
+         */
 
 
         camerax = mariox-width/7;
@@ -197,6 +217,15 @@ public class mario_gv1 extends View {
                 canvas.drawBitmap(gomba, (camerax - gombasx[j]) + width / 2, gombasy[j], null);
             } else {
                 canvas.drawBitmap(gomba2, (camerax - gombasx[j]) + width / 2, gombasy[j], null);
+            }
+            j++;
+        }
+        j=0;
+        while (j<vogelx.length){
+            if (vogel_rechts){
+                canvas.drawBitmap(vogel1, (camerax-vogelx[j]+width/2), vogely[j], null);
+            } else{
+                canvas.drawBitmap(vogel2, (camerax-vogelx[j]+width/2), vogely[j], null);
             }
             j++;
         }
@@ -277,6 +306,32 @@ public class mario_gv1 extends View {
 
     }
 
+    private void vogel_move(){
+        if (framecounter==1){
+            vogel_durchlauf++;
+            if (vogel_durchlauf<3){
+                vogel_rechts=true;
+            } else {
+                vogel_rechts=false;
+            }
+            vogel_durchlauf=vogel_durchlauf%6;
+        }
+        int i =0;
+        while (i<vogelx.length){
+            if (vogel_rechts){
+                vogelx[i]=vogelx[i]-vogelspeedx;
+            } else {
+                vogelx[i]=vogelx[i]+vogelspeedx;
+            }
+            if (framecounter<33){
+                vogely[i]=vogely[i]-vogelspeedy;
+            } else{
+                vogely[i]=vogely[i]+vogelspeedy;
+            }
+            i++;
+        }
+    }
+
     private boolean gomba_floorcheck(int i) {
         int temp = 0;
         while (temp < blocksx.length) {
@@ -353,6 +408,20 @@ public class mario_gv1 extends View {
             }
             temp++;
         }
+        temp = 0;
+        while (temp<vogelx.length){
+            if (vogelx[temp] >= mariox-mario.getWidth() && vogelx[temp] <= mariox+vogel_width){
+                if (vogely[temp]+vogel_height_hit >= marioy+vogel_height_jump && vogely[temp]+vogel_height_hit<= marioy+mario.getHeight()){
+                    hit_spike();
+                    return;
+                }
+                if (vogely[temp] >= marioy-vogel_height_jump && vogely[temp]<= marioy+mario.getHeight()){
+                    kill_vogel(temp);
+                    return;
+                }
+            }
+            temp++;
+        }
 
     }
 
@@ -372,6 +441,13 @@ public class mario_gv1 extends View {
         speedy=-sprungkraft/3;
         doppelsprung=false;
         gombasy[temp]=2* height;
+        score = score + 100;
+    }
+
+    private void kill_vogel(int temp){
+        speedy=-sprungkraft/3;
+        doppelsprung=false;
+        vogely[temp]=2 * height;
         score = score + 100;
     }
 
@@ -628,4 +704,16 @@ public class mario_gv1 extends View {
         }
     }
 
+    private void init_level_vogel(){
+        ArrayList xwerte = new ArrayList<Integer>();
+        ArrayList ywerte = new ArrayList<Integer>();
+
+        xwerte.add(-50*blocksize);
+        ywerte.add(height-9*blocksize);
+        xwerte.add(-3*blocksize);
+        ywerte.add(height-10*blocksize);
+
+        vogelx=convertIntegers(xwerte);
+        vogely=convertIntegers(ywerte);
+    }
 }
