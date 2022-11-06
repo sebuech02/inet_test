@@ -308,12 +308,12 @@ public class mario_gv1 extends View {
 
     private void vogel_move(){
         if (framecounter==1){
-            vogel_durchlauf++;
             if (vogel_durchlauf<3){
                 vogel_rechts=true;
             } else {
                 vogel_rechts=false;
             }
+            vogel_durchlauf++;
             vogel_durchlauf=vogel_durchlauf%6;
         }
         int i =0;

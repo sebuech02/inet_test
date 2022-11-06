@@ -108,6 +108,11 @@ public class spielerstellen extends MainActivity implements View.OnClickListener
                 "        <beschreibung>"+input+"</beschreibung>"+System.lineSeparator() +
                 "        <atf>false</atf>"+System.lineSeparator() +
                 "    </spiel>");
+        build.append(System.lineSeparator());
+        build.append(System.lineSeparator());
+        build.append("Von Token:");
+        build.append(System.lineSeparator());
+        build.append(util.appid);
         String message = build.toString();
         String mail = "sebastian.buechler@tutanota.de";
         javamailapi  mailapi = new javamailapi(this, mail, "Neues Spiel für die Volle Pumpe", message);

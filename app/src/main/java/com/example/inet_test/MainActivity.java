@@ -1,5 +1,6 @@
 package com.example.inet_test;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,11 +9,16 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -53,6 +59,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //pgb.setProgressDrawable(@drawable/carlrot);
         getWebsite();
         pgb.setProgress(66, true);
+
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            return;
+                        }
+                        String token = task.getResult();
+                        Log.i("Hinweis", "token received: " + token);
+                        util.appid=token;
+                    }
+                });
+        FirebaseMessaging.getInstance().subscribeToTopic("alles")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        String msg = "Subscribed";
+                        if (!task.isSuccessful()) {
+                            msg = "Subscribe failed";
+                        }
+                        Log.i("Hinweis",msg);
+                    }
+                });
+
         but1.setOnClickListener(this);
         but2.setOnClickListener(this);
         but3.setOnClickListener(this);
