@@ -23,7 +23,8 @@ Geplante/dran gedachte Features:
   - (Server fehlt)
 *****************
 Fertige Features:
-
+  
+  - Notifications work, speil erstellen sendet Token für persöhnliche Nachricht
   - online Strichliste für Bier bestellen, damit man dem Bierbesteller per knopfdruck klar machen kann was man möchte (Server tot).
   - Kegelspiel mit gameengine (Work in Progress)
   - spiele einlesen aus xml (web-basiert) + rangliste einlesen 
