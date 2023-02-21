@@ -22,6 +22,7 @@ public class zweiteSeite extends MainActivity implements View.OnClickListener{
     private Button random;
     private Button rang;
     private Button bier;
+    private Button pumpen;
     private Button spielmachen;
     private Button kegeln;
     private Button crabby;
@@ -43,7 +44,8 @@ public class zweiteSeite extends MainActivity implements View.OnClickListener{
         atf=(Button) findViewById(R.id.button6);
         random=(Button) findViewById(R.id.button7);
         rang=(Button) findViewById(R.id.button8);
-        bier=(Button) findViewById(R.id.button9);
+        //bier=(Button) findViewById(R.id.button9);
+        pumpen=(Button) findViewById(R.id.button9);
         spielmachen=(Button) findViewById(R.id.button10);
         kegeln =(Button) findViewById(R.id.button11);
         crabby = (Button) findViewById(R.id.button12);
@@ -57,7 +59,8 @@ public class zweiteSeite extends MainActivity implements View.OnClickListener{
         atf.setOnClickListener(this);
         random.setOnClickListener(this);
         rang.setOnClickListener(this);
-        bier.setOnClickListener(this);
+        pumpen.setOnClickListener(this);
+        //bier.setOnClickListener(this);
         spielmachen.setOnClickListener(this);
         kegeln.setOnClickListener(this);
         crabby.setOnClickListener(this);
@@ -97,7 +100,7 @@ public class zweiteSeite extends MainActivity implements View.OnClickListener{
                 startActivity(new Intent(zweiteSeite.this, bestenliste.class));
                 break;
             case R.id.button9:
-                startActivity(new Intent(zweiteSeite.this, anmeldung.class));
+                startActivity(new Intent(zweiteSeite.this, pumpen_hub.class));
                 break;
             case R.id.button10:
                 startActivity(new Intent(zweiteSeite.this, spielerstellen.class));
