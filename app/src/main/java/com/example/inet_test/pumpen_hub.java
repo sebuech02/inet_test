@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -23,6 +24,8 @@ public class pumpen_hub extends MainActivity implements View.OnClickListener {
     public LinearLayout parent;
 
     public Button ep, dum_von, share, reset;
+    private static long LAST_CLICK_TIME = 0;
+    private final int mDoubleClickInterval = 400;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +68,7 @@ public class pumpen_hub extends MainActivity implements View.OnClickListener {
             tv = new TextView(pumpen_hub.this);
             tv.setBackground(this.getResources().getDrawable(R.color.black));
             tv.setTextColor(getResources().getColor(R.color.white));
-            int lenge=25-util.getPumpen().get(util.getSpieler().indexOf(name)).toString().length();
+            int lenge=30-2*util.getSpieler().get(util.getSpieler().indexOf(name)).length();
             int j=0;
             String split="";
             while (j<lenge){
@@ -96,14 +99,44 @@ public class pumpen_hub extends MainActivity implements View.OnClickListener {
         }
     }
 
-
     @Override
     public void onClick(View v) {
         //save_pumpen();
         switch (v.getId()) {
             case R.id.ep: {
                 save_pumpen();
+                build_list(parent);
                 startActivity(new Intent(pumpen_hub.this, spieler_auswahl.class));
+                break;
+            }
+            case R.id.dum_von: {
+                save_pumpen();
+                build_list(parent);
+                startActivity(new Intent(pumpen_hub.this, spieler_auswahl_dummes.class));
+                break;
+            }
+            case R.id.share: {
+                share_pumpen();
+                save_pumpen();
+                build_list(parent);
+                break;
+            }
+            case R.id.reset: {
+                long doubleClickCurrentTime = System.currentTimeMillis();
+                long currentClickTime = System.currentTimeMillis();
+                if (currentClickTime - LAST_CLICK_TIME <= mDoubleClickInterval)
+                {
+                    reset_pumpen();
+                }
+                else
+                {
+                    Toast.makeText(this, "Doppel-Tap für Reset", Toast.LENGTH_SHORT).show();
+                    LAST_CLICK_TIME = System.currentTimeMillis();
+                    // !Warning, Single click action problem
+                }
+                //reset_pumpen();
+                save_pumpen();
+                build_list(parent);
                 break;
             }
             default:{
@@ -122,7 +155,9 @@ public class pumpen_hub extends MainActivity implements View.OnClickListener {
         if (input % 2 == 0) {
             int index = (input - 2) / 2;
             Log.i("Minus",util.getSpieler().get(index));
-            util.minus_pumpe(util.getSpieler().get(index));
+            if (util.getPumpen().get(index)>0){
+                util.minus_pumpe(util.getSpieler().get(index));
+            }
         } else {
             int index = (input - 1) / 2;
             Log.i("Plus",util.getSpieler().get(index));
@@ -151,6 +186,35 @@ public class pumpen_hub extends MainActivity implements View.OnClickListener {
             util.remove_player(name);
             save_pumpen();
         }
+    }
+    public void reset_pumpen(){
+        util.setPumpen(new ArrayList<Integer>());
+        util.setDummes(new ArrayList<Integer>());
+        util.setSpieler(new ArrayList<String>());
+    }
+    public void share_pumpen(){
+        load_pumpen();
+        String share = share_builder();
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, share);
+        sendIntent.setType("text/plain");
+        Intent shareIntent = Intent.createChooser(sendIntent, null);
+        startActivity(shareIntent);
+    }
+    public String share_builder(){
+        int i=0;
+        String output="";
+        ArrayList<String> spieler=util.getSpieler();
+        ArrayList<Integer> pumpen=util.getPumpen();
+        ArrayList<Integer> dummes=util.getDummes();
+        while(i<spieler.size()){
+            output=output+spieler.get(i)+": "+pumpen.get(i)+"  Dummes: "+dummes.get(i);
+            output=output+System.lineSeparator();
+            i++;
+        }
+        output=output+"Glückwunsch an "+spieler.get(0)+" mit seinen "+pumpen.get(0)+" Pumpen."+System.lineSeparator()+"Starke Leistung!";
+        return output;
     }
 }
 
