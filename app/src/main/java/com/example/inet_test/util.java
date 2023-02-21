@@ -59,6 +59,12 @@ public class util {
                 util.dummes.add(0);
                 sort_pumpen();
         }
+        public static void add_spieler_dumm(String name){
+                util.spieler.add(name);
+                util.pumpen.add(0);
+                util.dummes.add(0);
+                sort_pumpen();
+        }
         public static void add_pumpe(String name){
                 int index=util.spieler.indexOf(name);
                 util.pumpen.set(index, pumpen.get(index)+1);
@@ -90,9 +96,10 @@ public class util {
                 // Sort the indices list based on the key
                 Collections.sort(indices, new Comparator<Integer>(){
                         @Override public int compare(Integer i, Integer j) {
-                                return key.get(i).compareTo(key.get(j));
+                                return (-1)*key.get(i).compareTo(key.get(j));
                         }
                 });
+                //Collections.reverse(indices);
 
                 // Create a mapping that allows sorting of the List by N swaps.
                 // Only swaps can be used since we do not know the type of the lists

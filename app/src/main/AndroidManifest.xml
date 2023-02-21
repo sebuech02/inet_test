@@ -48,6 +48,7 @@
         <activity android:name=".spielerstellen"/>
         <activity android:name=".pumpen_hub" />
         <activity android:name=".spieler_auswahl" />
+        <activity android:name=".spieler_auswahl_dummes" />
         <activity android:name=".kegeln"
             android:theme="@style/Theme.Inet_test2"
             android:screenOrientation="portrait"/>

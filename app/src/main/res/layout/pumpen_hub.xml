@@ -22,13 +22,17 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:background="#000000">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="#ffffff"/>
             <Button
                 android:id="@+id/ep"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#ffffff"
                 android:backgroundTint="#000000"
-                android:textSize="22dp"
+                android:textSize="25dp"
                 android:text="Erste Pumpe von"/>
             <Button
                 android:id="@+id/dum_von"
@@ -36,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="#ffffff"
                 android:backgroundTint="#000000"
-                android:textSize="22dp"
+                android:textSize="25dp"
                 android:text="Was Dummes von..."/>
             <Button
                 android:id="@+id/share"
@@ -44,16 +48,20 @@
                 android:layout_height="wrap_content"
                 android:textColor="#ffffff"
                 android:backgroundTint="#000000"
-                android:textSize="22dp"
-                android:text="Pumpen sind vorbei"/>
+                android:textSize="25dp"
+                android:text="Teilen"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="#ff0000"/>
             <Button
                 android:id="@+id/reset"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#ffffff"
-                android:backgroundTint="#000000"
-                android:textSize="22dp"
-                android:text="ALLES Löschen"/>
+                android:backgroundTint="#ffffff"
+                android:text="ALLES Löschen"
+                android:textColor="#000000"
+                android:textSize="15dp" />
         </LinearLayout>
         </LinearLayout>
 

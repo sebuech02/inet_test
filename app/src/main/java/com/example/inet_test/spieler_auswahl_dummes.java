@@ -10,8 +10,9 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
-public class spieler_auswahl extends MainActivity implements View.OnClickListener {
+public class spieler_auswahl_dummes extends MainActivity implements View.OnClickListener {
     private String[] alle_spieler={"#1","Anabol","Wiecklaß","Mexiko","Langer","Redabol","Errich","Zwerg","Spakko","Zugpferd","Tolky","Tolky","Driver","Blome","Jeremias","Moritz","Pasckaal","Timm","Lion", "Gast1","Gast2","Gast3","Gast4","Gast5"};
     private ArrayList<String> spieler;
     private LinearLayout parent;
@@ -19,13 +20,13 @@ public class spieler_auswahl extends MainActivity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.spieler_list);
-        setTitle("Wer tat die Pumpe?");
+        setTitle("Wer tat was Dummes?");
         LinearLayout parent = findViewById(R.id.player_list);
-        spieler=ermittle_delta(alle_spieler);
+        spieler=new ArrayList<>(Arrays.asList(alle_spieler));
         load_pumpen();
         int i=1;
         for (String el: spieler){
-            add_player = new Button(spieler_auswahl.this);
+            add_player = new Button(spieler_auswahl_dummes.this);
             add_player.setId(i);
             add_player.setText(el);
             add_player.setTag(el);
@@ -53,10 +54,13 @@ public class spieler_auswahl extends MainActivity implements View.OnClickListene
         String str = v.getTag().toString();
         Log.i("Hinweis",str);
         if(!(str.equals("null"))) {
-            util.add_spieler(str);
+            if (!util.getSpieler().contains(str)){
+                util.add_spieler_dumm(str);
+            }
+            util.add_dummes(str);
             save_pumpen();
             Log.i("Hinweis",util.getSpieler().toString());
-            Intent actvar = new Intent(spieler_auswahl.this, pumpen_hub.class);
+            Intent actvar = new Intent(spieler_auswahl_dummes.this, pumpen_hub.class);
             startActivity(actvar);
         }
     }
