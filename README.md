@@ -29,3 +29,4 @@ Fertige Features:
   - Kegelspiel mit gameengine (Work in Progress)
   - spiele einlesen aus xml (web-basiert) + rangliste einlesen 
     - hinzufügen von Spielen in der app. (benötigt noch manuelle Freigabe)
+  - Strichliste für die Pumpne in der App bearbeiten und ggf. teilen
