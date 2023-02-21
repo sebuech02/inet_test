@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        tinydb tinydb = new tinydb(this);
         setTitle("Volle Pumpe");
         but1=(Button) findViewById(R.id.but1);
         but2=(ImageButton) findViewById(R.id.but2);
