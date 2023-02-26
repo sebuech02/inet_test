@@ -1,10 +1,13 @@
 package com.example.inet_test;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.icu.text.DateTimePatternGenerator;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -75,11 +78,15 @@ public class pumpen_hub extends MainActivity implements View.OnClickListener {
                 split=split+" ";
                 j++;
             }
-            tv.setText(name + ":" +split+ String.valueOf(util.getPumpen().get(util.getSpieler().indexOf(name))) + "   Dummes: " + String.valueOf(util.getDummes().get(util.getSpieler().indexOf(name))));
+            tv.setText("  "+name + ":" +split+ String.valueOf(util.getPumpen().get(util.getSpieler().indexOf(name))) + "   Dummes: " + String.valueOf(util.getDummes().get(util.getSpieler().indexOf(name))));
+            tv.setTextSize(16);
             bi = new Button(pumpen_hub.this);
             bi.setBackground(this.getResources().getDrawable(R.color.black));
             bi.setTextColor(getResources().getColor(R.color.white));
             bi.setText("+");
+            bi.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            bi.setTextSize(16);
+            bi.setMaxWidth(20);
             bi.setId(i);
             bi.setTag(Integer.toString(i));
             bi.setOnClickListener(this);
@@ -88,6 +95,9 @@ public class pumpen_hub extends MainActivity implements View.OnClickListener {
             bd.setBackground(this.getResources().getDrawable(R.color.black));
             bd.setTextColor(getResources().getColor(R.color.white));
             bd.setText("-");
+            bd.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            bd.setTextSize(16);
+            bd.setMaxWidth(20);
             bd.setId(i);
             bd.setTag(Integer.toString(i));
             bd.setOnClickListener(this);
@@ -134,7 +144,6 @@ public class pumpen_hub extends MainActivity implements View.OnClickListener {
                     LAST_CLICK_TIME = System.currentTimeMillis();
                     // !Warning, Single click action problem
                 }
-                //reset_pumpen();
                 save_pumpen();
                 build_list(parent);
                 break;
@@ -215,6 +224,11 @@ public class pumpen_hub extends MainActivity implements View.OnClickListener {
         }
         output=output+"Glückwunsch an "+spieler.get(0)+" mit seinen "+pumpen.get(0)+" Pumpen."+System.lineSeparator()+"Starke Leistung!";
         return output;
+    }
+
+    public void onBackPressed() {
+        save_pumpen();
+        startActivity(new Intent(pumpen_hub.this, zweiteSeite.class));
     }
 }
 
