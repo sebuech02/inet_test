@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.icu.text.DateTimePatternGenerator;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
@@ -51,6 +52,7 @@ public class pumpen_hub extends MainActivity implements View.OnClickListener {
     }
 
 
+    //@android.support.annotation.RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public void build_list(LinearLayout parent) {
         parent.removeAllViews();
         load_pumpen();

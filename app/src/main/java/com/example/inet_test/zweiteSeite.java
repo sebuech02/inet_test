@@ -27,6 +27,7 @@ public class zweiteSeite extends MainActivity implements View.OnClickListener{
     private Button kegeln;
     private Button crabby;
     private Button mario;
+    private Button helfer;
     private ArrayList<spiel> ubergabe;
     private TextView tv;
 
@@ -50,6 +51,7 @@ public class zweiteSeite extends MainActivity implements View.OnClickListener{
         kegeln =(Button) findViewById(R.id.button11);
         crabby = (Button) findViewById(R.id.button12);
         mario = (Button) findViewById(R.id.button13);
+        helfer = (Button) findViewById(R.id.buttonh);
         ubergabe=spiel_liste.get();
         alles.setOnClickListener(this);
         free.setOnClickListener(this);
@@ -65,6 +67,7 @@ public class zweiteSeite extends MainActivity implements View.OnClickListener{
         kegeln.setOnClickListener(this);
         crabby.setOnClickListener(this);
         mario.setOnClickListener(this);
+        helfer.setOnClickListener(this);
         bier_local.init();
         }
         @Override
@@ -113,6 +116,10 @@ public class zweiteSeite extends MainActivity implements View.OnClickListener{
                 break;
             case R.id.button13:
                 startActivity(new Intent(zweiteSeite.this, mario_splash.class));
+                break;
+            case R.id.buttonh:
+                startActivity(new Intent(zweiteSeite.this, sp_helfer.class));
+                break;
             default:
                 break;
             }
