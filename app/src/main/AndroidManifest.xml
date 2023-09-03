@@ -49,6 +49,10 @@
         <activity android:name=".pumpen_hub" />
         <activity android:name=".spieler_auswahl" />
         <activity android:name=".spieler_auswahl_dummes" />
+        <activity android:name=".sp_helfer"/>
+        <activity android:name=".helfer_wuerfel"/>
+        <activity android:name=".helfer_zufalsz"/>
+        <activity android:name=".helfer_karte"/>
         <activity android:name=".kegeln"
             android:theme="@style/Theme.Inet_test2"
             android:screenOrientation="portrait"/>

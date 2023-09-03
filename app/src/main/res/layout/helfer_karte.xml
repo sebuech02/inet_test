@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kartendeck wählen (Click für Reset)"
+            android:textColor="#ffffff"
+            android:textSize="22dp"
+            android:backgroundTint="#000000"/>
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <RadioButton
+                android:id="@+id/k32"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="32 Karte (Skat)"
+                android:textColor="#ffffff"
+                android:textSize="22dp"
+                android:backgroundTint="#000000"
+                android:onClick="onRadioButtonClicked"/>
+            <RadioButton
+                android:id="@+id/k52"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="52 Karten"
+                android:textColor="#ffffff"
+                android:textSize="22dp"
+                android:backgroundTint="#000000"
+                android:onClick="onRadioButtonClicked"/>
+            <RadioButton
+                android:id="@+id/k56"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="56 Karten (52 + 4 Jocker)"
+                android:textColor="#ffffff"
+                android:textSize="22dp"
+                android:backgroundTint="#000000"
+                android:onClick="onRadioButtonClicked"/>
+        </RadioGroup>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="#ff0000"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ziehen"
+            android:textColor="#ffffff"
+            android:textSize="22dp"
+            android:backgroundTint="#000000"
+            android:id="@+id/do_zieh"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="#ff0000"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ergebnis:"
+            android:textColor="#ffffff"
+            android:textSize="22dp"
+            android:backgroundTint="#000000"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/karten"/>
+    </LinearLayout>
+</ScrollView>

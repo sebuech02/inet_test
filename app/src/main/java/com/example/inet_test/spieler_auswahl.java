@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import java.util.ArrayList;
 
 public class spieler_auswahl extends MainActivity implements View.OnClickListener {
-    private String[] alle_spieler={"#1","Anabol","Wiecklaß","Mexiko","Langer","Redabol","Errich","Zwerg","Spakko","Zugpferd","Tolky","Tolky","Driver","Blome","Jeremias","Moritz","Pasckaal","Timm","Lion", "Gast1","Gast2","Gast3","Gast4","Gast5"};
+    private String[] alle_spieler={"#1","Anabol","Wiecklaß","Mexiko","Langer","Redabol","Errich","Zwerg","Spakko","Zugpferd","Tolky","Tolky","Driver","Blome","Jeremias","Moritz","Pasckaal","Timm","Lion", "Gast1","Gast2","Gast3","Gast4","Gast5","Weizen","Bier", "Schnapps","Cola"};
     private ArrayList<String> spieler;
     private LinearLayout parent;
     private Button add_player;

@@ -1,0 +1,208 @@
+package com.example.inet_test;
+
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Random;
+
+public class helfer_karte extends sp_helfer implements View.OnClickListener {
+    private ArrayList<Integer> gezogenes;
+    private LinearLayout card;
+    private Button ziehen;
+    private RadioButton rb1, rb2, rb3;
+    private int max;
+    private ImageView farbe;
+    private TextView zahl;
+    private LinearLayout zeile;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.helfer_karte);
+        setTitle("Karten-ziehen");
+
+        ziehen=findViewById(R.id.do_zieh);
+        card=findViewById(R.id.karten);
+        rb1=findViewById(R.id.k32);
+        rb2=findViewById(R.id.k52);
+        rb3=findViewById(R.id.k56);
+
+        ziehen.setOnClickListener(this);
+        rb1.setChecked(true);
+        reset_cards();
+    }
+    @Override
+    public void onClick(View v){
+        if (v.getId()==R.id.do_zieh){
+            ziehe_karten();
+        }
+    }
+    public void onRadioButtonClicked(View v){
+        reset_cards();
+    }
+    public void reset_cards(){
+        gezogenes = new ArrayList<Integer>();
+        update_views();
+    }
+    public void ziehe_karten(){
+        max = 32;
+        int min = 1;
+        if (rb1.isChecked()){
+            max=32;
+        } else if (rb2.isChecked()) {
+            max=52;
+        } else if (rb3.isChecked()) {
+            max=56;
+        } else{
+            rb1.setChecked(true);
+        }
+        int zahl =  new Random().nextInt((max - min) + 1) + min;
+        if (!gezogenes.contains(zahl)){
+            gezogenes.add(zahl);
+        } else if (gezogenes.size()==max) {
+            Toast.makeText(this, "Deck ist alle ...", Toast.LENGTH_SHORT).show();
+        } else {
+            ziehe_karten();
+        }
+        update_views();
+    }
+
+    public void update_views(){
+        card.removeAllViews();
+        int i = 0;
+        if (max==32){
+            while (i<gezogenes.size()){
+                zeile=new LinearLayout(this);
+                zeile.setOrientation(LinearLayout.HORIZONTAL);
+                farbe=new ImageView(this);
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(100,100);
+                farbe.setLayoutParams(lp);
+                farbe.setBackgroundColor(Color.parseColor("#ffffff"));
+                zahl=new TextView(this);
+                zahl.setTextColor(Color.parseColor("#ffffff"));
+                zahl.setTextSize(22);
+                int temp = gezogenes.get(gezogenes.size()-1-i);
+                if (temp%4==0){
+                    farbe.setImageDrawable(getDrawable(R.drawable.caro));
+                    zahl.setTextColor(Color.parseColor("#ff0000"));
+                } else if (temp%4==1) {
+                    farbe.setImageDrawable(getDrawable(R.drawable.hearts));
+                    zahl.setTextColor(Color.parseColor("#ff0000"));
+                } else if (temp%4==2) {
+                    farbe.setImageDrawable(getDrawable(R.drawable.pik));
+                } else if (temp%4==3) {
+                    farbe.setImageDrawable(getDrawable(R.drawable.kreuz));
+                }
+                int zz =(int) Math.floor(temp/4)+1+6;
+                if (zz==11){
+                    zahl.setText("Bube");
+                } else if (zz==12) {
+                    zahl.setText("Dame");
+                } else if (zz==13) {
+                    zahl.setText("König");
+                } else if (zz==14) {
+                    zahl.setText("Ass");
+                } else {
+                    zahl.setText(String.valueOf(zz));
+                }
+
+                zeile.addView(farbe);
+                zeile.addView(zahl);
+                card.addView(zeile);
+                i++;
+            }
+        } else if (max==52) {
+            while (i<gezogenes.size()){
+                zeile=new LinearLayout(this);
+                zeile.setOrientation(LinearLayout.HORIZONTAL);
+                farbe=new ImageView(this);
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(100,100);
+                farbe.setLayoutParams(lp);
+                farbe.setBackgroundColor(Color.parseColor("#ffffff"));
+                zahl=new TextView(this);
+                zahl.setTextColor(Color.parseColor("#ffffff"));
+                zahl.setTextSize(22);
+                int temp = gezogenes.get(gezogenes.size()-1-i);
+                if (temp%4==0){
+                    farbe.setImageDrawable(getDrawable(R.drawable.caro));
+                    zahl.setTextColor(Color.parseColor("#ff0000"));
+                } else if (temp%4==1) {
+                    farbe.setImageDrawable(getDrawable(R.drawable.hearts));
+                    zahl.setTextColor(Color.parseColor("#ff0000"));
+                } else if (temp%4==2) {
+                    farbe.setImageDrawable(getDrawable(R.drawable.pik));
+                } else if (temp%4==3) {
+                    farbe.setImageDrawable(getDrawable(R.drawable.kreuz));
+                }
+                int zz =(int) Math.floor(temp/4)+1+1;
+                if (zz==11){
+                    zahl.setText("Bube");
+                } else if (zz==12) {
+                    zahl.setText("Dame");
+                } else if (zz==13) {
+                    zahl.setText("König");
+                } else if (zz==14) {
+                    zahl.setText("Ass");
+                } else {
+                    zahl.setText(String.valueOf(zz));
+                }
+
+                zeile.addView(farbe);
+                zeile.addView(zahl);
+                card.addView(zeile);
+                i++;
+            }
+
+        } else if (max==56) {
+            while (i<gezogenes.size()){
+                zeile=new LinearLayout(this);
+                zeile.setOrientation(LinearLayout.HORIZONTAL);
+                farbe=new ImageView(this);
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(100,100);
+                farbe.setLayoutParams(lp);
+                farbe.setBackgroundColor(Color.parseColor("#ffffff"));
+                zahl=new TextView(this);
+                zahl.setTextColor(Color.parseColor("#ffffff"));
+                zahl.setTextSize(22);
+                int temp = gezogenes.get(gezogenes.size()-1-i);
+                if (temp%4==0){
+                    farbe.setImageDrawable(getDrawable(R.drawable.caro));
+                    zahl.setTextColor(Color.parseColor("#ff0000"));
+                } else if (temp%4==1) {
+                    farbe.setImageDrawable(getDrawable(R.drawable.hearts));
+                    zahl.setTextColor(Color.parseColor("#ff0000"));
+                } else if (temp%4==2) {
+                    farbe.setImageDrawable(getDrawable(R.drawable.pik));
+                } else if (temp%4==3) {
+                    farbe.setImageDrawable(getDrawable(R.drawable.kreuz));
+                }
+                int zz =(int) Math.floor(temp/4)+1+1;
+                if (zz==11){
+                    zahl.setText("Bube");
+                } else if (zz==12) {
+                    zahl.setText("Dame");
+                } else if (zz==13) {
+                    zahl.setText("König");
+                } else if (zz==14) {
+                    zahl.setText("Ass");
+                } else if (zz==15) {
+                    zahl.setText("Jocker");
+                    zahl.setTextColor(Color.parseColor("#0000ff"));
+                } else {
+                    zahl.setText(String.valueOf(zz));
+                }
+                zeile.addView(farbe);
+                zeile.addView(zahl);
+                card.addView(zeile);
+                i++;
+            }
+        }
+    }
+}
