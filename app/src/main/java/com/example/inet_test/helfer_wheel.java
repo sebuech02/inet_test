@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -89,6 +90,7 @@ public class helfer_wheel extends sp_helfer implements View.OnClickListener {
             tv.setLayoutParams(lp);
             if (current_pick==i){
                 tv.setTextColor(Color.parseColor("#ff0000"));
+                Toast.makeText(this, objects.get(i), Toast.LENGTH_SHORT).show();
             }
             lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             lp.setMargins(1,11,1,11);
