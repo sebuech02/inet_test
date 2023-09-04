@@ -16,11 +16,11 @@ Spiele können in der App erstellt und an mich zur überprüfung gesendet werden
 ********************************
 Geplante/dran gedachte Features:
 
-  - Einstellungen mit option die Sortierung zu ändern
   - alle Daten auf SQL-server packen
   - Animationen und visuals
   - Spiele online sync mit erstellen
   - (Server fehlt)
+  - vielleicht helfer für Hausnummer oder strichliste
 *****************
 Fertige Features:
   
@@ -30,3 +30,9 @@ Fertige Features:
   - spiele einlesen aus xml (web-basiert) + rangliste einlesen 
     - hinzufügen von Spielen in der app. (benötigt noch manuelle Freigabe)
   - Strichliste für die Pumpne in der App bearbeiten und ggf. teilen
+  - Einstellungen mit option die Sortierung zu ändern
+  - spielehelfer, die verschiedene Funktionen haben
+      - Zufallszahl von bis
+      - Karteziehen mehrere Decks
+      - würfeln (belibig viele)
+      - 5er spiel erweitert als helfer 
