@@ -1,3 +1,28 @@
 <resources>
     <string name="app_name">Volle Pumpe</string>
+    <string-array name="cards">
+        <item>1 Exen</item>
+        <item>Gegenüber ext</item>
+        <item>Ein Spieler deiner whal ext</item>
+        <item>Zwei Plätze weiter rechts ext</item>
+        <item>Du ext im doppel mit jemand anderem</item>
+        <item>Der nächste auf der Tafel ext</item>
+        <item>Du ext 1</item>
+        <item>Beidhändig, also 2 auf ex</item>
+        <item>Demokratisch eins verteilen</item>
+        <item>Beide Nachbarn Recht und Links mit dir</item>
+        <item>2 Verteilen (auch gerne zwei an dich selbst)</item>
+        <item>Der letzte Pumpus-Rex ext (oder neue Karte falls nicht da)</item>
+        <item>Die nächsten 2 und du spielen Pumpus-Rex um den Schnapps</item>
+        <item>Eins mit Links exen</item>
+        <item>Einen Exen oder die nächste Karte zählt doppelt, deine Wahl.</item>
+        <item>Der nächste Wurf bestimmt wer wie viele Plätze weiter mit dir zusammen trinkt (Es kann auch 2 auf dich fallen)</item>
+        <item>Die nächsten beiden Stechen wer mit dir trinken darf</item>
+        <item>Zwei aussuchen, die mit dir trinken</item>
+        <item>Rest vom eigenen Bier exen</item>
+        <item>Runde für alle (Skip falls nicht genug da ist)</item>
+        <item>Fahrer-Karte.\n Gibt nix</item>
+        <item>Werfen und je nach Ergebniss trinken\n Weniger als 5: eins auf Ex\n 5: Nix\n Mehr als 5: Zwei auf Ex</item>
+        <item>Eins ohne Hände trinken. Bei Bier auf Kante trinken.</item>
+    </string-array>
 </resources>

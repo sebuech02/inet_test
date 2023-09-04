@@ -16,7 +16,7 @@ import java.util.Random;
 public class helfer_karte extends sp_helfer implements View.OnClickListener {
     private ArrayList<Integer> gezogenes;
     private LinearLayout card;
-    private Button ziehen;
+    private Button mischen, stapel;
     private RadioButton rb1, rb2, rb3;
     private int max;
     private ImageView farbe;
@@ -28,24 +28,53 @@ public class helfer_karte extends sp_helfer implements View.OnClickListener {
         setContentView(R.layout.helfer_karte);
         setTitle("Karten-ziehen");
 
-        ziehen=findViewById(R.id.do_zieh);
         card=findViewById(R.id.karten);
         rb1=findViewById(R.id.k32);
         rb2=findViewById(R.id.k52);
         rb3=findViewById(R.id.k56);
+        mischen=findViewById(R.id.do_shuffle);
+        stapel=findViewById(R.id.rest_haufen);
 
-        ziehen.setOnClickListener(this);
         rb1.setChecked(true);
+        max=32;
+        mischen.setOnClickListener(this);
+        stapel.setOnClickListener(this);
         reset_cards();
+        update_views();
     }
     @Override
     public void onClick(View v){
-        if (v.getId()==R.id.do_zieh){
+        if (v.getId()==R.id.rest_haufen){
             ziehe_karten();
+        } else if (v.getId()==R.id.do_shuffle) {
+            reset_cards();
         }
     }
     public void onRadioButtonClicked(View v){
-        reset_cards();
+        if (v.getId()==R.id.k32){
+            if (max==32) {
+                return;
+            } else {
+                max=32;
+                reset_cards();
+            }
+        } else if (v.getId()==R.id.k52){
+            if (max==52){
+                return;
+            } else{
+                max=52;
+                reset_cards();
+            }
+        } else if (v.getId()==R.id.k56) {
+            if (max==56){
+                return;
+            } else {
+                max=56;
+                reset_cards();
+            }
+        } else {
+            reset_cards();
+        }
     }
     public void reset_cards(){
         gezogenes = new ArrayList<Integer>();
@@ -203,6 +232,10 @@ public class helfer_karte extends sp_helfer implements View.OnClickListener {
                 card.addView(zeile);
                 i++;
             }
+        }
+        stapel.setText(String.valueOf(max-gezogenes.size()));
+        if (max-gezogenes.size()<10){
+            stapel.setText("0"+String.valueOf(max-gezogenes.size()));
         }
     }
 }

@@ -26,6 +26,20 @@ public class util {
         public static ArrayList<String> spieler;
         public static ArrayList<Integer> pumpen;
         public static ArrayList<Integer> dummes;
+        public static boolean name_sort;
+        public static void setName_sort(boolean in){
+                name_sort=in;
+        }
+        public static boolean getName_sort(){
+                return name_sort;
+        }
+        public static boolean rev_sort;
+        public static void setRev_sort(boolean in){
+                rev_sort=in;
+        }
+        public static boolean getRev_sort(){
+                return rev_sort;
+        }
 
         public static ArrayList<String> getSpieler(){
                 return spieler;

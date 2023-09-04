@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000000">
@@ -9,12 +10,46 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:backgroundTint="#000000">
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Baustelle, hier wird noch geschuftett."
-            android:textSize="44dp"
+            android:text="Sortieren nach:"
+            android:textSize="22dp"
             android:textColor="#ffffff" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="#ff0000"/>
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <RadioButton
+                android:id="@+id/sname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nach Spielname A-Z"
+                android:textColor="#ffffff"
+                android:textSize="22dp"
+                android:backgroundTint="#000000"
+                android:onClick="onRadioButtonClicked"/>
+            <RadioButton
+                android:id="@+id/sid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nach ID (Neuste unten)"
+                android:textColor="#ffffff"
+                android:textSize="22dp"
+                android:backgroundTint="#000000"
+                android:onClick="onRadioButtonClicked"/>
+        </RadioGroup>
+        <CheckBox
+            android:id="@+id/sreverse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sortierung umkehren (Neuste und Z oben)"
+            android:textColor="#ffffff"
+            android:textSize="22dp"
+            android:backgroundTint="#000000"/>
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

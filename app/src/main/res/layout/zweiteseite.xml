@@ -76,6 +76,10 @@
             android:backgroundTint="#000000"
             android:text="Random Spiel"
             app:layout_constraintEnd_toEndOf="parent" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="#ff0000"/>
         <Button
             android:id="@+id/button8"
             android:layout_width="match_parent"
@@ -124,6 +128,10 @@
             android:backgroundTint="#000000"
             android:text="Hilfsmittel für Spiele"
             app:layout_constraintEnd_toEndOf="parent" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="#ff0000"/>
         <Button
             android:id="@+id/button11"
             android:layout_width="match_parent"

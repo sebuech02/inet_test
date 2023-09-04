@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import java.util.Comparator;
 import java.util.Random;
 
 import androidx.annotation.RequiresApi;
@@ -69,7 +71,8 @@ public class zweiteSeite extends MainActivity implements View.OnClickListener{
         mario.setOnClickListener(this);
         helfer.setOnClickListener(this);
         bier_local.init();
-        }
+
+    }
         @Override
     public void onClick(View v){
         switch(v.getId()){
