@@ -49,9 +49,14 @@ public class helfer_wuerfel extends sp_helfer implements View.OnClickListener {
         final int max = 6;
         int erg = 0;
         String temp = et.getText().toString();
-        input=Integer.parseInt(temp);
+        try {
+            input=Integer.parseInt(temp);
+        } catch (Exception e){
+            input=0;
+        }
         if(input<1){
             input=1;
+            et.setText("1");
         }
 
         int i = 0;

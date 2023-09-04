@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Random;
 
@@ -35,9 +36,27 @@ public class helfer_zufalsz extends sp_helfer implements View.OnClickListener {
     private void gen_zz(){
         int min, max;
         String temp = et_min.getText().toString();
-        min = Integer.parseInt(temp);
+        try {
+            min = Integer.parseInt(temp);
+        } catch (Exception e){
+            min=0;
+            et_min.setText("0");
+        }
         temp = et_max.getText().toString();
-        max = Integer.parseInt(temp);
+        try {
+            max = Integer.parseInt(temp);
+        } catch (Exception e){
+            max=0;
+            et_max.setText("0");
+        }
+        if (max<min){
+            int tt = max;
+            max=min;
+            min=tt;
+            //Toast.makeText(this, "Max kliener als Min.", Toast.LENGTH_SHORT).show();
+            et_min.setText(String.valueOf(min));
+            et_max.setText(String.valueOf(max));
+        }
         int zahl = new Random().nextInt((max - min) + 1) + min;
         erg.setText(String.valueOf(zahl));
     }
