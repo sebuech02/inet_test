@@ -24,5 +24,26 @@
         <item>Fahrer-Karte.\n Gibt nix</item>
         <item>Werfen und je nach Ergebniss trinken\n Weniger als 5: eins auf Ex\n 5: Nix\n Mehr als 5: Zwei auf Ex</item>
         <item>Eins ohne Hände trinken. Bei Bier auf Kante trinken.</item>
+        <item>Per Zufallsauswahl aus dem Glucksrad</item>
+    </string-array>
+    <string-array name="team">
+        <item>#1</item>
+        <item>Anabol</item>
+        <item>Wiecklaß</item>
+        <item>Mexiko</item>
+        <item>Langer</item>
+        <item>Redabol</item>
+        <item>Errich</item>
+        <item>Zwerg</item>
+        <item>Spakko</item>
+        <item>Zugpferd</item>
+        <item>Tolky</item>
+        <item>Driver</item>
+        <item>Blome</item>
+        <item>Jeremias</item>
+        <item>Moritz</item>
+        <item>Pasckaal</item>
+        <item>Timm</item>
+        <item>Lion</item>
     </string-array>
 </resources>
