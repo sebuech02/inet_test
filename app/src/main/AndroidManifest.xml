@@ -53,6 +53,7 @@
         <activity android:name=".helfer_zufalsz"/>
         <activity android:name=".helfer_karte"/>
         <activity android:name=".helfer_schnapps"/>
+        <activity android:name=".helfer_wheel"/>
         <activity android:name=".kegeln"
             android:theme="@style/Theme.Inet_test2"
             android:screenOrientation="portrait"/>

@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.Button;
 
 public class sp_helfer extends zweiteSeite implements View.OnClickListener{
-    private Button wuerf, zz, karte, schnapps;
+    private Button wuerf, zz, karte, schnapps, wheel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,11 +17,13 @@ public class sp_helfer extends zweiteSeite implements View.OnClickListener{
         zz=findViewById(R.id.z_zahl);
         karte=findViewById(R.id.karte);
         schnapps=findViewById(R.id.schnapps);
+        wheel=findViewById(R.id.wheel);
 
         wuerf.setOnClickListener(this);
         zz.setOnClickListener(this);
         karte.setOnClickListener(this);
         schnapps.setOnClickListener(this);
+        wheel.setOnClickListener(this);
     }
 
     @Override
@@ -41,6 +43,10 @@ public class sp_helfer extends zweiteSeite implements View.OnClickListener{
             }
             case R.id.schnapps:{
                 startActivity(new Intent(sp_helfer.this, helfer_schnapps.class));
+                break;
+            }
+            case R.id.wheel:{
+                startActivity(new Intent(sp_helfer.this, helfer_wheel.class));
                 break;
             }
             default:{

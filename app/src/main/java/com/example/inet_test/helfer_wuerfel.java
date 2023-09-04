@@ -44,7 +44,7 @@ public class helfer_wuerfel extends sp_helfer implements View.OnClickListener {
 
     private void do_wuerfel(){
         int input = 1;
-        int zahl =1;
+        int zahl = 1;
         final int min = 1;
         final int max = 6;
         int erg = 0;
