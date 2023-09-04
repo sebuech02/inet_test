@@ -9,48 +9,12 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Kartendeck wählen:"
+            android:text="Karte Ziehen: "
             android:textColor="#ffffff"
             android:textSize="22dp"
             android:backgroundTint="#000000"/>
-        <RadioGroup
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <RadioButton
-                android:id="@+id/k32"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="32 Karte (Skat)"
-                android:textColor="#ffffff"
-                android:textSize="22dp"
-                android:backgroundTint="#000000"
-                android:onClick="onRadioButtonClicked"/>
-            <RadioButton
-                android:id="@+id/k52"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="52 Karten"
-                android:textColor="#ffffff"
-                android:textSize="22dp"
-                android:backgroundTint="#000000"
-                android:onClick="onRadioButtonClicked"/>
-            <RadioButton
-                android:id="@+id/k56"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="56 Karten (52 + 4 Jocker)"
-                android:textColor="#ffffff"
-                android:textSize="22dp"
-                android:backgroundTint="#000000"
-                android:onClick="onRadioButtonClicked"/>
-        </RadioGroup>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:background="#ff0000"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -66,24 +30,24 @@
                 android:textColor="#ffffff"
                 android:layout_margin="22dp"
                 android:textSize="88dp"
-                android:id="@+id/rest_haufen"/>
+                android:id="@+id/anzahl_karten"/>
         </LinearLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="5dp"
             android:background="#ff0000"/>
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ergebnis:"
+            android:text="Karten-Verlauf: "
             android:textColor="#ffffff"
             android:textSize="22dp"
             android:backgroundTint="#000000"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:id="@+id/karten"/>
+            android:orientation="horizontal"
+            android:id="@+id/verlauf_karten"/>
         <View
             android:layout_width="match_parent"
             android:layout_height="5dp"
@@ -91,10 +55,12 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Mischen bitte"
+            android:gravity="center_horizontal"
+            android:textAlignment="center"
+            android:text="Karten neu mischen"
             android:textColor="#ffffff"
             android:textSize="22dp"
             android:backgroundTint="#000000"
-            android:id="@+id/do_shuffle"/>
+            android:id="@+id/misch_karten"/>
     </LinearLayout>
 </ScrollView>

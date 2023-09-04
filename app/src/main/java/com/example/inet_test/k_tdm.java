@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import androidx.annotation.RequiresApi;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class k_tdm extends MainActivity implements View.OnClickListener {
     LinearLayout parent;
@@ -27,6 +28,14 @@ public class k_tdm extends MainActivity implements View.OnClickListener {
         parent=(LinearLayout)findViewById(R.id.ll_parentlayout);
         setTitle("Wand gegen Tafel");
         ubergabe=spiel_liste.get();
+        if (util.getName_sort()){
+            ubergabe.sort(new spiel_name_comp());
+        }else {
+            ubergabe.sort(new spiel_id_comp());
+        }
+        if (util.getRev_sort()){
+            Collections.reverse(ubergabe);
+        }
         int i=ubergabe.size();
         String btn_name[] = new String[i];
         int j=0;

@@ -32,6 +32,14 @@
             android:textSize="22dp"
             android:backgroundTint="#000000"
             android:id="@+id/karte"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="5er Schnapps-Karten"
+            android:textColor="#ffffff"
+            android:textSize="22dp"
+            android:backgroundTint="#000000"
+            android:id="@+id/schnapps"/>
     </LinearLayout>
 
 </ScrollView>

@@ -6,9 +6,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -60,6 +62,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //pgb.setProgressDrawable(@drawable/carlrot);
         getWebsite();
         pgb.setProgress(66, true);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        util.setName_sort(prefs.getBoolean("sname", false));
+        util.setRev_sort(prefs.getBoolean("srev", false));
 
         FirebaseMessaging.getInstance().getToken()
                 .addOnCompleteListener(new OnCompleteListener<String>() {

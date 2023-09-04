@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.inet_test">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION"/>
     <uses-permission android:name="android.permission.HIGH_SAMPLING_RATE_SENSORS"/>
@@ -53,6 +52,7 @@
         <activity android:name=".helfer_wuerfel"/>
         <activity android:name=".helfer_zufalsz"/>
         <activity android:name=".helfer_karte"/>
+        <activity android:name=".helfer_schnapps"/>
         <activity android:name=".kegeln"
             android:theme="@style/Theme.Inet_test2"
             android:screenOrientation="portrait"/>
