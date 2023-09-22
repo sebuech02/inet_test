@@ -199,7 +199,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 ranglisten_daten.set_misc(misc);
                 Collections.sort(score, new strintstrComparator());
                 bereinige(score);
-                ranglisten_daten.set_scores(score_temp);
+                ranglisten_daten.set_scores(score);
             } catch(Exception e){
                 //startActivity(new Intent(MainActivity.this, main_game.class));
                 //Toast.makeText(getApplicationContext(),"ERROR, keine Spiele", Toast.LENGTH_LONG).show();

@@ -22,6 +22,7 @@ public class helfer_karte extends sp_helfer implements View.OnClickListener {
     private ImageView farbe;
     private TextView zahl;
     private LinearLayout zeile;
+    private tinydb db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,11 +36,34 @@ public class helfer_karte extends sp_helfer implements View.OnClickListener {
         mischen=findViewById(R.id.do_shuffle);
         stapel=findViewById(R.id.rest_haufen);
 
-        rb1.setChecked(true);
-        max=32;
+
         mischen.setOnClickListener(this);
         stapel.setOnClickListener(this);
-        reset_cards();
+
+        db=new tinydb(this);
+        try {
+            gezogenes=db.getListInt("karte_helfer");
+        } catch (Exception e){
+            System.out.println(e.toString());
+            gezogenes=new ArrayList<Integer>();
+            db.putListInt("karte_helfer", gezogenes);
+        }
+        try {
+            max=db.getInt("karte_helfer_max");
+            if(max==32){
+                rb1.setChecked(true);
+            } else if (max==52) {
+                rb2.setChecked(true);
+            } else if (max==56) {
+                rb3.setChecked(true);
+            }
+        } catch (Exception e){
+            System.out.println(e.toString());
+            max=32;
+            rb1.setChecked(true);
+            db.putInt("karte_helfer_max", max);
+        }
+
         update_views();
     }
     @Override
@@ -104,6 +128,8 @@ public class helfer_karte extends sp_helfer implements View.OnClickListener {
     }
 
     public void update_views(){
+        db.putListInt("karte_helfer", gezogenes);
+        db.putInt("karte_helfer_max", max);
         card.removeAllViews();
         int i = 0;
         if (max==32){

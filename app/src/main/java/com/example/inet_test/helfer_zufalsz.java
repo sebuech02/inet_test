@@ -7,12 +7,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class helfer_zufalsz extends sp_helfer implements View.OnClickListener {
     private Button eingabe;
     private EditText et_min, et_max;
     private TextView erg;
+    private int zzahl, zmax, zmin;
+    private tinydb db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +27,32 @@ public class helfer_zufalsz extends sp_helfer implements View.OnClickListener {
         erg=findViewById(R.id.erg_zz);
 
         eingabe.setOnClickListener(this);
+
+        db=new tinydb(this);
+        try {
+            zzahl=db.getInt("zzahl_helfer");
+            erg.setText(String.valueOf(zzahl));
+        } catch (Exception e){
+            System.out.println(e.toString());
+            zzahl=0;
+            db.putInt("zzahl_helfer", zzahl);
+        }
+        try {
+            zmax=db.getInt("zmax_helfer");
+        } catch (Exception e){
+            System.out.println(e.toString());
+            zmax=0;
+            db.putInt("zmax_helfer", zmax);
+        }
+        et_max.setText(String.valueOf(zmax));
+        try {
+            zmin=db.getInt("zmin_helfer");
+        } catch (Exception e){
+            System.out.println(e.toString());
+            zmin=9;
+            db.putInt("zmin_helfer", zmin);
+        }
+        et_min.setText(String.valueOf(zmin));
     }
 
     @Override
@@ -54,10 +83,14 @@ public class helfer_zufalsz extends sp_helfer implements View.OnClickListener {
             max=min;
             min=tt;
             //Toast.makeText(this, "Max kliener als Min.", Toast.LENGTH_SHORT).show();
-            et_min.setText(String.valueOf(min));
-            et_max.setText(String.valueOf(max));
         }
+        et_min.setText(String.valueOf(min));
+        et_max.setText(String.valueOf(max));
+        db.putInt("zmin_helfer", min);
+        db.putInt("zmax_helfer", max);
         int zahl = new Random().nextInt((max - min) + 1) + min;
-        erg.setText(String.valueOf(zahl));
+        zzahl=zahl;
+        db.putInt("zzahl_helfer", zzahl);
+        erg.setText(String.valueOf(zzahl));
     }
 }

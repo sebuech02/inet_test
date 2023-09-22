@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hinzufügen"
+                android:gravity="right"
+                android:textColor="#ffffff"
+                android:textSize="22dp"
+                android:backgroundTint="#000000"
+                android:id="@+id/do_add"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="#ff0000"
+                android:textSize="22dp"
+                android:backgroundTint="#ff0000"
+                android:gravity="left"
+                android:id="@+id/et_obj"/>
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="#ff0000"/>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="3">
+
+            <Button
+                android:layout_margin="10dp"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_columnWeight="1"
+                android:gravity="center"
+                android:background="@drawable/shape_cad"
+                android:layout_gravity="fill_horizontal"
+                android:backgroundTint="#ff0000"
+                android:textSize="55dp"
+                android:id="@+id/plus1"
+                android:text="1" />
+
+            <Button
+                android:layout_margin="10dp"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_columnWeight="1"
+                android:gravity="center"
+                android:background="@drawable/shape_cad"
+                android:layout_gravity="fill_horizontal"
+                android:backgroundTint="#ff0000"
+                android:textSize="55dp"
+                android:id="@+id/plus2"
+                android:text="2" />
+            <Button
+                android:layout_margin="10dp"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_columnWeight="1"
+                android:gravity="center"
+                android:background="@drawable/shape_cad"
+                android:layout_gravity="fill_horizontal"
+                android:backgroundTint="#ff0000"
+                android:textSize="55dp"
+                android:id="@+id/plus3"
+                android:text="3" />
+            <Button
+                android:layout_margin="10dp"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_columnWeight="1"
+                android:gravity="center"
+                android:background="@drawable/shape_cad"
+                android:layout_gravity="fill_horizontal"
+                android:backgroundTint="#ff0000"
+                android:textSize="55dp"
+                android:id="@+id/plus4"
+                android:text="4" />
+            <Button
+                android:layout_margin="10dp"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_columnWeight="1"
+                android:gravity="center"
+                android:background="@drawable/shape_cad"
+                android:layout_gravity="fill_horizontal"
+                android:backgroundTint="#ff0000"
+                android:textSize="55dp"
+                android:id="@+id/plus5"
+                android:text="5" />
+
+            <Button
+                android:layout_margin="10dp"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_columnWeight="1"
+                android:gravity="center"
+                android:background="@drawable/shape_cad"
+                android:layout_gravity="fill_horizontal"
+                android:backgroundTint="#ff0000"
+                android:textSize="55dp"
+                android:id="@+id/plus6"
+                android:text="6" />
+
+            <Button
+                android:layout_margin="10dp"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_columnWeight="1"
+                android:gravity="center"
+                android:background="@drawable/shape_cad"
+                android:layout_gravity="fill_horizontal"
+                android:backgroundTint="#ff0000"
+                android:textSize="55dp"
+                android:id="@+id/plus7"
+                android:text="7" />
+            <Button
+                android:layout_margin="10dp"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_columnWeight="1"
+                android:gravity="center"
+                android:background="@drawable/shape_cad"
+                android:layout_gravity="fill_horizontal"
+                android:backgroundTint="#ff0000"
+                android:textSize="55dp"
+                android:id="@+id/plus8"
+                android:text="8" />
+            <Button
+                android:layout_margin="10dp"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_columnWeight="1"
+                android:gravity="center"
+                android:background="@drawable/shape_cad"
+                android:layout_gravity="fill_horizontal"
+                android:backgroundTint="#ff0000"
+                android:textSize="55dp"
+                android:id="@+id/plus9"
+                android:text="9" />
+            <Button
+                android:layout_margin="10dp"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_columnWeight="1"
+                android:gravity="center"
+                android:background="@drawable/shape_cad"
+                android:layout_gravity="fill_horizontal"
+                android:backgroundTint="#ff0000"
+                android:textSize="55dp"
+                android:id="@+id/plus0"
+                android:text="0" />
+            <Button
+                android:layout_margin="10dp"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_columnWeight="1"
+                android:gravity="center"
+                android:background="@drawable/shape_cad"
+                android:textSize="55dp"
+                android:layout_gravity="fill_horizontal"
+                android:backgroundTint="#ff0000"
+                android:id="@+id/plusp"
+                android:text="P" />
+        </GridLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="#ff0000"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/choosable_list"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="#ff0000"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Alle Kegler hinzufügen"
+            android:textColor="#ffffff"
+            android:textSize="22dp"
+            android:backgroundTint="#000000"
+            android:id="@+id/do_ffa"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Wand/Tafel hinzufügen"
+            android:textColor="#ffffff"
+            android:textSize="22dp"
+            android:backgroundTint="#000000"
+            android:id="@+id/do_team"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="#ff0000"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Würfe zurücksetzen"
+            android:textColor="#ffffff"
+            android:textSize="22dp"
+            android:backgroundTint="#000000"
+            android:id="@+id/do_del_werte"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Alle Spieler löschen"
+            android:textColor="#ffffff"
+            android:textSize="22dp"
+            android:backgroundTint="#000000"
+            android:id="@+id/do_del_alles"/>
+    </LinearLayout>
+</ScrollView>

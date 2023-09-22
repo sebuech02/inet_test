@@ -48,6 +48,14 @@
             android:textSize="22dp"
             android:backgroundTint="#000000"
             android:id="@+id/wheel"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Punkte Zählen"
+            android:textColor="#ffffff"
+            android:textSize="22dp"
+            android:backgroundTint="#000000"
+            android:id="@+id/zahler"/>
     </LinearLayout>
 
 </ScrollView>

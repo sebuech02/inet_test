@@ -17,6 +17,7 @@ public class helfer_schnapps extends sp_helfer implements View.OnClickListener {
     private String[] karten;
     private ArrayList<Integer> gezogens;
     private TextView zahl;
+    private tinydb db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +31,15 @@ public class helfer_schnapps extends sp_helfer implements View.OnClickListener {
 
         ziehen.setOnClickListener(this);
         shuffle.setOnClickListener(this);
-        reset_schnapps();
+
+        try {
+            gezogens=db.getListInt("schnapps_helfer");
+        } catch (Exception e){
+            System.out.println(e.toString());
+            gezogens=new ArrayList<Integer>();
+            db.putListInt("schnapps_helfer", gezogens);
+        }
+        show_schnapps();
     }
 
     @Override
@@ -56,6 +65,7 @@ public class helfer_schnapps extends sp_helfer implements View.OnClickListener {
     }
 
     private void show_schnapps(){
+        db.putListInt("schnapps_helfer", gezogens);
         parent.removeAllViews();
         parent.setOrientation(LinearLayout.VERTICAL);
         ziehen.setText(String.valueOf(karten.length-gezogens.size()));
@@ -63,17 +73,12 @@ public class helfer_schnapps extends sp_helfer implements View.OnClickListener {
             ziehen.setText("0"+String.valueOf(karten.length-gezogens.size()));
         }
         ziehen.setBackground(getDrawable(R.drawable.shape_cad));
-        //ziehen.setBackgroundColor(Color.parseColor("#757575"));
         int i = 0;
         while (i<gezogens.size()){
             zahl=new TextView(this);
             zahl.setTextColor(Color.parseColor("#ffffff"));
             zahl.setTextSize(22);
-            //System.out.println(gezogens.size()-1-i);
-            //System.out.println(gezogens.get(gezogens.size()-1-i));
-            //System.out.println(karten[gezogens.get(gezogens.size()-1-i)]);
-            //zahl.setText("TREST");
-            zahl.setText(karten[gezogens.get(gezogens.size()-1-i)]);
+            zahl.setText(karten[(int) (gezogens.get((int) (gezogens.size()-1-i)))]);
             if (i==0){
                 zahl.setTextColor(Color.parseColor("#ff0000"));
             }
@@ -94,7 +99,7 @@ public class helfer_schnapps extends sp_helfer implements View.OnClickListener {
         } else if (gezogens.size()==karten.length) {
             Toast.makeText(this, "Keine Karten übrig", Toast.LENGTH_SHORT).show();
         } else{
-            gezogens.add(rn);
+            gezogens.add((int) rn);
             show_schnapps();
         }
     }
