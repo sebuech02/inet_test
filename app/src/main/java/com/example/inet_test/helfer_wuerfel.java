@@ -18,6 +18,8 @@ public class helfer_wuerfel extends sp_helfer implements View.OnClickListener {
     private TextView tv;
     private ImageView iv;
     private LinearLayout zeile;
+    private tinydb db;
+    private int anzahl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +34,16 @@ public class helfer_wuerfel extends sp_helfer implements View.OnClickListener {
         parent=findViewById(R.id.erg_parent);
 
         wuerfel.setOnClickListener(this);
+
+        db=new tinydb(this);
+        try {
+            anzahl=db.getInt("wurfel_helfer");
+        } catch (Exception e){
+            System.out.println(e.toString());
+            anzahl=11;
+            db.putInt("wurfel_helfer", anzahl);
+        }
+        et.setText(String.valueOf(anzahl));
     }
     @Override
     public void onClick(View v){
@@ -58,7 +70,7 @@ public class helfer_wuerfel extends sp_helfer implements View.OnClickListener {
             input=1;
             et.setText("1");
         }
-
+        db.putInt("wurfel_helfer", input);
         int i = 0;
         while (i<input){
             if (i%5==4){

@@ -25,6 +25,7 @@
         <item>Werfen und je nach Ergebniss trinken\n Weniger als 5: eins auf Ex\n 5: Nix\n Mehr als 5: Zwei auf Ex</item>
         <item>Eins ohne Hände trinken. Bei Bier auf Kante trinken.</item>
         <item>Per Zufallsauswahl aus dem Glucksrad</item>
+        <item>Auf das Glücksrad wird null, eins oder zwei eingetragen. Was kommt ist was du ext.</item>
     </string-array>
     <string-array name="team">
         <item>#1</item>

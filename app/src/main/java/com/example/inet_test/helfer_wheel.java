@@ -21,6 +21,7 @@ public class helfer_wheel extends sp_helfer implements View.OnClickListener {
     private TextView tv;
     private ArrayList<String> objects = new ArrayList<>();
     private int current_pick;
+    private tinydb db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +37,23 @@ public class helfer_wheel extends sp_helfer implements View.OnClickListener {
         add.setOnClickListener(this);
         pick.setOnClickListener(this);
         team.setOnClickListener(this);
-        current_pick=-1;
+
+        db=new tinydb(this);
+        try {
+            current_pick=db.getObject("wheel_helfer_pick", int.class);
+        } catch (Exception e){
+            System.out.println(e.toString());
+            current_pick=-1;
+            db.putObject("wheel_helfer_pick", current_pick);
+        }
+        try {
+            objects=db.getObject("wheel_helfer_obj", ArrayList.class);
+        } catch (Exception e){
+            System.out.println(e.toString());
+            objects=new ArrayList<>();
+            db.putObject("wheel_helfer_obj", objects);
+        }
+        update_views();
     }
 
     @Override
@@ -73,6 +90,8 @@ public class helfer_wheel extends sp_helfer implements View.OnClickListener {
         }
     }
     private void update_views(){
+        db.putObject("wheel_helfer_pick", current_pick);
+        db.putObject("wheel_helfer_obj", objects);
         int i = 0;
         parent.removeAllViews();
         while (i<objects.size()){
@@ -95,9 +114,8 @@ public class helfer_wheel extends sp_helfer implements View.OnClickListener {
             lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             lp.setMargins(1,11,1,11);
             del=new Button(this);
-            del.setTextColor(Color.parseColor("#ffffff"));
+            del.setTextColor(Color.parseColor("#ffff00"));
             del.setBackgroundColor(Color.parseColor("#000000"));
-            //del.setBackground(getDrawable(R.drawable.shape_cad));
             del.setLayoutParams(lp);
             del.setTextSize(22);
             del.setText("Löschen");
