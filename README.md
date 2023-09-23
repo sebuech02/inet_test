@@ -16,16 +16,16 @@ Spiele können in der App erstellt und an mich zur überprüfung gesendet werden
 ********************************
 Geplante/dran gedachte Features:
 
-  - alle Daten auf SQL-server packen
-  - Animationen und visuals
-  - Spiele online sync mit erstellen
-  - (Server fehlt)
-  - vielleicht helfer für Hausnummer oder strichliste
+  - alle Daten auf SQL-server packen (Wegen Performance lieber als Socket)
+  - Animationen und visuals 
+  - Spiele online sync mit erstellen (evtl. mangels moderation keine gute idee)
+  - (Server fehlt/müsste aufgesetzt werden)
+  - vielleicht helfer für Hausnummer oder strichliste (Mehr Helfer-klassen)
 *****************
 Fertige Features:
   
   - Notifications work, speil erstellen sendet Token für persöhnliche Nachricht
-  - online Strichliste für Bier bestellen, damit man dem Bierbesteller per knopfdruck klar machen kann was man möchte (Server tot).
+  - online Strichliste für Bier bestellen, damit man dem Bierbesteller per knopfdruck klar machen kann was man möchte (Server tot und ausgebaut).
   - Kegelspiel mit gameengine (Work in Progress)
   - spiele einlesen aus xml (web-basiert) + rangliste einlesen 
     - hinzufügen von Spielen in der app. (benötigt noch manuelle Freigabe)
@@ -35,4 +35,6 @@ Fertige Features:
       - Zufallszahl von bis
       - Karteziehen mehrere Decks
       - würfeln (belibig viele)
-      - 5er spiel erweitert als helfer 
+      - 5er spiel erweitert als helfer
+      - zufallsauswahl
+      - punkte zählen
