@@ -1,6 +1,9 @@
 package com.example.inet_test;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,11 +19,14 @@ public class helfer_zufalsz extends sp_helfer implements View.OnClickListener {
     private TextView erg;
     private int zzahl, zmax, zmin;
     private tinydb db;
+    private Vibrator vibe;
+    private boolean vibe_on;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.helfer_zzahl);
         setTitle("Zufallszahl");
+        vibe=getApplicationContext().getSystemService(Vibrator.class);
         eingabe = findViewById(R.id.do_zz);
         et_min=findViewById(R.id.et_min);
         et_max=findViewById(R.id.et_max);
@@ -52,6 +58,8 @@ public class helfer_zufalsz extends sp_helfer implements View.OnClickListener {
             zmin=9;
             db.putInt("zmin_helfer", zmin);
         }
+        vibe_on=db.getBoolean_true("vibe");
+        db.putBoolean("vibe", vibe_on);
         et_min.setText(String.valueOf(zmin));
     }
 
@@ -59,6 +67,14 @@ public class helfer_zufalsz extends sp_helfer implements View.OnClickListener {
     public void onClick(View v){
         if (v.getId()==R.id.do_zz){
             gen_zz();
+            if (vibe_on){
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    long[] temp = new long[] {0,100, 0, 100};
+                    vibe.vibrate(VibrationEffect.createWaveform(temp, VibrationEffect.DEFAULT_AMPLITUDE));
+                } else {
+                    vibe.vibrate(200);
+                }
+            }
         }
     }
 

@@ -1,7 +1,10 @@
 package com.example.inet_test;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,11 +25,14 @@ public class helfer_wheel extends sp_helfer implements View.OnClickListener {
     private ArrayList<String> objects = new ArrayList<>();
     private int current_pick;
     private tinydb db;
+    private Vibrator vibe;
+    private boolean vibe_on;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.helfer_wheel);
         setTitle("Zufallspicker");
+        vibe=getApplicationContext().getSystemService(Vibrator.class);
 
         add=findViewById(R.id.do_add);
         pick=findViewById(R.id.do_pick);
@@ -53,6 +59,8 @@ public class helfer_wheel extends sp_helfer implements View.OnClickListener {
             objects=new ArrayList<>();
             db.putObject("wheel_helfer_obj", objects);
         }
+        vibe_on=db.getBoolean_true("vibe");
+        db.putBoolean("vibe", vibe_on);
         update_views();
     }
 
@@ -65,10 +73,26 @@ public class helfer_wheel extends sp_helfer implements View.OnClickListener {
                 }
                 objects.add(input.getText().toString());
                 update_views();
+                if (vibe_on){
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                        long[] temp = new long[] {0,100, 0, 100};
+                        vibe.vibrate(VibrationEffect.createWaveform(temp, VibrationEffect.DEFAULT_AMPLITUDE));
+                    } else {
+                        vibe.vibrate(200);
+                    }
+                }
                 break;
             }
             case R.id.do_pick:{
                 pick_random();
+                if (vibe_on){
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                        long[] temp = new long[] {0,100, 0, 100};
+                        vibe.vibrate(VibrationEffect.createWaveform(temp, VibrationEffect.DEFAULT_AMPLITUDE));
+                    } else {
+                        vibe.vibrate(200);
+                    }
+                }
                 break;
             }
             case R.id.do_team:{
@@ -135,6 +159,14 @@ public class helfer_wheel extends sp_helfer implements View.OnClickListener {
                 objects.remove(v.getId());
                 current_pick=-1;
                 update_views();
+                if (vibe_on){
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                        long[] temp = new long[] {0,100, 0, 100};
+                        vibe.vibrate(VibrationEffect.createWaveform(temp, VibrationEffect.DEFAULT_AMPLITUDE));
+                    } else {
+                        vibe.vibrate(200);
+                    }
+                }
             }
         } catch (Exception e){
             System.out.println(e.toString());
