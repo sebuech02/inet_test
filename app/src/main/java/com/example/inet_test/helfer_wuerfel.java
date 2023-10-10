@@ -1,7 +1,10 @@
 package com.example.inet_test;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,11 +23,14 @@ public class helfer_wuerfel extends sp_helfer implements View.OnClickListener {
     private LinearLayout zeile;
     private tinydb db;
     private int anzahl;
+    private Vibrator vibe;
+    private boolean vibe_on;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.helfer_wuerfel);
         setTitle("Würfel");
+        vibe=getApplicationContext().getSystemService(Vibrator.class);
 
         zeile = new LinearLayout(this);
         zeile.setOrientation(LinearLayout.HORIZONTAL);
@@ -44,6 +50,8 @@ public class helfer_wuerfel extends sp_helfer implements View.OnClickListener {
             db.putInt("wurfel_helfer", anzahl);
         }
         et.setText(String.valueOf(anzahl));
+        vibe_on=db.getBoolean_true("vibe");
+        db.putBoolean("vibe", vibe_on);
     }
     @Override
     public void onClick(View v){
@@ -51,6 +59,14 @@ public class helfer_wuerfel extends sp_helfer implements View.OnClickListener {
             parent.removeAllViews();
             zeile.removeAllViews();
             do_wuerfel();
+            if (vibe_on){
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    long[] temp = new long[] {0,100, 0, 100};
+                    vibe.vibrate(VibrationEffect.createWaveform(temp, VibrationEffect.DEFAULT_AMPLITUDE));
+                } else {
+                    vibe.vibrate(200);
+                }
+            }
         }
     }
 

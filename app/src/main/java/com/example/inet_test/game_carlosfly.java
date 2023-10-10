@@ -11,6 +11,9 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
+import android.os.Build;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
@@ -37,6 +40,9 @@ public class game_carlosfly extends View{
 
     private int score, lives;
     private int counter;
+    private tinydb db;
+    private Vibrator vibe;
+    private boolean vibe_on;
 
     private int majox=-500, majoy, majospeed=11;
     private int yellowx, yellowy, yellowspeed=7;
@@ -77,6 +83,10 @@ public class game_carlosfly extends View{
         super(context);
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        vibe= context.getApplicationContext().getSystemService(Vibrator.class);
+        db=new tinydb(context);
+        vibe_on=db.getBoolean_true("vibe");
+        db.putBoolean("vibe", vibe_on);
         height = displayMetrics.heightPixels;
         width = displayMetrics.widthPixels;
         choosen = MediaPlayer.create(getContext(),R.raw.mustafar_over);
@@ -301,6 +311,14 @@ public class game_carlosfly extends View{
                     if (hitchecker(majox, majoy)) {
                         score = score + 22;
                         majomode = true;
+                        if (vibe_on){
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                                long[] temp = new long[] {0,500, 0, 500};
+                                vibe.vibrate(VibrationEffect.createWaveform(temp, VibrationEffect.DEFAULT_AMPLITUDE));
+                            } else {
+                                vibe.vibrate(200);
+                            }
+                        }
                         schrei.start();
                         Toast.makeText(getContext(), "MAJONÄSE!!!", Toast.LENGTH_SHORT).show();
                         majox = -500;
@@ -323,7 +341,23 @@ public class game_carlosfly extends View{
                     //score = score + 3;
                     hit.start();
                     lives = lives - 1;
+                    if (vibe_on){
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                            long[] temp = new long[] {0,100, 0, 100};
+                            vibe.vibrate(VibrationEffect.createWaveform(temp, VibrationEffect.DEFAULT_AMPLITUDE));
+                        } else {
+                            vibe.vibrate(200);
+                        }
+                    }
                     if (lives == 0) {
+                        if (vibe_on){
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                                long[] temp = new long[] {0,400, 0, 400};
+                                vibe.vibrate(VibrationEffect.createWaveform(temp, VibrationEffect.DEFAULT_AMPLITUDE));
+                            } else {
+                                vibe.vibrate(200);
+                            }
+                        }
                         Toast.makeText(getContext(), "Game Over", Toast.LENGTH_LONG).show();
                         Intent gameover = new Intent(getContext(), game_over.class);
                         back.stop();
@@ -356,8 +390,24 @@ public class game_carlosfly extends View{
                         if (!vodkamode) {
                             //score = score + 3;
                             lives = lives - 1;
+                            if (vibe_on){
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                                    long[] temp = new long[] {0,100, 0, 100};
+                                    vibe.vibrate(VibrationEffect.createWaveform(temp, VibrationEffect.DEFAULT_AMPLITUDE));
+                                } else {
+                                    vibe.vibrate(200);
+                                }
+                            }
                             hit3.start();
                             if (lives == 0) {
+                                if (vibe_on){
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                                        long[] temp = new long[] {0,400, 0, 400};
+                                        vibe.vibrate(VibrationEffect.createWaveform(temp, VibrationEffect.DEFAULT_AMPLITUDE));
+                                    } else {
+                                        vibe.vibrate(200);
+                                    }
+                                }
                                 Toast.makeText(getContext(), "Game Over", Toast.LENGTH_LONG).show();
                                 Intent gameover = new Intent(getContext(), game_over.class);
                                 back.stop();
@@ -395,6 +445,14 @@ public class game_carlosfly extends View{
                         if (!vodkamode) {
                             lives = 0;
                             hit2.start();
+                            if (vibe_on){
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                                    long[] temp = new long[] {0,400, 0, 400};
+                                    vibe.vibrate(VibrationEffect.createWaveform(temp, VibrationEffect.DEFAULT_AMPLITUDE));
+                                } else {
+                                    vibe.vibrate(200);
+                                }
+                            }
                             Toast.makeText(getContext(), "Game Over", Toast.LENGTH_LONG).show();
                             Intent gameover = new Intent(getContext(), game_over.class);
                             back.stop();
@@ -489,6 +547,14 @@ public class game_carlosfly extends View{
                     if (hitchecker(majox, majoy)) {
                         score = score + 22;
                         majomode = true;
+                        if (vibe_on){
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                                long[] temp = new long[] {0,500, 0, 500};
+                                vibe.vibrate(VibrationEffect.createWaveform(temp, VibrationEffect.DEFAULT_AMPLITUDE));
+                            } else {
+                                vibe.vibrate(200);
+                            }
+                        }
                         schrei.start();
                         Toast.makeText(getContext(), "MAJONÄSE!!!", Toast.LENGTH_SHORT).show();
                         majox = -500;
@@ -511,7 +577,23 @@ public class game_carlosfly extends View{
                     //score = score + 3;
                     hit.start();
                     lives = lives - 1;
+                    if (vibe_on){
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                            long[] temp = new long[] {0,100, 0, 100};
+                            vibe.vibrate(VibrationEffect.createWaveform(temp, VibrationEffect.DEFAULT_AMPLITUDE));
+                        } else {
+                            vibe.vibrate(200);
+                        }
+                    }
                     if (lives == 0) {
+                        if (vibe_on){
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                                long[] temp = new long[] {0,400, 0, 400};
+                                vibe.vibrate(VibrationEffect.createWaveform(temp, VibrationEffect.DEFAULT_AMPLITUDE));
+                            } else {
+                                vibe.vibrate(200);
+                            }
+                        }
                         Toast.makeText(getContext(), "Game Over", Toast.LENGTH_LONG).show();
                         Intent gameover = new Intent(getContext(), game_over.class);
                         back.stop();
@@ -545,8 +627,24 @@ public class game_carlosfly extends View{
                         if (!vodkamode) {
                             //score = score + 3;
                             lives = lives - 1;
+                            if (vibe_on){
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                                    long[] temp = new long[] {0,100, 0, 100};
+                                    vibe.vibrate(VibrationEffect.createWaveform(temp, VibrationEffect.DEFAULT_AMPLITUDE));
+                                } else {
+                                    vibe.vibrate(200);
+                                }
+                            }
                             hit3.start();
                             if (lives == 0) {
+                                if (vibe_on){
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                                        long[] temp = new long[] {0,400, 0, 400};
+                                        vibe.vibrate(VibrationEffect.createWaveform(temp, VibrationEffect.DEFAULT_AMPLITUDE));
+                                    } else {
+                                        vibe.vibrate(200);
+                                    }
+                                }
                                 Toast.makeText(getContext(), "Game Over", Toast.LENGTH_LONG).show();
                                 Intent gameover = new Intent(getContext(), game_over.class);
                                 back.stop();
@@ -583,6 +681,14 @@ public class game_carlosfly extends View{
                         //score = score + 3;
                         if (!vodkamode) {
                             lives = 0;
+                            if (vibe_on){
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                                    long[] temp = new long[] {0,400, 0, 400};
+                                    vibe.vibrate(VibrationEffect.createWaveform(temp, VibrationEffect.DEFAULT_AMPLITUDE));
+                                } else {
+                                    vibe.vibrate(200);
+                                }
+                            }
                             hit2.start();
                             Toast.makeText(getContext(), "Game Over", Toast.LENGTH_LONG).show();
                             Intent gameover = new Intent(getContext(), game_over.class);
@@ -677,6 +783,14 @@ public class game_carlosfly extends View{
                     if (hitchecker(majox, majoy)) {
                         score = score + 22;
                         majomode = true;
+                        if (vibe_on){
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                                long[] temp = new long[] {0,500, 0, 500};
+                                vibe.vibrate(VibrationEffect.createWaveform(temp, VibrationEffect.DEFAULT_AMPLITUDE));
+                            } else {
+                                vibe.vibrate(200);
+                            }
+                        }
                         schrei.start();
                         Toast.makeText(getContext(), "MAJONÄSE!!!", Toast.LENGTH_SHORT).show();
                         majox = -500;
@@ -699,8 +813,24 @@ public class game_carlosfly extends View{
                     //score = score + 3;
                     hit.start();
                     lives = lives - 1;
+                    if (vibe_on){
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                            long[] temp = new long[] {0,100, 0, 100};
+                            vibe.vibrate(VibrationEffect.createWaveform(temp, VibrationEffect.DEFAULT_AMPLITUDE));
+                        } else {
+                            vibe.vibrate(200);
+                        }
+                    }
                     if (lives == 0) {
                         Toast.makeText(getContext(), "Game Over", Toast.LENGTH_LONG).show();
+                        if (vibe_on){
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                                long[] temp = new long[] {0,400, 0, 400};
+                                vibe.vibrate(VibrationEffect.createWaveform(temp, VibrationEffect.DEFAULT_AMPLITUDE));
+                            } else {
+                                vibe.vibrate(200);
+                            }
+                        }
                         choosen.start();
                         Intent gameover = new Intent(getContext(), game_over.class);
                         back.stop();
@@ -734,10 +864,26 @@ public class game_carlosfly extends View{
                         if (!vodkamode) {
                             //score = score + 3;
                             lives = lives - 1;
+                            if (vibe_on){
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                                    long[] temp = new long[] {0,100, 0, 100};
+                                    vibe.vibrate(VibrationEffect.createWaveform(temp, VibrationEffect.DEFAULT_AMPLITUDE));
+                                } else {
+                                    vibe.vibrate(200);
+                                }
+                            }
                             hit3.start();
                             if (lives == 0) {
                                 Toast.makeText(getContext(), "Game Over", Toast.LENGTH_LONG).show();
                                 choosen.start();
+                                if (vibe_on){
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                                        long[] temp = new long[] {0,400, 0, 400};
+                                        vibe.vibrate(VibrationEffect.createWaveform(temp, VibrationEffect.DEFAULT_AMPLITUDE));
+                                    } else {
+                                        vibe.vibrate(200);
+                                    }
+                                }
                                 Intent gameover = new Intent(getContext(), game_over.class);
                                 back.stop();
                                 mexiko.stop();
@@ -773,6 +919,14 @@ public class game_carlosfly extends View{
                         //score = score + 3;
                         if (!vodkamode) {
                             lives = 0;
+                            if (vibe_on){
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                                    long[] temp = new long[] {0,500, 0, 500};
+                                    vibe.vibrate(VibrationEffect.createWaveform(temp, VibrationEffect.DEFAULT_AMPLITUDE));
+                                } else {
+                                    vibe.vibrate(200);
+                                }
+                            }
                             hit2.start();
                             choosen.start();
                             Toast.makeText(getContext(), "Game Over", Toast.LENGTH_LONG).show();

@@ -7,6 +7,8 @@ import android.graphics.Color;
 import android.icu.text.DateTimePatternGenerator;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -26,15 +28,18 @@ public class pumpen_hub extends MainActivity implements View.OnClickListener {
     public Button bi, bd;
 
     public LinearLayout parent;
-
+    private boolean vibe_on;
+    private tinydb db;
     public Button ep, dum_von, share, reset;
     private static long LAST_CLICK_TIME = 0;
     private final int mDoubleClickInterval = 400;
+    private Vibrator vibe;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pumpen_hub);
         setTitle("Pumpen-Übersicht");
+        vibe=getApplicationContext().getSystemService(Vibrator.class);
         parent = findViewById(R.id.edit_list);
         util.init_pumpen();
         util.add_spieler("#1");
@@ -49,11 +54,17 @@ public class pumpen_hub extends MainActivity implements View.OnClickListener {
         dum_von.setOnClickListener(this);
         share.setOnClickListener(this);
         reset.setOnClickListener(this);
+
+        db = new tinydb(this);
+        vibe_on=db.getBoolean_true("vibe");
+        db.putBoolean("vibe", vibe_on);
     }
 
 
     //@android.support.annotation.RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public void build_list(LinearLayout parent) {
+        //TODO: Hier vielleicht ein Grid raus machen. So passen die allignments leider nicht ganz perfekt
+
         parent.removeAllViews();
         load_pumpen();
         int i = 1;
@@ -168,6 +179,14 @@ public class pumpen_hub extends MainActivity implements View.OnClickListener {
             Log.i("Minus",util.getSpieler().get(index));
             if (util.getPumpen().get(index)>0){
                 util.minus_pumpe(util.getSpieler().get(index));
+                if (vibe_on){
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                        long[] temp = new long[] {0,100, 0, 100};
+                        vibe.vibrate(VibrationEffect.createWaveform(temp, VibrationEffect.DEFAULT_AMPLITUDE));
+                    } else {
+                        vibe.vibrate(200);
+                    }
+                }
             }
         } else {
             int index = (input - 1) / 2;
@@ -175,6 +194,14 @@ public class pumpen_hub extends MainActivity implements View.OnClickListener {
             Log.i("hinweis",Integer.toString(index));
             Log.i("hinweis",util.getSpieler().toString());
             util.add_pumpe(util.getSpieler().get(index));
+            if (vibe_on){
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    long[] temp = new long[] {0,100, 0, 100};
+                    vibe.vibrate(VibrationEffect.createWaveform(temp, VibrationEffect.DEFAULT_AMPLITUDE));
+                } else {
+                    vibe.vibrate(200);
+                }
+            }
         }
         save_pumpen();
         build_list(parent);

@@ -51,5 +51,29 @@
             android:textColor="#ffffff"
             android:textSize="22dp"
             android:backgroundTint="#000000"/>
+        <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="#ff0000"/>
+        <CheckBox
+            android:id="@+id/vibe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Vibration"
+            android:textColor="#ffffff"
+            android:textSize="22dp"
+            android:backgroundTint="#000000"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="#ff0000"/>
+        <CheckBox
+            android:id="@+id/carlmode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Carlosmode"
+            android:textColor="#ffffff"
+            android:textSize="16dp"
+            android:backgroundTint="#000000"/>
     </LinearLayout>
 </ScrollView>

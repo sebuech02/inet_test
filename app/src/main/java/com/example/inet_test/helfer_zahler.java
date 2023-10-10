@@ -1,17 +1,25 @@
 package com.example.inet_test;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.HapticFeedbackConstants;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class helfer_zahler extends sp_helfer implements View.OnClickListener{
     private LinearLayout container, zeile;
@@ -19,15 +27,20 @@ public class helfer_zahler extends sp_helfer implements View.OnClickListener{
     private Button pl1, pl2, pl3, pl4, pl5, pl6, pl7, pl8, pl9, pl0, plp;
     private EditText to_add;
     private TextView t_name, t_score;
-    public tinydb db;
+    private ScrollView scv;
     public score_helper scores;
+    public tinydb db;
+    private Vibrator vibe;
+    private boolean vibe_on;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.helfer_zahler);
         setTitle("Punkte-tracken");
 
-        db=new tinydb(this);
+        vibe=getApplicationContext().getSystemService(Vibrator.class);
+
 
         container=findViewById(R.id.choosable_list);
         del_werte=findViewById(R.id.do_del_werte);
@@ -47,6 +60,7 @@ public class helfer_zahler extends sp_helfer implements View.OnClickListener{
         pl9=findViewById(R.id.plus9);
         pl0=findViewById(R.id.plus0);
         plp=findViewById(R.id.plusp);
+        scv=findViewById(R.id.kasten_scroll);
 
         del_werte.setOnClickListener(this);
         del.setOnClickListener(this);
@@ -75,6 +89,10 @@ public class helfer_zahler extends sp_helfer implements View.OnClickListener{
             scores.init();
             db.putObject("zahler_helfer", scores);
         }
+
+        vibe_on=db.getBoolean_true("vibe");
+        db.putBoolean("vibe", vibe_on);
+
         //scores.init();
         update_views();
     }
@@ -105,6 +123,14 @@ public class helfer_zahler extends sp_helfer implements View.OnClickListener{
                     }
                     scores.add_name(temp);
                     update_views();
+                    if (vibe_on){
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                            long[] tempp = new long[] {0,100, 0, 100};
+                            vibe.vibrate(VibrationEffect.createWaveform(tempp, VibrationEffect.DEFAULT_AMPLITUDE));
+                        } else {
+                            vibe.vibrate(200);
+                        }
+                    }
                 }
 
                 break;
@@ -125,56 +151,67 @@ public class helfer_zahler extends sp_helfer implements View.OnClickListener{
             }
             case R.id.plus1:{
                 scores.wurf("1");
+                scrolltoplayer();
                 update_views();
                 break;
             }
             case R.id.plus2:{
                 scores.wurf("2");
+                scrolltoplayer();
                 update_views();
                 break;
             }
             case R.id.plus3:{
                 scores.wurf("3");
+                scrolltoplayer();
                 update_views();
                 break;
             }
             case R.id.plus4:{
                 scores.wurf("4");
+                scrolltoplayer();
                 update_views();
                 break;
             }
             case R.id.plus5:{
                 scores.wurf("5");
+                scrolltoplayer();
                 update_views();
                 break;
             }
             case R.id.plus6:{
                 scores.wurf("6");
+                scrolltoplayer();
                 update_views();
                 break;
             }
             case R.id.plus7:{
                 scores.wurf("7");
+                scrolltoplayer();
                 update_views();
                 break;
             }
             case R.id.plus8:{
                 scores.wurf("8");
+                scrolltoplayer();
                 update_views();
                 break;
             }
             case R.id.plus9:{
                 scores.wurf("9");
+                scrolltoplayer();
                 update_views();
                 break;
             }
             case R.id.plus0:{
                 scores.wurf("0");
+                scrolltoplayer();
                 update_views();
                 break;
             }
             case R.id.plusp:{
                 scores.wurf("P");
+                scrolltoplayer();
                 update_views();
                 break;
             }
@@ -210,8 +247,14 @@ public class helfer_zahler extends sp_helfer implements View.OnClickListener{
             lp.setMargins(1,11,1,11);
             selection=new Button(this);
             selection.setText("Auswählen");
-            selection.setTextColor(Color.parseColor("#ffffff"));
             selection.setBackgroundColor(Color.parseColor("#000000"));
+            selection.setTextColor(Color.parseColor("#ffffff"));
+            if (scores.auswahlstatus.get(i)){
+                selection.setText("Abwählen");
+                selection.setTextColor(Color.parseColor("#ff0000"));
+                //selection.setBackgroundColor(Color.parseColor("#ff0000"));
+            }
+
             selection.setTextSize(18);
             selection.setGravity(Gravity.RIGHT);
             selection.setLayoutParams(lp);
@@ -238,6 +281,7 @@ public class helfer_zahler extends sp_helfer implements View.OnClickListener{
             zeile.addView(delete);
             zeile.addView(t_name);
             zeile.addView(selection);
+            zeile.setId(3000+i);
             container.addView(zeile);
 
             zeile= new LinearLayout(this);
@@ -285,7 +329,7 @@ public class helfer_zahler extends sp_helfer implements View.OnClickListener{
             int id = in-1000;
             scores.remove_name(scores.names.get(id));
             update_views();
-        } else if (1999<in && 30000>in) {
+        } else if (1999<in && 3000>in) {
             int id = in-2000;
             if (scores.auswahlstatus.get(id)){
                 scores.unselect_someone(scores.names.get(id));
@@ -293,6 +337,32 @@ public class helfer_zahler extends sp_helfer implements View.OnClickListener{
                 scores.select_someone(scores.names.get(id));
             }
             update_views();
+        }
+    }
+
+    private void scrolltoplayer(){
+        //Vibrator vibe = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+        //System.out.println("Ich soll vibebn");
+        if (vibe_on){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                long[] temp = new long[] {0,100, 0, 100};
+                vibe.vibrate(VibrationEffect.createWaveform(temp, VibrationEffect.DEFAULT_AMPLITUDE));
+            } else {
+                vibe.vibrate(200);
+            }
+        }
+
+        ArrayList<Boolean> status = scores.getAuswahlstatus();
+        int i = 0;
+        View v;
+        while (i<status.size()){
+            if (status.get(i)){
+                v=findViewById(3000+i);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                    scv.scrollTo((int) v.getX(),(int) v.getY());
+                }
+            }
+            i++;
         }
     }
 }

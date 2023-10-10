@@ -1,7 +1,10 @@
 package com.example.inet_test;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -18,11 +21,14 @@ public class helfer_schnapps extends sp_helfer implements View.OnClickListener {
     private ArrayList<Integer> gezogens;
     private TextView zahl;
     private tinydb db;
+    private Vibrator vibe;
+    private boolean vibe_on;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.helfer_schnapps);
         setTitle("Schnappskarten-ziehen");
+        vibe=getApplicationContext().getSystemService(Vibrator.class);
 
         parent=findViewById(R.id.verlauf_karten);
         ziehen=findViewById(R.id.anzahl_karten);
@@ -32,6 +38,7 @@ public class helfer_schnapps extends sp_helfer implements View.OnClickListener {
         ziehen.setOnClickListener(this);
         shuffle.setOnClickListener(this);
 
+        db = new tinydb(this);
         try {
             gezogens=db.getListInt("schnapps_helfer");
         } catch (Exception e){
@@ -39,6 +46,8 @@ public class helfer_schnapps extends sp_helfer implements View.OnClickListener {
             gezogens=new ArrayList<Integer>();
             db.putListInt("schnapps_helfer", gezogens);
         }
+        vibe_on=db.getBoolean_true("vibe");
+        db.putBoolean("vibe", vibe_on);
         show_schnapps();
     }
 
@@ -47,6 +56,14 @@ public class helfer_schnapps extends sp_helfer implements View.OnClickListener {
         switch (v.getId()){
             case R.id.anzahl_karten:{
                 karte_ziehen();
+                if (vibe_on){
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                        long[] temp = new long[] {0,100, 0, 100};
+                        vibe.vibrate(VibrationEffect.createWaveform(temp, VibrationEffect.DEFAULT_AMPLITUDE));
+                    } else {
+                        vibe.vibrate(200);
+                    }
+                }
                 break;
             }
             case R.id.misch_karten:{

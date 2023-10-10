@@ -1,7 +1,10 @@
 package com.example.inet_test;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -23,11 +26,14 @@ public class helfer_karte extends sp_helfer implements View.OnClickListener {
     private TextView zahl;
     private LinearLayout zeile;
     private tinydb db;
+    private Vibrator vibe;
+    private boolean vibe_on;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.helfer_karte);
         setTitle("Karten-ziehen");
+        vibe=getApplicationContext().getSystemService(Vibrator.class);
 
         card=findViewById(R.id.karten);
         rb1=findViewById(R.id.k32);
@@ -63,6 +69,8 @@ public class helfer_karte extends sp_helfer implements View.OnClickListener {
             rb1.setChecked(true);
             db.putInt("karte_helfer_max", max);
         }
+        vibe_on=db.getBoolean_true("vibe");
+        db.putBoolean("vibe", vibe_on);
 
         update_views();
     }
@@ -70,6 +78,14 @@ public class helfer_karte extends sp_helfer implements View.OnClickListener {
     public void onClick(View v){
         if (v.getId()==R.id.rest_haufen){
             ziehe_karten();
+            if (vibe_on){
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    long[] temp = new long[] {0,100, 0, 100};
+                    vibe.vibrate(VibrationEffect.createWaveform(temp, VibrationEffect.DEFAULT_AMPLITUDE));
+                } else {
+                    vibe.vibrate(200);
+                }
+            }
         } else if (v.getId()==R.id.do_shuffle) {
             reset_cards();
         }
