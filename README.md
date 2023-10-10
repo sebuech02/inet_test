@@ -24,14 +24,14 @@ Geplante/dran gedachte Features:
 *****************
 Fertige Features:
   
-  - Notifications work, speil erstellen sendet Token für persöhnliche Nachricht
+  - Notifications work, Spiel erstellen sendet Token für persöhnliche Nachricht
   - online Strichliste für Bier bestellen, damit man dem Bierbesteller per knopfdruck klar machen kann was man möchte (Server tot und ausgebaut).
-  - Kegelspiel mit gameengine (Work in Progress)
+  - Kegelspiel mit gameengine (Work in Progress), flappy Carlos geht und andere Spiele sind in arbeit
   - spiele einlesen aus xml (web-basiert) + rangliste einlesen 
     - hinzufügen von Spielen in der app. (benötigt noch manuelle Freigabe)
-  - Strichliste für die Pumpne in der App bearbeiten und ggf. teilen
-  - Einstellungen mit option die Sortierung zu ändern
-  - spielehelfer, die verschiedene Funktionen haben
+  - Strichliste für die Pumpen in der App bearbeiten und ggf. teilen
+  - Einstellungen mit option die Sortierung zu ändern und auch die Vibration ein und auszuschalten
+  - spielehelfer, die verschiedene Funktionen haben und haptisches Feedback haben
       - Zufallszahl von bis
       - Karteziehen mehrere Decks
       - würfeln (belibig viele)
